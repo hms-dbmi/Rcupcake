@@ -149,7 +149,7 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
             
             for( j in 1:nrow(mt)){
                 
-                selection <- tt[c("patient_id", as.character(ph$variable[i]), as.character(mt$variable[j]))]
+                selection <- tt[c("patient_id", as.character(ph$check[i]), as.character(mt$check[j]))]
                 mcolumn <- which(colnames(selection) == as.character(mt[j,1]))
                 pcolumn <- which(colnames(selection) == as.character(ph[i,1]))
                 
