@@ -40,14 +40,14 @@
 #' the warnings.
 #' @return An object of class \code{cgpAnalysis}
 #' @examples
-#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
+#' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
 #' ex1 <- comorAnalysis( 
-#'               input         = data2b2,
-#'               pth           = system.file("extdata", package="genophenoR"),
+#'               input         = result,
+#'               pth      = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,100),
 #'               gender        = "ALL", 
-#'               mutation      = c("ALL", "ALL")
+#'               mutation      = "ALL"
 #'               )
 #' @export comorAnalysis
 
@@ -96,7 +96,6 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
             if( length( unique( data[,pcolumn])) > nfactor){
                 message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
             }else{
-                
                 codesSelection <- codes[ codes$phenotype == as.character(input@phenotypes[i,3]),c(2,6)]
                 
                 for( j in 1:nrow(codesSelection)){
@@ -107,16 +106,18 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                 
                 if( mutation[1] %in% mt$variable ){
                     mt <- mt[ mt$variable == mutation[1], ]        
-                }else if(mutation[1] != "ALL"){
+                }else{
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
-                        message("-> ", mt$check[i])
+                        message("-> ", mt$variable[i])
                     }
                     stop()
                 }
                 
-
+                mt <- mt[ mt$variable == mutation[1], ]  
+                
+                
                 subset <- data[c("patient_id", "Gender", "Age", as.character(mt$check[1]), as.character(input@phenotypes[i,1]))]
                 subcolumn <- which(colnames(subset) == as.character(input@phenotypes[i,1]))
                 subset[,subcolumn] <- tolower(subset[,subcolumn])
@@ -153,7 +154,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                 
                 if( mutation[1] %in% mt$variable ){
                     mt <- mt[ mt$variable == mutation[1], ]        
-                }else if(mutation[1] != "ALL"){
+                }else{
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
@@ -229,17 +230,17 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     
     
     
-    colnames(resultad2) <- c( "phenoAdescription", "phenoBdescription", "phenoA", "phenoB", "phenoAB", "phenoANOTphenoB", "phenoBNOTphenoA", "NOTphenoANOTphenoB", "fisher", "oddsRatio", "relativeRisk", "phi" )
+    colnames(resultad2) <- c( "disAcode", "disBcode", "disA", "disB", "AB", "AnotB", "BnotA", "notAnotB", "fisher", "oddsRatio", "relativeRisk", "phi" )
     
     
-    resultad2$expect <-  as.numeric( resultad2$phenoA ) * as.numeric( resultad2$phenoB ) / totPatients
-    resultad2$score  <- log2( ( as.numeric( resultad2$phenoAB ) + 1 ) / ( resultad2$expect + 1) )
+    resultad2$expect <-  as.numeric( resultad2$disA ) * as.numeric( resultad2$disB ) / totPatients
+    resultad2$score  <- log2( ( as.numeric( resultad2$AB ) + 1 ) / ( resultad2$expect + 1) )
     resultad2        <- resultad2[ with( resultad2, order( resultad2$fisher ) ), ]
     resultad2$fdr    <- p.adjust( as.numeric( resultad2$fisher ), method = "fdr", n = nrow( resultad2 ) )
     
     resultad2$pair   <- NA
     for(cont in 1:nrow(resultad2)){
-        pairDis <- sort(c(resultad2$phenoAdescription[cont], resultad2$phenoBdescription[cont]))
+        pairDis <- sort(c(resultad2$disAcode[cont], resultad2$disBcode[cont]))
         resultad2$pair[cont] <- paste(pairDis[1], pairDis[2], sep="*")
     }
     
@@ -275,8 +276,8 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     }
     
     cAnalysis <- new( "cAnalysis", 
-                      ageMin    = ageRange[ 1 ]+1, 
-                      ageMax    = ageRange[ 2 ]-1, 
+                      ageMin    = ageRange[ 1 ], 
+                      ageMax    = ageRange[ 2 ], 
                       gender    = gender, 
                       patients  = totPatients,
                       tpatients = length(activePatients),
