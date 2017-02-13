@@ -5,7 +5,7 @@
 #' generates a \code{cgpAnalysis} object.
 #'
 #' @param input  A phenotype object, obtained with the queryPheno function. 
-#' @param Pth Determines the path where the required input file with 
+#' @param pth Determines the path where the required input file with 
 #' the yes/no phenotype data is located.
 #' @param aggregate By default TRUE. Change it to FALSE if you want to 
 #' analyze the comorbidity taking into all the values of each phenotype.
@@ -43,7 +43,7 @@
 #' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
 #' ex1 <- comorAnalysis( 
 #'               input         = result,
-#'               Pth      = system.file("extdata", package="genophenoR"),
+#'               pth           = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,100),
 #'               gender        = "ALL", 
@@ -51,7 +51,7 @@
 #'               )
 #' @export comorAnalysis
 
-comorAnalysis <- function ( input, phenoPth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE ){
+comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE ){
     
     message("Checking the input object")
     checkClass <- class(input)[1]
@@ -69,7 +69,7 @@ comorAnalysis <- function ( input, phenoPth, ageRange=c(0,100), aggregate = TRUE
     message( "Staring the comorbidity analysis" )
     message( "Loading the phenotype data file" )
  
-    codes <- read.delim ( file.path(phenoPth, "phenoValues.txt"),
+    codes <- read.delim ( file.path(pth, "phenoValues.txt"),
                           header=TRUE, 
                           sep="\t", 
                           colClasses="character" ) 
