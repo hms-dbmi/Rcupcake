@@ -1,0 +1,11 @@
+phenotype	PhenotypeValue	AllPopulation	yesCHD8	noCHD8	yesno
+FacialExpression	0	19.51	12.5	19.53	NO
+FacialExpression	1	41.31	37.5	41.33	YES
+FacialExpression	2	34.87	37.5	34.86	YES
+FacialExpression	3	4.27	12.5	4.24	YES
+FacialExpression	9	0.04	0	0.04	NO
+HandMovement	0	96.71	100	96.7	NO
+HandMovement	1	1.23	0	1.24	YES
+HandMovement	2	2.05	0	2.06	YES
+LossLanguage	0	82.46	87.5	82.45	NO
+LossLanguage	1	17.54	12.5	17.55	YES

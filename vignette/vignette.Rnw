@@ -1,0 +1,60 @@
+\documentclass[a4paper]{article}
+
+\usepackage[none]{hyphenat}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+\usepackage{amsmath}
+\usepackage[left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{float}
+\usepackage[linktoc=all]{hyperref}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\graphicspath{ {/home/alba/workspace/1_Current_projects/comoRbidity/Data/} }
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+%\SweaveOpts{concordance=TRUE}
+
+\newcommand{\subsubsubsection}[1]{\vspace{0.15cm}\noindent\textbf{#1}\vspace{0.15cm}}
+
+\title{\texttt{comoRbidity}: An R package to analyze disease comorbidities}
+
+\author{Alba Gutierrez-Sacristan \and Laura I. Furlong}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Load the package}
+
+
+<<bitb, eval=FALSE>>=
+library( "devtools" )
+install_bitbucket( "albags/genophenoR" )
+library( "genophenoR" )
+@
+
+
+\section{Input Data}
+<<inputData, eval=FALSE>>=
+path <- "C:/Users/AG440/Desktop/albags-genophenor-43ee3d3afddb/inst/extdata/" 
+exampleData <- read.delim(paste0(path, "testResults.txt"))
+head(exampleData)
+@
+
+
+\section{Query function}
+
+<<query, eval=FALSE>>=
+result <- queryPheno( databasePth = path, verbose=TRUE)
+result
+@
+

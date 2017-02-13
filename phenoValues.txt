@@ -1,0 +1,11 @@
+phenotype	PhenotypeValue	AllPopulation	yesTTN	noTTN	yesno
+FacialExpression	0	19.48	0	19.54	no
+FacialExpression	1	41.36	50	41.33	yes
+FacialExpression	2	34.85	50	34.8	yes
+FacialExpression	3	4.27	0	4.28	yes
+FacialExpression	9	0.04	0	0.04	no
+HandMovement	0	96.73	75	96.8	no
+HandMovement	1	1.24	0	1.25	yes
+HandMovement	2	2.03	25	1.95	yes
+LossLanguage	0	82.35	87.5	82.33	no
+LossLanguage	1	17.65	12.5	17.67	yes
