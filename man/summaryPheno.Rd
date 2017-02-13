@@ -36,8 +36,8 @@ another one of the age distribution and the third one with the relation
 between age and gender distribution.
 }
 \examples{
-load(system.file("extdata", "phenotype.RData", package="genophenoR"))
-summaryPheno( input      = result, 
+load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
+summaryPheno( input      = data2b2, 
            maleCode   = "MALE", 
            femaleCode = "FEMALE"
            )

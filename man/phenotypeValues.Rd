@@ -42,8 +42,9 @@ those having or not a mutation. Furthermore, a data.frame with the numerical var
 is obtained.
 }
 \examples{
-load(system.file("extdata", "phenotype.RData", package="genophenoR"))
-phenotypeValues( input      = result, 
+load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
+phenotypeValues( input      = data2b2, 
+                 mutation   = c("ALL", "ALL"),
                  verbose    = FALSE 
            )
 }

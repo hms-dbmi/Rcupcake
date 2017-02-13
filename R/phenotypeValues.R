@@ -24,8 +24,9 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
-#' phenotypeValues( input      = result, 
+#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
+#' phenotypeValues( input      = data2b2, 
+#'                  mutation   = c("ALL", "ALL"),
 #'                  verbose    = FALSE 
 #'            )
 #' @export phenotypeValues
@@ -57,9 +58,9 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
         stop()
     }
     
-    if( mutation %in% mt$variable ){
+    if( mutation[1] %in% mt$variable ){
         mt <- mt[ mt$variable == mutation, ]        
-    }else{
+    }else if(mutation[1] != "ALL"){
         message( "Your mutation of interest is not in the mutation list")
         message( "The mutations availabe for this analysis are: ")
         for( i in 1:nrow(mt)){
@@ -80,7 +81,7 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
         
         if( length( unique( tt[,pcolumn])) <= nfactor){
             
-            message( as.character(ph$check[i]), " phenotype is considered as a categorical variable")
+            message( as.character(ph$variable[i]), " phenotype is considered as a categorical variable")
             selection <- as.data.frame((round(100*summary(as.factor(tt[,pcolumn]))/length(unique(tt$patient_id)),2)))
             colnames(selection) <- ph$variable[i]
             
@@ -89,11 +90,11 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
                 mcolumn <- which(colnames(tt) == as.character(mt[j,1]))
                 mtyes <- tt[ tt[,mcolumn] =="yes",]
                 mtyes <- as.data.frame((round(100*summary(as.factor(mtyes[,pcolumn]))/length(unique(mtyes$patient_id)),2)))
-                colnames(mtyes) <- paste0("yes", mt$variable[j])
+                colnames(mtyes) <- paste0("P_", mt$variable[j], "yes")
                 
                 mtno  <- tt[ tt[,mcolumn] =="no",]
                 mtno <- as.data.frame((round(100*summary(as.factor(mtno[,pcolumn]))/length(unique(mtno$patient_id)),2)))
-                colnames(mtno) <- paste0("no", mt$variable[j])
+                colnames(mtno) <- paste0("P_", mt$variable[j], "no")
                 mtoutput <- merge( mtyes, mtno, all = TRUE, by=0 )
                 rownames(mtoutput) <- mtoutput[,1]
                 mtoutput <- mtoutput[,2:3]
@@ -109,7 +110,7 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
                 
                 resultTable              <- output
                 resultTable$phenotype    <- colnames(output)[2]
-                colnames(resultTable)[2] <- "AllPopulation"
+                colnames(resultTable)[2] <- "P_AllPatients"
                 resultTable              <- resultTable[,c(5,1:4)]
             }else{
                 
@@ -144,11 +145,11 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
             
         }else{
             
-            message( as.character(ph$check[i]), " phenotype is considerede as a continuous variable")
+            message( as.character(ph$variable[i]), " phenotype is considerede as a continuous variable")
             
             for( j in 1:nrow(mt)){
                 
-                selection <- tt[c("patient_id", as.character(ph$check[i]), as.character(mt$check[j]))]
+                selection <- tt[c("patient_id", as.character(ph$variable[i]), as.character(mt$variable[j]))]
                 mcolumn <- which(colnames(selection) == as.character(mt[j,1]))
                 pcolumn <- which(colnames(selection) == as.character(ph[i,1]))
                 
@@ -183,7 +184,6 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
     if( ifile == TRUE){
         
         resultTable$yesno <- NA
-        
         write.table( resultTable, file = paste0(path, "phenoValues.txt"), 
                      col.names = TRUE, 
                      row.names = FALSE, 

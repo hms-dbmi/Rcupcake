@@ -20,8 +20,8 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
-#' summaryPheno( input      = result, 
+#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
+#' summaryPheno( input      = data2b2, 
 #'            maleCode   = "MALE", 
 #'            femaleCode = "FEMALE"
 #'            )

@@ -67,13 +67,13 @@ for the subset of population under specific conditions of age and gender. It
 generates a \code{cgpAnalysis} object.
 }
 \examples{
-load(system.file("extdata", "phenotype.RData", package="genophenoR"))
+load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
 ex1 <- comorAnalysis( 
-              input         = result,
+              input         = data2b2,
               pth           = system.file("extdata", package="genophenoR"),
               aggregate     = TRUE, 
               ageRange      = c(0,100),
               gender        = "ALL", 
-              mutation      = "ALL"
+              mutation      = c("ALL", "ALL")
               )
 }

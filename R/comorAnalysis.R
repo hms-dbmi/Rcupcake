@@ -40,14 +40,14 @@
 #' the warnings.
 #' @return An object of class \code{cgpAnalysis}
 #' @examples
-#' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
+#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
 #' ex1 <- comorAnalysis( 
-#'               input         = result,
+#'               input         = data2b2,
 #'               pth           = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,100),
 #'               gender        = "ALL", 
-#'               mutation      = "ALL"
+#'               mutation      = c("ALL", "ALL")
 #'               )
 #' @export comorAnalysis
 
@@ -106,7 +106,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                 
                 if( mutation[1] %in% mt$variable ){
                     mt <- mt[ mt$variable == mutation[1], ]        
-                }else{
+                }else if(mutation[1] != "ALL"){
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
@@ -115,9 +115,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                     stop()
                 }
                 
-                mt <- mt[ mt$variable == mutation[1], ]  
-                
-                
+
                 subset <- data[c("patient_id", "Gender", "Age", as.character(mt$check[1]), as.character(input@phenotypes[i,1]))]
                 subcolumn <- which(colnames(subset) == as.character(input@phenotypes[i,1]))
                 subset[,subcolumn] <- tolower(subset[,subcolumn])
