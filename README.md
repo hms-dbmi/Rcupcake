@@ -14,12 +14,3 @@ This repository is used for `genophenoR` package.
  * __Authors__: Alba Gutierrez-Sacristan (HMS)
  * __Maintainer__: Alba Gutierrez-Sacristan (HMS)
 
-
-### Installation
-
-`genophenoR` can be installed using `devtools` from this repository:
-
-```R
-library(devtools)
-install_github("hms-dbmi/genophenoR")
-```
