@@ -228,17 +228,17 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     
     
     
-    colnames(resultad2) <- c( "disAcode", "disBcode", "disA", "disB", "AB", "AnotB", "BnotA", "notAnotB", "fisher", "oddsRatio", "relativeRisk", "phi" )
+    colnames(resultad2) <- c( "phenoAdescription", "phenoBdescription", "phenoA", "phenoB", "phenoAB", "phenoANOTphenoB", "phenoBNOTphenoA", "NOTphenoANOTphenoB", "fisher", "oddsRatio", "relativeRisk", "phi" )
     
     
-    resultad2$expect <-  as.numeric( resultad2$disA ) * as.numeric( resultad2$disB ) / totPatients
-    resultad2$score  <- log2( ( as.numeric( resultad2$AB ) + 1 ) / ( resultad2$expect + 1) )
+    resultad2$expect <-  as.numeric( resultad2$phenoA ) * as.numeric( resultad2$phenoB ) / totPatients
+    resultad2$score  <- log2( ( as.numeric( resultad2$phenoAB ) + 1 ) / ( resultad2$expect + 1) )
     resultad2        <- resultad2[ with( resultad2, order( resultad2$fisher ) ), ]
     resultad2$fdr    <- p.adjust( as.numeric( resultad2$fisher ), method = "fdr", n = nrow( resultad2 ) )
     
     resultad2$pair   <- NA
     for(cont in 1:nrow(resultad2)){
-        pairDis <- sort(c(resultad2$disAcode[cont], resultad2$disBcode[cont]))
+        pairDis <- sort(c(resultad2$phenoAdescription[cont], resultad2$phenoBdescription[cont]))
         resultad2$pair[cont] <- paste(pairDis[1], pairDis[2], sep="*")
     }
     
