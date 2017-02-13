@@ -96,6 +96,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
             if( length( unique( data[,pcolumn])) > nfactor){
                 message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
             }else{
+                
                 codesSelection <- codes[ codes$phenotype == as.character(input@phenotypes[i,3]),c(2,6)]
                 
                 for( j in 1:nrow(codesSelection)){
@@ -110,7 +111,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
-                        message("-> ", mt$variable[i])
+                        message("-> ", mt$check[i])
                     }
                     stop()
                 }
