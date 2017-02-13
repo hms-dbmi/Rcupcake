@@ -152,7 +152,7 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
                 
                 if( mutation[1] %in% mt$variable ){
                     mt <- mt[ mt$variable == mutation[1], ]        
-                }else{
+                }else if(mutation[1] != "ALL"){
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
