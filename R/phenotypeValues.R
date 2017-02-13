@@ -116,7 +116,7 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
                 
                 resultmidd               <- output
                 resultmidd$phenotype    <- colnames(output)[2]
-                colnames(resultmidd)[2] <- "AllPopulation"
+                colnames(resultmidd)[2] <- "P_AllPatients"
                 resultmidd              <- resultmidd[,c(5,1:4)] 
                 
                 resultTable             <- rbind( resultTable, resultmidd )
