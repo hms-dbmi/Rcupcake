@@ -32,7 +32,7 @@
 demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FALSE, warnings = TRUE) {
     
     message("Checking the input object")
-    checkClass <- class(input)[1]
+    checkClass <- class(inputObject)[1]
     
     if(checkClass != "genopheno"){
         message("Check the input object. Remember that this
@@ -54,7 +54,7 @@ demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FA
         message( "Creating a summary table with the main characteristics of population" )
     }
     
-    tt <- input@iresult
+    tt <- inputObject@iresult
     
     male<- tt[ tt$Gender == maleCode, ]
     female<- tt[ tt$Gender == femaleCode, ]

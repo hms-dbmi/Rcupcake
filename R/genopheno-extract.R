@@ -15,7 +15,7 @@
 setMethod( "extract",
    signature = "genopheno",
    definition = function( object ) {
-     return( object@result )
+     return( object@iresult )
    }
 )
 
