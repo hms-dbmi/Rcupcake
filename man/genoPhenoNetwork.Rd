@@ -59,9 +59,9 @@ Given an object of class \code{genophenoComor} obtained from a comorbidity analy
 a network is obtained.
 }
 \examples{
-load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
+load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
 genoPhenoNetwork <- network( 
-              input            = phenoEx,
+              input            = genophenoComor,
               selectValue      = "score",
               cutOff           = 1.5,
               npairs           = 2,

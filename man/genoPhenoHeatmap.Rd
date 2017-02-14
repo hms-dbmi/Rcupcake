@@ -48,8 +48,8 @@ Given an object of class \code{genophenoComor} obtained from a comorbidity analy
 a heatmap is obtained.
 }
 \examples{
-load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
-htmp <- genoPhenoHeatmap( input = phenoEx, 
+load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
+htmp <- genoPhenoHeatmap( input = genophenoComor, 
               selectValue  = "patientsPhenoAB", 
               cutOff       = 1, 
               npairs       = 1

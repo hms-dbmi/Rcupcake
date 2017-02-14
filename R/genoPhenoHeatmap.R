@@ -27,8 +27,8 @@
 #' the warnings.
 #' @return A heatmap
 #' @examples
-#' load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
-#' htmp <- genoPhenoHeatmap( input = phenoEx, 
+#' load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
+#' htmp <- genoPhenoHeatmap( input = genophenoComor, 
 #'               selectValue  = "patientsPhenoAB", 
 #'               cutOff       = 1, 
 #'               npairs       = 1

@@ -35,9 +35,9 @@
 #'  
 #' @return A network
 #' @examples
-#' load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
+#' load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
 #' genoPhenoNetwork <- network( 
-#'               input            = phenoEx,
+#'               input            = genophenoComor,
 #'               selectValue      = "score",
 #'               cutOff           = 1.5,
 #'               npairs           = 2,
@@ -116,14 +116,15 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
         disPrev <- rbind ( disPrev1, disPrev2)
         disPrev <- disPrev[ !duplicated( disPrev$dis ), ]
         disPrev$prevalence <- (as.numeric(disPrev$patients)/patients)*100
+        disPrev$dis <- paste0( disPrev$dis, ": yes")
         
         sizes <- as.numeric(disPrev[ , 3 ])
         names( sizes ) <- disPrev[ , 1 ]
         column <- which(colnames(input )==selectValue)
         
       
-        input[,1]=as.character(input[,1]) 
-        input[,2]=as.character(input[,2])
+        input[,1]=paste0( as.character(input[,1]), ": yes") 
+        input[,2]=paste0( as.character(input[,2]), ": yes") 
         input=as.matrix(input)
         g=igraph::graph.edgelist(input[,1:2],directed=FALSE)
         igraph::E(g)$weight=input[,column] 
@@ -131,6 +132,8 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
         if( verbose ) {
             message( "The network contains ", igraph::vcount( g ), " nodes and ", igraph::ecount( g ), " edges." )
         }
+        
+
       
         if(interactive == FALSE){
             plot( g, 
@@ -151,6 +154,8 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
                   vertex.label.cex    = 0.8,    #specifies the size of the font of the labels
                   main                = title
             ) 
+            legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ) ,pt.cex=scaled,col='black',pch=21, pt.bg='lightblue')
+            
         }else if (interactive == TRUE){
             tkid <- igraph::tkplot(g, 
                                    vertex.frame.color = "white",
@@ -170,6 +175,8 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
                                    vertex.label.cex    = 0.8,    #specifies the size of the font of the labels
                                    main                = title
             ) 
+            legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ) ,pt.cex=scaled,col='black',pch=21, pt.bg='lightblue')
+            
             
         }
     }
