@@ -1,10 +1,10 @@
-#' Comorbidity Analysis \code{cAnalysis}
+#' Comorbidity Analysis \code{genophenoComor}
 #'
-#' Given an object of type \code{phenotype}, a comorbidity analysis is perform, 
+#' Given an object of type \code{genopheno}, a comorbidity analysis is perform, 
 #' for the subset of population under specific conditions of age and gender. It 
 #' generates a \code{cgpAnalysis} object.
 #'
-#' @param input  A phenotype object, obtained with the queryPheno function. 
+#' @param input  A \code{genopheno} object, obtained with the queryPheno function. 
 #' @param pth Determines the path where the required input file with 
 #' the yes/no phenotype data is located.
 #' @param aggregate By default TRUE. Change it to FALSE if you want to 
@@ -40,27 +40,27 @@
 #' the warnings.
 #' @return An object of class \code{cgpAnalysis}
 #' @examples
-#' load(system.file("extdata", "phenotype.RData", package="genophenoR"))
-#' ex1 <- comorAnalysis( 
-#'               input         = result,
-#'               pth      = system.file("extdata", package="genophenoR"),
+#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+#' ex1 <- genoPhenoComorbidity( 
+#'               input         = queryExample,
+#'               pth           = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
-#'               ageRange      = c(0,100),
-#'               gender        = "ALL", 
-#'               mutation      = "ALL"
+#'               ageRange      = c(0,16),
+#'               gender        = "MALE", 
+#'               mutation      = c("CHD8", "ALL")
 #'               )
-#' @export comorAnalysis
+#' @export genoPhenoComorbidity
 
-comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE ){
+genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE ){
     
     message("Checking the input object")
     checkClass <- class(input)[1]
     
-    if(checkClass != "phenotype"){
+    if(checkClass != "genopheno"){
         message("Check the input object. Remember that this
                 object must be obtained after applying the queryPheno
                 function to your input file. The input object class must
-                be:\"phenotype\"")
+                be:\"genopheno\"")
         stop()
     }
     
@@ -179,10 +179,22 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
 
     }
   
-
-    qresult$Age <- as.numeric(qresult$Age)
+    
 
     if ( !missing( ageRange ) ) {
+        
+        naCheck <- qresult[! is.na( qresult$Age), ]
+        
+        if( nrow(naCheck) != nrow( qresult)){
+            message("There is not age information for all the patients.")
+            noAge <- nrow( qresult ) - nrow( naCheck )
+            message("The ", noAge, " patients without age data will be removed")
+            qresult  <- qresult[! is.na( qresult$Age), ]
+            
+            
+        }
+        
+        qresult$Age <- as.numeric(qresult$Age)
         qresult <- qresult[ qresult$Age >= ageRange[ 1 ] & qresult$Age <= ageRange[ 2 ], ]
     }
     
@@ -192,6 +204,9 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
         }
     }
     
+    totPatients <- length( unique( qresult$patient_id ) )
+    
+    
     if ( !missing( mutation ) ) {
         if(mutation[2] !="ALL"){
             ncolumn <- which(colnames(qresult) == as.character(mt$check[1]))
@@ -200,95 +215,105 @@ comorAnalysis <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     }
     
     
-    ##active patients
-    totPatients <- length( unique( qresult$patient_id ) )
-    activePatients <- unique( qresult$patient_id )
-    ##
-    
-    phenoPairs <- function ( pt ){
-        pp <- qresult[ qresult$patient_id == pt, ]
-        phenosC <- unique( pp$phenotype )
-        phenos.f <- as.character( unique(pp$phenotype) )
-        phenosC.c <- unique(do.call(c, apply(expand.grid(phenos.f, phenosC), 1, combn, m=2, simplify=FALSE)))
-        phenos.f <- phenosC.c[sapply(phenosC.c, function(x) x[1] != x[2])]
+    if( length( unique( qresult$phenotype)) < 2 ){
+        message(paste0("Your patients subset only contains 1 phenotype: ", unique( qresult$phenotype)))
+        message("Comorbidity analysis cannot be performed")
+        stop()
     }
     
-    message( "Generating the cAnalysis object" )
-    finalCP  <- parallel::mclapply( activePatients, phenoPairs, mc.preschedule = TRUE, mc.cores = cores )
-    finalCP <- finalCP[ sapply(finalCP, function(x) { length(x) != 0 }) ]
+    else{
+        ##active patients
+        activePatients <- unique( qresult$patient_id )
+        ##
+        
+        phenoPairs <- function ( pt ){
+            pp <- qresult[ qresult$patient_id == pt, ]
+            phenosC <- unique( pp$phenotype )
+            phenos.f <- as.character( unique(pp$phenotype) )
+            phenosC.c <- unique(do.call(c, apply(expand.grid(phenos.f, phenosC), 1, combn, m=2, simplify=FALSE)))
+            phenos.f <- phenosC.c[sapply(phenosC.c, function(x) x[1] != x[2])]
+        }
+        
+        message( "Generating the genophenoComor object" )
+        finalCP  <- parallel::mclapply( activePatients, phenoPairs, mc.preschedule = TRUE, mc.cores = cores )
+        finalCP <- finalCP[ sapply(finalCP, function(x) { length(x) != 0 }) ]
+        
+        f <- function( j ){ t( data.frame( j ) ) }
+        unnest <-  do.call( f, list( j = finalCP  ) )
+        unnest <- unnest[!duplicated(unnest), ]
+        unnest <- lapply(1:nrow(unnest), function(ii) unnest[ii, ])
+        
+        
+        
+        resultado <- parallel::mclapply( unnest, tableData, mc.preschedule = TRUE, mc.cores = cores, data = qresult, lenActPa=totPatients)
+        resultad2 <- do.call("rbind", resultado )
+        resultad2 <- as.data.frame( resultad2, stringsAsFactors=FALSE )
+        
+        
+        
+        colnames(resultad2) <- c( "phenotypeA", "phenotypeB", "patientsPhenoA", "patientsPhenoB", "patientsPhenoAB", "patientsPhenoAnotB", "patientsPhenoABnotA", "patientsNotAnotBpheno", "fisher", "oddsRatio", "relativeRisk", "phi" )
+        
+        
+        resultad2$expect <-  as.numeric( resultad2$patientsPhenoA ) * as.numeric( resultad2$patientsPhenoB ) / totPatients
+        resultad2$score  <- log2( ( as.numeric( resultad2$patientsPhenoAB ) + 1 ) / ( resultad2$expect + 1) )
+        resultad2        <- resultad2[ with( resultad2, order( resultad2$fisher ) ), ]
+        resultad2$fdr    <- p.adjust( as.numeric( resultad2$fisher ), method = "fdr", n = nrow( resultad2 ) )
+        
+        resultad2$pair   <- NA
+        for(cont in 1:nrow(resultad2)){
+            pairDis <- sort(c(resultad2$phenotypeA[cont], resultad2$phenotypeA[cont]))
+            resultad2$pair[cont] <- paste(pairDis[1], pairDis[2], sep="*")
+        }
+        
+        resultad2 <- resultad2[!duplicated(resultad2$pair),]
+        resultad2 <- resultad2[,c(1:15)]
+        
+        if ( !missing( score ) ) {
+            resultad2 <- resultad2[ resultad2$score > score, ]
+        }
+        if ( !missing( fdr ) ) {
+            resultad2 <- resultad2[ resultad2$fdr < fdr, ]
+        }
+        if ( !missing( oddsRatio ) ) {
+            resultad2 <- resultad2[ resultad2$fdr > oddsRatio, ]
+        }
+        if ( !missing( rr ) ) {
+            resultad2 <- resultad2[ resultad2$fdr > rr, ]
+        }
+        if ( !missing( phi ) ) {
+            resultad2 <- resultad2[ resultad2$fdr > phi, ]        
+        }
+        
+        resultad2$fisher <- round(as.numeric(resultad2$fisher), 3)
+        resultad2$oddsRatio <- round(as.numeric(resultad2$oddsRatio), 3)
+        resultad2$relativeRisk <- round(as.numeric(resultad2$relativeRisk), 3)
+        resultad2$phi <- round(as.numeric(resultad2$phi), 3)
+        resultad2$expect <- round(as.numeric(resultad2$expect), 3)
+        resultad2$score <- round(as.numeric(resultad2$score), 3)
+        resultad2$fdr <- round(as.numeric(resultad2$fdr), 3)
+        
+        if( nrow( resultad2 ) == 0 ){
+            warning("None of the disease pairs has pass the filters") 
+        }
+        
+        genophenoComor <- new( "genophenoComor", 
+                               ageMin    = ageRange[ 1 ], 
+                               ageMax    = ageRange[ 2 ], 
+                               gender    = gender, 
+                               patients  = totPatients,
+                               tpatients = length(activePatients),
+                               prevalence= (length(activePatients)/totPatients)*100,
+                               minimumOR = round(min(as.numeric(resultad2$oddsRatio)), digits = 3),
+                               minimumRR = round(min(as.numeric(resultad2$relativeRisk)), digits = 3),
+                               minimumPhi= round(min(as.numeric(resultad2$phi)), digits = 3),
+                               dispairs  = nrow( resultad2 ),
+                               result    = resultad2 
+        )
+        return( genophenoComor )
     
-    f <- function( j ){ t( data.frame( j ) ) }
-    unnest <-  do.call( f, list( j = finalCP  ) )
-    unnest <- unnest[!duplicated(unnest), ]
-    unnest <- lapply(1:nrow(unnest), function(ii) unnest[ii, ])
-    
-    
-    
-    resultado <- parallel::mclapply( unnest, tableData, mc.preschedule = TRUE, mc.cores = cores, data = qresult, lenActPa=totPatients)
-    resultad2 <- do.call("rbind", resultado )
-    resultad2 <- as.data.frame( resultad2, stringsAsFactors=FALSE )
-    
-    
-    
-    colnames(resultad2) <- c( "disAcode", "disBcode", "disA", "disB", "AB", "AnotB", "BnotA", "notAnotB", "fisher", "oddsRatio", "relativeRisk", "phi" )
-    
-    
-    resultad2$expect <-  as.numeric( resultad2$disA ) * as.numeric( resultad2$disB ) / totPatients
-    resultad2$score  <- log2( ( as.numeric( resultad2$AB ) + 1 ) / ( resultad2$expect + 1) )
-    resultad2        <- resultad2[ with( resultad2, order( resultad2$fisher ) ), ]
-    resultad2$fdr    <- p.adjust( as.numeric( resultad2$fisher ), method = "fdr", n = nrow( resultad2 ) )
-    
-    resultad2$pair   <- NA
-    for(cont in 1:nrow(resultad2)){
-        pairDis <- sort(c(resultad2$disAcode[cont], resultad2$disBcode[cont]))
-        resultad2$pair[cont] <- paste(pairDis[1], pairDis[2], sep="*")
+            
     }
     
-    resultad2 <- resultad2[!duplicated(resultad2$pair),]
-    resultad2 <- resultad2[,c(1:15)]
-
-    if ( !missing( score ) ) {
-        resultad2 <- resultad2[ resultad2$score > score, ]
-    }
-    if ( !missing( fdr ) ) {
-        resultad2 <- resultad2[ resultad2$fdr < fdr, ]
-    }
-    if ( !missing( oddsRatio ) ) {
-        resultad2 <- resultad2[ resultad2$fdr > oddsRatio, ]
-    }
-    if ( !missing( rr ) ) {
-        resultad2 <- resultad2[ resultad2$fdr > rr, ]
-    }
-    if ( !missing( phi ) ) {
-        resultad2 <- resultad2[ resultad2$fdr > phi, ]        
-    }
-    
-    resultad2$fisher <- round(as.numeric(resultad2$fisher), 3)
-    resultad2$oddsRatio <- round(as.numeric(resultad2$oddsRatio), 3)
-    resultad2$relativeRisk <- round(as.numeric(resultad2$relativeRisk), 3)
-    resultad2$phi <- round(as.numeric(resultad2$phi), 3)
-    resultad2$expect <- round(as.numeric(resultad2$expect), 3)
-    resultad2$score <- round(as.numeric(resultad2$score), 3)
-    resultad2$fdr <- round(as.numeric(resultad2$fdr), 3)
-    
-    if( nrow( resultad2 ) == 0 ){
-        warning("None of the disease pairs has pass the filters") 
-    }
-    
-    cAnalysis <- new( "cAnalysis", 
-                      ageMin    = ageRange[ 1 ], 
-                      ageMax    = ageRange[ 2 ], 
-                      gender    = gender, 
-                      patients  = totPatients,
-                      tpatients = length(activePatients),
-                      prevalence= (length(activePatients)/totPatients)*100,
-                      minimumOR = round(min(as.numeric(resultad2$oddsRatio)), digits = 3),
-                      minimumRR = round(min(as.numeric(resultad2$relativeRisk)), digits = 3),
-                      minimumPhi= round(min(as.numeric(resultad2$phi)), digits = 3),
-                      dispairs  = nrow( resultad2 ),
-                      result    = resultad2 
-    )
-    return( cAnalysis )
 }
 
 tableData <- function ( pairCode, data, lenActPa ) {

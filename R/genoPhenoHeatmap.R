@@ -1,11 +1,11 @@
 #' Plot the comorbidity analysis results in a heatmap.
 #'
-#' Given an object of class \code{cAnalysis} obtained from a comorbidity analysis, 
+#' Given an object of class \code{genophenoComor} obtained from a comorbidity analysis, 
 #' a heatmap is obtained. 
 #'
-#' @param input A \code{cAnalysis} object, obtained 
+#' @param input A \code{genophenoComor} object, obtained 
 #' by applying the \code{comorbidityAnalysis} function
-#' @param selectValue By default \code{"AB"} variable will be selected. Change
+#' @param selectValue By default \code{"patientsPhenoAB"} variable will be selected. Change
 #' it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'odds ratio'}, 
 #' \code{'phi'}, \code{'rr'}).  
 #' @param cutOff By default \code{'0.05'}. The value of the argument can be changed 
@@ -28,60 +28,54 @@
 #' @return A heatmap
 #' @examples
 #' load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
-#' htmp <- comorHeatmap( input = phenoEx, 
-#'               selectValue  = "AB", 
+#' htmp <- genoPhenoHeatmap( input = phenoEx, 
+#'               selectValue  = "patientsPhenoAB", 
 #'               cutOff       = 1, 
 #'               npairs       = 1
 #'               )
 #' htmp
-#' @export comorHeatmap
+#' @export genoPhenoHeatmap
 #' 
 
 
-comorHeatmap <- function( input , selectValue = "score", cutOff = 0.05, npairs = 0, interactive = FALSE, lowColor = "#cde6ff", highColor = "red", verbose = FALSE ) {
+genoPhenoHeatmap <- function( input , selectValue = "score", cutOff = 0.05, npairs = 0, interactive = FALSE, lowColor = "#cde6ff", highColor = "red", verbose = FALSE ) {
 
     message("Checking the input object")
     checkClass <- class(input)[1]
     
-    if(checkClass != "cAnalysis"){
+    if(checkClass != "genophenoComor"){
         message("Check the input object. Remember that this
                     object must be obtained after applying the query
                     function to your input file. The input object class must
-                    be:\"cAnalysis\"")
+                    be:\"genophenoComor\"")
         stop()
     }
     
-    if(class(input)[1]== "cAnalysis"){
+    if(class(input)[1]== "genophenoComor"){
         obj <- input@result
-        obj <- obj[as.numeric(obj$AB) >= npairs, ]
+        obj <- obj[as.numeric(obj$patientsPhenoAB) >= npairs, ]
         column <- which(colnames(obj )==selectValue)
         obj$value <- as.numeric( obj[,column] )
         obj  <- obj [obj$value >= cutOff,]
         obj [,column] <- as.numeric(obj [,column])
         
-        casted_rr <- reshape::cast(obj , disAcode ~ disBcode, value= selectValue  )
-        l <- dim(casted_rr)[2]        
-        Rowm  <- rowMeans(casted_rr[2:l], na.rm = T)       
-        casted_rr<- cbind(casted_rr, Rowm)
-        ordered<-  casted_rr[order(casted_rr["Rowm"]), "disAcode" ]          
-        obj$disAcode  <- factor(obj $disAcode  , levels= as.factor(ordered))
         m <- max(obj [,column])
         n <- min(obj [,column])
 
         
         if( interactive == FALSE ){
-            p <- ggplot2::ggplot(obj , ggplot2::aes ( disAcode, disBcode ) ) +
+            p <- ggplot2::ggplot(obj , ggplot2::aes ( phenotypeA, phenotypeB ) ) +
                 ggplot2::geom_tile(ggplot2::aes(fill = value), colour = "black") +
                 ggplot2::scale_fill_gradient(limits = c(n,m), low = lowColor,   high = highColor, na.value = "black") +
                 ggplot2::theme_grey(base_size = 13) +
-                ggplot2::labs ( title = "Comorbidity between diseases", x = "diagnosis code under study", y = "disease comorbidities") +
+                ggplot2::labs ( title = "Phenotype comrobidities", x = "phenotypes", y = "phenotypes") +
                 ggplot2::scale_x_discrete(expand = c(0, 0)) +
                 ggplot2::geom_text(ggplot2::aes(label = value ) ) +
                 ggplot2::theme( plot.margin = grid::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ),
                                 axis.text.x = ggplot2::element_text ( angle = 45, size = 11, hjust = 1 ), panel.background = ggplot2::element_blank() )
             p
         }else if(interactive == TRUE){
-            tt <- reshape2::acast(obj, disBcode~disAcode, value.var=selectValue)
+            tt <- reshape2::acast(obj, phenotypeB~phenotypeA, value.var=selectValue)
             d3heatmap::d3heatmap(tt, dendrogram = "none", scale = "none",
                                  colors =c("mediumorchid4","black"), 
                                  yaxis_font_size = 10,

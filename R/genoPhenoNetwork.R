@@ -1,9 +1,9 @@
 #' Plot the comorbidity analysis results in a network
 #'
-#'Given an object of class \code{cAnalysis} obtained from a comorbidity analysis, 
+#'Given an object of class \code{genophenoComor} obtained from a comorbidity analysis, 
 #' a network is obtained.
 #'
-#' @param input A \code{cAnalysis} object, obtained 
+#' @param input A \code{genophenoComor} object, obtained 
 #' by applying the \code{comorbidityAnalysis} function
 #' @param databasePth Determines the path where the intermediate RData objects 
 #' have been created. It is the same path where the three required input files 
@@ -36,33 +36,33 @@
 #' @return A network
 #' @examples
 #' load(system.file("extdata", "phenoEx.RData", package="genophenoR"))
-#' comorNetwork <- network( 
+#' genoPhenoNetwork <- network( 
 #'               input            = phenoEx,
 #'               selectValue      = "score",
 #'               cutOff           = 1.5,
 #'               npairs           = 2,
 #'               title            = "Example comorbidity network"
 #'               )
-#' @export comorNetwork
+#' @export genoPhenoNetwork
 #' 
 
-comorNetwork <- function( input, layout = "layout.circle", selectValue = "AB", title = "Phenotype comorbidity network", cutOff = 0, npairs = 0, prop  = 1, interactive = FALSE, comorColor = "lightblue", verbose = FALSE ) {
+genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "patientsPhenoAB", title = "Phenotype comorbidity network", cutOff = 0, npairs = 0, prop  = 1, interactive = FALSE, comorColor = "lightblue", verbose = FALSE ) {
     
     message("Checking the input object")
     checkClass <- class(input)[1]
     
-    if(checkClass != "cAnalysis" ){
+    if(checkClass != "genophenoComor" ){
         message("Check the input object. Remember that this
                     object must be obtained after applying the query
                     function to your input file. The input object class must
-                    be:\"cAnalysis\" ")
+                    be:\"genophenoComor\" ")
         stop()
     }
     
-    if(class(input)[1]== "cAnalysis"){
+    if(class(input)[1]== "genophenoComor"){
         patients <- input@patients
         input  <- input@result
-        input  <- input[as.numeric(input$AB) >= npairs, ]
+        input  <- input[as.numeric(input$patientsPhenoAB) >= npairs, ]
         input  <- input[input[[selectValue]] >= cutOff,]
         
 

@@ -1,21 +1,21 @@
 #' A graphical summary of the phenotype values 
 #'
-#' Given an object of class \code{phenotype}, a figure containing a barplot for each
+#' Given an object of class \code{genopheno}, a figure containing a barplot for each
 #' phenotype is displayed. Each barplot shows the population percentage suffering each
 #' type of the phenotypes according to the values it takes, and distinguishing between
 #' those having or not a mutation. Furthermore, a data.frame with the numerical variables
 #' is obtained.  
 #'
-#' @param input Object of \code{phenotype} class. 
+#' @param input Object of \code{genopheno} class. 
 #' @param nfactor By default 10. Change it into other number if you consider there is any
 #' categorical variable with more than nfactor values. 
 #' @param mutation Determines the mutation of interest for wchich you want to analyze the 
 #' phenotype values
 #' @param showTable By default FALSE. Change it into TRUE in order to visualize the table
 #' with the ressults. 
-#' @param ifile By default FALSE. Change it into TRUE in order to generate a file with the 
+#' @param outputFile By default FALSE. Change it into TRUE in order to generate a file with the 
 #' phenotypes and the values for each of them and an extra column to be filled by the user
-#' for further analysis. 
+#' for further analysis. The output file is called 'phenoSummary.txt'
 #' @param path By default the working directory. Define the path where you want the file to 
 #' be saved
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
@@ -24,20 +24,20 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
-#' phenotypeValues( input      = data2b2, 
-#'                  mutation   = c("ALL", "ALL"),
+#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+#' phenotypeSummary( input      = data2b2, 
+#'                  mutation   = "CHD8",
 #'                  verbose    = FALSE 
 #'            )
-#' @export phenotypeValues
+#' @export phenotypeSummary
 
-phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, ifile = FALSE, path = "", verbose = FALSE ){
+phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, outputFile = FALSE, path = "", verbose = FALSE ){
     
     
     message("Checking the input object")
     checkClass <- class(input)[1]
     
-    if(checkClass != "phenotype"){
+    if(checkClass != "genopheno"){
         message("Check the input object. Remember that this
                 object must be obtained after applying the queryPheno
                 function to your input file. The input object class must
@@ -58,9 +58,9 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
         stop()
     }
     
-    if( mutation[1] %in% mt$variable ){
+    if( mutation %in% mt$variable ){
         mt <- mt[ mt$variable == mutation, ]        
-    }else if(mutation[1] != "ALL"){
+    }else{
         message( "Your mutation of interest is not in the mutation list")
         message( "The mutations availabe for this analysis are: ")
         for( i in 1:nrow(mt)){
@@ -181,10 +181,10 @@ phenotypeValues <- function( input, mutation, nfactor = 10, showTable = FALSE, i
     multiplot(plotlist = plots, cols = 2)
     
     
-    if( ifile == TRUE){
+    if( outputFile == TRUE){
         
         resultTable$yesno <- NA
-        write.table( resultTable, file = paste0(path, "phenoValues.txt"), 
+        write.table( resultTable, file = paste0(path, "phenoSummary.txt"), 
                      col.names = TRUE, 
                      row.names = FALSE, 
                      quote     = FALSE, 

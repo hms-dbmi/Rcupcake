@@ -2,13 +2,13 @@
 % Please edit documentation in R/queryGenoPheno.R
 \name{queryGenoPheno}
 \alias{queryGenoPheno}
-\title{Query your data and generates a \code{phenoytpe}}
+\title{Query your data and generates a \code{genopheno}}
 \usage{
-queryGenoPheno(databasePth, verbose = FALSE, warnings = TRUE)
+queryGenoPheno(inputDataFile, verbose = FALSE, warnings = TRUE)
 }
 \arguments{
-\item{databasePth}{Determines the path where the required input file 
-islocated.}
+\item{inputDataFile}{Determines the file with the complete path where the required 
+input file is located.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
@@ -20,6 +20,8 @@ the warnings.}
 An object of class \code{phenotype}
 }
 \examples{
-ex1 <- queryPheno( databasePth = system.file("extdata", package="phenotypeR"),
-                   verbose     = FALSE)
+queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
+                                                "/genophenoExData.txt"),
+                                  verbose     = FALSE)
+queryExample
 }

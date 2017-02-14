@@ -1,27 +1,30 @@
-#' Query your data and generates a \code{phenoytpe}
+#' Query your data and generates a \code{genopheno}
 #'
 #' Given 1 file (testResults.txt), generates some RData and create an object of type 
 #' \code{phenotype}.}.
 #'
-#' @param databasePth Determines the path where the required input file 
-#' islocated. 
+#' @param inputDataFile Determines the file with the complete path where the required 
+#' input file is located. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
 #' @return An object of class \code{phenotype}
 #' @examples
-#' ex1 <- queryPheno( databasePth = system.file("extdata", package="phenotypeR"),
-#'                    verbose     = FALSE)
+#' queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
+#'                                                 "/genophenoExData.txt"),
+#'                                   verbose     = FALSE)
+#' queryExample
 #' @export queryGenoPheno
 
 
-queryGenoPheno <- function( databasePth,verbose = FALSE, warnings= TRUE) {
+queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
     
     message( "Loading the input datasets" )
-    patients <- read.delim( file.path( databasePth, "testResults.txt"  ), 
-                                header = TRUE, sep = "\t", 
-                                colClasses = "character" )
+    patients <- read.delim( inputDataFile, ,
+                            header = TRUE, 
+                            sep = "\t", 
+                            colClasses = "character" )
     
     message("Checking the inputData file structure")
         colnamesPatients   <- c("patient_id","Gender", "Age")   
@@ -33,10 +36,11 @@ queryGenoPheno <- function( databasePth,verbose = FALSE, warnings= TRUE) {
             stop()
         }
         
-        message("Removing those patients for which there is not complete information")
-        patientComplete <- patients[complete.cases(patients),]
+        #message("Removing those patients for which there is not complete information")
+        #patientComplete <- patients[complete.cases(patients),]
+        
         message("Removing duplicated data")
-        patientComplete <- patientComplete[! duplicated( patientComplete), ]
+        patientComplete <- patients[! duplicated( patients), ]
 
     if( verbose ) {
         message( "There are ", length( unique ( patientComplete$patient_id)), " patients in your input data whith complete information for all your variables, from the initial ", length( unique ( patients$patient_id ) ), " patients in your list.")
@@ -57,7 +61,7 @@ queryGenoPheno <- function( databasePth,verbose = FALSE, warnings= TRUE) {
 
     
     #with the data we have, we create a comorbidity object
-    result <- new( "phenotype", 
+    result <- new( "genopheno", 
                    nMutations   = nrow(mutations),
                    nPhenotype   = nrow(phenotypes),
                    nPatient     = length( unique ( patientComplete$patient_id ) ), 
@@ -67,14 +71,14 @@ queryGenoPheno <- function( databasePth,verbose = FALSE, warnings= TRUE) {
     )
     
     #we create a second object with all the data of the dataset
-    allData <- new( "phenotype", 
+    allData <- new( "genopheno", 
                     nMutations   = nrow(mutations),
                     nPhenotype   = nrow(phenotypes),
                     nPatient     = length( unique ( patientComplete$patient_id ) ), 
                     iresult      = patients, 
                     mutations    = mutations, 
                     phenotypes   = phenotypes )
-    save(allData, file=paste0(databasePth, "allData.RData"))
+    save(allData, file=paste0(inputDataFile, "allData.RData"))
     
     return( result )
 

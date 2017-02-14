@@ -1,11 +1,11 @@
 #' A graphical summary of the database content. 
 #'
-#' Given an object of class \code{phenotype}, and the characters used to 
+#' Given an object of class \code{genopheno}, and the characters used to 
 #' specify the gender, a figure containing 3 plots, one of the age distribution, 
 #' another one of the age distribution and the third one with the relation 
 #' between age and gender distribution. 
 #'
-#' @param input Object of \code{phenotype} class. 
+#' @param inputObject Object of \code{genopheno} class. 
 #' @param maleCode Characters(s) used to determine the male condition of a patient. 
 #' Depending on the database it can be determined, for example, as \code{Male}, .
 #' \code{MALE}, \code{M}, with digits as \code{0} or \code{1}. 
@@ -20,28 +20,36 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "phenogeno.RData", package="genophenoR"))
-#' summaryPheno( input      = data2b2, 
-#'            maleCode   = "MALE", 
-#'            femaleCode = "FEMALE"
+#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+#' demographicSummary( inputObject = data2b2, 
+#'                maleCode   = "MALE", 
+#'                femaleCode = "FEMALE"
 #'            )
-#' @export summaryPheno
+#' @export demographicSummary
 
 
 
-summaryPheno <- function( input, maleCode = "Male", femaleCode ="Female", verbose = FALSE, warnings = TRUE) {
+demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FALSE, warnings = TRUE) {
     
     message("Checking the input object")
     checkClass <- class(input)[1]
     
-    if(checkClass != "phenotype"){
+    if(checkClass != "genopheno"){
         message("Check the input object. Remember that this
                 object must be obtained after applying the queryPheno
                 function to your input file. The input object class must
-                be:\"phenotype\"")
+                be:\"genopheno\"")
         stop()
     }
     
+    
+    if ( missing( maleCode ) | missing( femaleCode ) ) {
+        message("'maleCode' or 'femlaeCode' argument is missing. 
+                Please, enter the 'maleCode' and 'femaleCode' argument.")
+        stop()        
+    }
+    
+
     if( verbose == TRUE ){
         message( "Creating a summary table with the main characteristics of population" )
     }
@@ -50,37 +58,6 @@ summaryPheno <- function( input, maleCode = "Male", femaleCode ="Female", verbos
     
     male<- tt[ tt$Gender == maleCode, ]
     female<- tt[ tt$Gender == femaleCode, ]
-    tt$Age    <- as.numeric( tt$Age )
-    
-    ### age distribution
-    p <-ggplot2::ggplot( tt ) +
-        ggplot2::geom_bar( ggplot2::aes(Age) ) +
-        ggplot2::labs ( title = "Age distribution" , x = "age", y = "# of patients") +
-        ggplot2::scale_x_continuous(breaks = seq(min(tt$Age), max(tt$Age), by= 3),labels = seq(min(tt$Age), max(tt$Age), by=3))
-    
-    
-    p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
-                                                         axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
-                                                         axis.text.x = ggplot2::element_text ( angle = 45, size = 9, hjust = 1 ))
-    
-    #Boxplot
-    male1<-male[c("patient_id", "Age", "Gender")]
-    female1<-female[c("patient_id", "Age", "Gender")]
-    
-    tot<-rbind(male1, female1)
-    tot$Age <- as.numeric( tot$Age )
-    stats <- t.test(as.numeric(female$Age), as.numeric(male$Age))
-    
-    bp <- ggplot2::ggplot(tot, ggplot2::aes(x=Gender, y=Age)) + 
-        ggplot2::geom_boxplot() +
-        ggplot2::stat_summary(fun.y=mean, geom="point", shape=5, size=4) +
-        ggplot2::labs ( title = paste0("Age distribution by Gender\n (T-test p-val:", round(stats$p.value, 3), ")") , x = "gender", y = "age")
-    
-    bp <- bp + ggplot2::theme_classic( ) +
-        ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
-                        axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), 
-                        text = ggplot2::element_text ( size = 11 ),
-                        axis.text.x = ggplot2::element_text ( angle = 45, size = 11, hjust = 1 ))
     
     ### sex distribution
     slices<-c(length ( unique( female$patient_id ) ), length ( unique( male$patient_id ) ) )
@@ -114,6 +91,52 @@ summaryPheno <- function( input, maleCode = "Male", femaleCode ="Female", verbos
     pie <- pie + ggplot2::scale_fill_grey(start = 0.4, end = 0.8, na.value = "red") +  
         blank_theme + 
         ggplot2::theme(axis.text.x = ggplot2::element_blank())
+    ##
+    
+    
+    tt$Age    <- as.numeric( tt$Age )
+    ttNotNA <- tt[! is.na( tt$Age), ]
+    
+    if( nrow( tt ) != nrow( ttNotNA ) ){
+        message(paste0("From the initial ", nrow(tt), " patients, there are \n",
+                nrow( ttNotNA ), " for which age information is available"))
+    
+    }
+    
+    
+    ### age distribution
+    p <-ggplot2::ggplot( ttNotNA ) +
+        ggplot2::geom_bar( ggplot2::aes(Age) ) +
+        ggplot2::labs ( title = "Age distribution" , x = "age", y = "# of patients") +
+        ggplot2::scale_x_continuous(breaks = seq(min(ttNotNA$Age), max(ttNotNA$Age), by= 3),labels = seq(min(ttNotNA$Age), max(tt2$Age), by=3))
+    
+    
+    p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
+                                                         axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 14 ) ,
+                                                         axis.text.x = ggplot2::element_text ( angle = 45, size = 9, hjust = 1 ))
+    
+    #Boxplot
+    maleNotNA<- ttNotNA[ ttNotNA$Gender == maleCode, ]
+    femaleNotNA<- ttNotNA[ ttNotNA$Gender == femaleCode, ]
+    
+    male1<-maleNotNA[c("patient_id", "Age", "Gender")]
+    female1<-femaleNotNA[c("patient_id", "Age", "Gender")]
+    
+    tot<-rbind(male1, female1)
+    tot$Age <- as.numeric( tot$Age )
+    stats <- t.test(as.numeric(female$Age), as.numeric(male$Age))
+    
+    bp <- ggplot2::ggplot(tot, ggplot2::aes(x=Gender, y=Age)) + 
+        ggplot2::geom_boxplot() +
+        ggplot2::stat_summary(fun.y=mean, geom="point", shape=5, size=4) +
+        ggplot2::labs ( title = paste0("Age distribution by Gender\n (T-test p-val:", round(stats$p.value, 3), ")") , x = "gender", y = "age")
+    
+    bp <- bp + ggplot2::theme_classic( ) +
+        ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
+                        axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), 
+                        text = ggplot2::element_text ( size = 11 ),
+                        axis.text.x = ggplot2::element_text ( angle = 45, size = 11, hjust = 1 ))
+    
     
     
     #plot them together
