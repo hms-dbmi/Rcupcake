@@ -37,7 +37,7 @@ between age and gender distribution.
 }
 \examples{
 load(system.file("extdata", "genopheno.RData", package="genophenoR"))
-demographicSummary( inputObject = data2b2, 
+demographicSummary( inputObject = queryExample, 
                maleCode   = "MALE", 
                femaleCode = "FEMALE"
            )

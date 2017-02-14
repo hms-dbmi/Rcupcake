@@ -59,8 +59,7 @@ queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
         phenotypes <- check[ check$firstL == "P", ]
         
 
-    
-    #with the data we have, we create a comorbidity object
+            #with the data we have, we create a comorbidity object
     result <- new( "genopheno", 
                    nMutations   = nrow(mutations),
                    nPhenotype   = nrow(phenotypes),

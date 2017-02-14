@@ -21,7 +21,7 @@
 #' gender distribution.
 #' @examples
 #' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
-#' demographicSummary( inputObject = data2b2, 
+#' demographicSummary( inputObject = queryExample, 
 #'                maleCode   = "MALE", 
 #'                femaleCode = "FEMALE"
 #'            )
@@ -108,7 +108,7 @@ demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FA
     p <-ggplot2::ggplot( ttNotNA ) +
         ggplot2::geom_bar( ggplot2::aes(Age) ) +
         ggplot2::labs ( title = "Age distribution" , x = "age", y = "# of patients") +
-        ggplot2::scale_x_continuous(breaks = seq(min(ttNotNA$Age), max(ttNotNA$Age), by= 3),labels = seq(min(ttNotNA$Age), max(tt2$Age), by=3))
+        ggplot2::scale_x_continuous(breaks = seq(min(ttNotNA$Age), max(ttNotNA$Age), by= 3),labels = seq(min(ttNotNA$Age), max(ttNotNA$Age), by=3))
     
     
     p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
