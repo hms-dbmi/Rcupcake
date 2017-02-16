@@ -261,7 +261,7 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
         
         resultad2$pair   <- NA
         for(cont in 1:nrow(resultad2)){
-            pairDis <- sort(c(resultad2$phenotypeA[cont], resultad2$phenotypeA[cont]))
+            pairDis <- sort(c(resultad2$phenotypeA[cont], resultad2$phenotypeB[cont]))
             resultad2$pair[cont] <- paste(pairDis[1], pairDis[2], sep="*")
         }
         
