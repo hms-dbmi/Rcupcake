@@ -175,7 +175,7 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
                                    vertex.label.cex    = 0.8,    #specifies the size of the font of the labels
                                    main                = title
             ) 
-            legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ) ,col='black',pch=21, pt.bg='lightblue')
+            legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ),col='black',pch=21, pt.bg='lightblue')
             
             
         }
