@@ -52,3 +52,4 @@ phenotypeSummaryZscore( input      = queryExample,
                         verbose    = FALSE 
            )
 }
+

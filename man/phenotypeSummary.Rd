@@ -48,3 +48,4 @@ phenotypeSummary( input      = data2b2,
                  verbose    = FALSE 
            )
 }
+

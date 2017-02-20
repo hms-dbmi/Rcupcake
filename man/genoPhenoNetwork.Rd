@@ -68,3 +68,4 @@ genoPhenoNetwork <- network(
               title            = "Example comorbidity network"
               )
 }
+

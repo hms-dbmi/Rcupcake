@@ -1,10 +1,11 @@
 Package: genophenoR
 Type: Package
-Title: Integrative analysis of phenotype and genotype information from electronic health record data
+Title: Integrative analysis of phenotype and genotype information from
+    electronic health record data
 Version: 0.99.0
 Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")))
-Description: Package to integrate, analyze and visualize phenotype and genotype information from electronic
-    health record data.
+Description: Package to integrate, analyze and visualize phenotype and genotype
+    information from electronic health record data.
 Depends:
     R (>= 3.2.3),
     stringr
@@ -31,4 +32,4 @@ NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
 Maintainer: Alba Gutierrez-Sacristan <alba.gutierrez@upf.edu>
 biocViews: Software, BiomedicalInformatics, Genetics, DataRepresentation
-RoxygenNote: 6.0.0
+RoxygenNote: 5.0.1
