@@ -116,6 +116,7 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
             
         if ( !missing( mutation ) ) {
             if(mutation[2] !="ALL"){
+                mt <- input@mutations
                 ncolumn <- which(colnames(qresult) == as.character(mt$check[1]))
                 qresult <- qresult[ qresult[,ncolumn] == mutation[2], ]
             }
@@ -158,6 +159,7 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
             
             if ( !missing( mutation ) ) {
                 if(mutation[2] !="ALL"){
+                    mt <- input@mutations
                     ncolumn <- which(colnames(qresult) == as.character(mt$check[1]))
                     qresult <- qresult[ qresult[,ncolumn] == mutation[2], ]
                 }
