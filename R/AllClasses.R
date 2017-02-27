@@ -23,7 +23,8 @@ setClass( "genophenoComor",
           representation =
               representation( ageMin    = "numeric",  # single or list
                               ageMax    = "numeric",    # max age
-                              gender    = "character",    # gender
+                              gender    = "character",  # gender
+                              mutation  = "character",  #mutation
                               patients  = "numeric",    # subsetPatients
                               tpatients = "numeric",    # totalPatients
                               prevalence= "numeric",    # prevalence respet to the total population
@@ -37,6 +38,7 @@ setClass( "genophenoComor",
               prototype( ageMin    = numeric(),
                          ageMax    = numeric(),
                          gender    = character(),
+                         mutation  = character(),
                          patients  = numeric(),
                          tpatients = numeric(),
                          prevalence= numeric(),

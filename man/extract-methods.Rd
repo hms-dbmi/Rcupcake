@@ -25,4 +25,3 @@ Obtain the raw query from a \code{genophenoComor} object.
 qr <- extract(x) 
 }
 }
-

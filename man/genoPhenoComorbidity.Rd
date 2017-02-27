@@ -77,4 +77,3 @@ ex1 <- genoPhenoComorbidity(
               mutation      = c("CHD8", "ALL")
               )
 }
-

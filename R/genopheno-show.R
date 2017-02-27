@@ -15,6 +15,7 @@ setMethod( "show",
                cat( " . Age Min :", object@ageMin, "\n" )
                cat( " . Age Max :", object@ageMax, "\n" )
                cat( " . Gender  :", object@gender, "\n" )
+               cat( " . Mutation  :", object@mutation, "\n" )
                cat( " . Patients in the age and gender interval:", object@patients, "\n" )
                cat( " . Patients with mutation selected:", object@tpatients, "\n" )
                cat( " . Prevalence:", round(as.numeric(object@prevalence), 3), "\n")

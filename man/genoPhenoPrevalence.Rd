@@ -29,4 +29,3 @@ prevalence <- genoPhenoPrevalence(
               input            = genophenoComor
               )
 }
-

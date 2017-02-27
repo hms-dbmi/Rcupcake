@@ -42,4 +42,3 @@ demographicSummary( inputObject = queryExample,
                femaleCode = "FEMALE"
            )
 }
-

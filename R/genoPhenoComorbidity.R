@@ -300,6 +300,7 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
                                ageMin    = ageRange[ 1 ], 
                                ageMax    = ageRange[ 2 ], 
                                gender    = gender, 
+                               mutation  = mutation, 
                                patients  = totPatients,
                                tpatients = length(activePatients),
                                prevalence= (length(activePatients)/totPatients)*100,

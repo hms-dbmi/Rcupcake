@@ -56,4 +56,3 @@ htmp <- genoPhenoHeatmap( input = genophenoComor,
               )
 htmp
 }
-

@@ -47,4 +47,3 @@ genohenoZscore( input      = queryExample,
                 verbose    = FALSE 
            )
 }
-

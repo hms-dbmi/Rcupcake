@@ -68,4 +68,3 @@ ex1 <- genoPhenoPatientsSelection(
               mutation      = c("CHD8", "ALL")
               )
 }
-

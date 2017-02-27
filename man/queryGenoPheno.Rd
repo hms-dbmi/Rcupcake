@@ -25,4 +25,3 @@ queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", pa
                                   verbose     = FALSE)
 queryExample
 }
-
