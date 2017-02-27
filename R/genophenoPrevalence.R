@@ -33,7 +33,7 @@ genoPhenoPrevalence <- function( input, verbose = FALSE, warnings = FALSE){
     }
     
     if(class(input)[1]== "genophenoComor"){
-        patients <- input@patients
+        patients <- input@tpatients
         input  <- input@result
 
         disPrev1 <- input[ , c( 1, 3 ) ]

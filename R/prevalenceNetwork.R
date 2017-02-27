@@ -40,7 +40,7 @@ prevalenceNetwork <- function( input, layout = "layout.circle", title = "Phenoty
     }
     
     if(class(input)[1]== "genophenoComor"){
-        patients <- input@patients
+        patients <- input@tpatients
         prev  <- input@result
         
         disPrev1 <- prev[ , c( 1, 3 ) ]
