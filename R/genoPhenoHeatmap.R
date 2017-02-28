@@ -7,7 +7,7 @@
 #' by applying the \code{comorbidityAnalysis} function
 #' @param selectValue By default \code{"patientsPhenoAB"} variable will be selected. Change
 #' it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'odds ratio'}, 
-#' \code{'phi'}, \code{'rr'}).  
+#' \code{'phi'}, \code{'rr'}, \code{'PercentagePhenoAB'}).  
 #' @param cutOff By default \code{'0.05'}. The value of the argument can be changed 
 #' to any other numeric variable, according to the range of the selected value.
 #' @param npairs by default \code{'0'}.  The value of the argument can be changed
@@ -68,7 +68,7 @@ genoPhenoHeatmap <- function( input , selectValue = "score", cutOff = 0.05, npai
                 ggplot2::geom_tile(ggplot2::aes(fill = value), colour = "black") +
                 ggplot2::scale_fill_gradient(limits = c(n,m), low = lowColor,   high = highColor, na.value = "black") +
                 ggplot2::theme_grey(base_size = 13) +
-                ggplot2::labs ( title = "Phenotype comrobidities", x = "phenotypes", y = "phenotypes") +
+                ggplot2::labs ( title = "Phenotype co-occurrence", x = "phenotypes", y = "phenotypes") +
                 ggplot2::scale_x_discrete(expand = c(0, 0)) +
                 ggplot2::geom_text(ggplot2::aes(label = value ) ) +
                 ggplot2::theme( plot.margin = grid::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ),

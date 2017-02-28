@@ -14,7 +14,7 @@ by applying the \code{comorbidityAnalysis} function}
 
 \item{selectValue}{By default \code{"patientsPhenoAB"} variable will be selected. Change
 it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'odds ratio'}, 
-\code{'phi'}, \code{'rr'}).}
+\code{'phi'}, \code{'rr'}, \code{'PercentagePhenoAB'}).}
 
 \item{cutOff}{By default \code{'0.05'}. The value of the argument can be changed 
 to any other numeric variable, according to the range of the selected value.}
