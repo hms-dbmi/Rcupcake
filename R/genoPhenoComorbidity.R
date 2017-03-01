@@ -258,7 +258,7 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
         resultad2$score  <- log2( ( as.numeric( resultad2$patientsPhenoAB ) + 1 ) / ( resultad2$expect + 1) )
         resultad2        <- resultad2[ with( resultad2, order( resultad2$fisher ) ), ]
         resultad2$fdr    <- p.adjust( as.numeric( resultad2$fisher ), method = "fdr", n = nrow( resultad2 ) )
-        resultad2$PercentagePhenoAB <- round(as.numeric( resultad2$patientsPhenoA )/ length(activePatients)*100, 2)
+        resultad2$PercentagePhenoAB <- round(as.numeric( resultad2$patientsPhenoAB )/ length(activePatients)*100, 2)
         
         
         resultad2$pair   <- NA
