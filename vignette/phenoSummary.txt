@@ -1,0 +1,14 @@
+phenotype	PhenotypeValue	P_AllPatients	P_CHD8yes	P_CHD8no	yesno
+CompulsionsRituals	0	56.36	50	56.38	NA
+CompulsionsRituals	1	14.55	25	14.51	NA
+CompulsionsRituals	2	22.12	25	22.11	NA
+CompulsionsRituals	3	6.74	0	6.76	NA
+CompulsionsRituals	NA's	0.24	0	0.24	NA
+FacialExpression	0	34	12.5	34.07	NA
+FacialExpression	1	52.77	75	52.7	NA
+FacialExpression	2	12.12	12.5	12.12	NA
+FacialExpression	3	0.88	0	0.88	NA
+FacialExpression	NA's	0.24	0	0.24	NA
+LossLanguage	0	81.59	87.5	81.57	NA
+LossLanguage	1	17.66	12.5	17.67	NA
+LossLanguage	NA's	0.76	0	0.76	NA

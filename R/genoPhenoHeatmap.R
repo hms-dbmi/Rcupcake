@@ -23,8 +23,6 @@
 #' By default it is set to \code{"red"}. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
-#' the warnings.
 #' @return A heatmap
 #' @examples
 #' load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
@@ -40,7 +38,11 @@
 
 genoPhenoHeatmap <- function( input , selectValue = "score", cutOff = 0.05, npairs = 0, interactive = FALSE, lowColor = "#cde6ff", highColor = "red", verbose = FALSE ) {
 
-    message("Checking the input object")
+    
+    if( verbose == TRUE){
+        message("Checking the input object")
+    } 
+    
     checkClass <- class(input)[1]
     
     if(checkClass != "genophenoComor"){

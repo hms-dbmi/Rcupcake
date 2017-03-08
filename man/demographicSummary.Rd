@@ -2,13 +2,13 @@
 % Please edit documentation in R/demographicSummary.R
 \name{demographicSummary}
 \alias{demographicSummary}
-\title{A graphical summary of the database content.}
+\title{Describes the demographic characteristics (sex, age) of the population under study}
 \usage{
-demographicSummary(inputObject, maleCode, femaleCode, verbose = FALSE,
+demographicSummary(input, maleCode, femaleCode, verbose = FALSE,
   warnings = TRUE)
 }
 \arguments{
-\item{inputObject}{Object of \code{genopheno} class.}
+\item{input}{Object of \code{genopheno} class.}
 
 \item{maleCode}{Characters(s) used to determine the male condition of a patient. 
 Depending on the database it can be determined, for example, as \code{Male}, .
@@ -31,14 +31,14 @@ gender distribution.
 }
 \description{
 Given an object of class \code{genopheno}, and the characters used to 
-specify the gender, a figure containing 3 plots, one of the age distribution, 
+specify the gender, a graphic containing 3 plots, one of the age distribution, 
 another one of the age distribution and the third one with the relation 
-between age and gender distribution.
+between age and gender distribution, is obtained.
 }
 \examples{
-load(system.file("extdata", "genopheno.RData", package="genophenoR"))
-demographicSummary( inputObject = queryExample, 
-               maleCode   = "MALE", 
-               femaleCode = "FEMALE"
+load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
+demographicSummary( input = genophenoExData, 
+                     maleCode   = "MALE", 
+                     femaleCode = "FEMALE"
            )
 }

@@ -30,8 +30,6 @@
 #' By default it is set to \code{"lightblue"}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
-#' the warnings.
 #'  
 #' @return A network
 #' @examples
@@ -48,7 +46,11 @@
 
 genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "patientsPhenoAB", title = "Phenotype comorbidity network", cutOff = 0, npairs = 0, prop  = 1, interactive = FALSE, comorColor = "lightblue", verbose = FALSE ) {
     
-    message("Checking the input object")
+    
+    if( verbose == TRUE){
+        message("Checking the input object")
+    } 
+    
     checkClass <- class(input)[1]
     
     if(checkClass != "genophenoComor" ){
@@ -99,13 +101,13 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
         }else if(layout == "layout.norm"){
             lay   <- igraph::layout.norm( netw )
         }else{
-            stop
             message("Check if your layout is included in the igraph layout options: 
                     layout.auto, layout.random, layout.circle, layout.sphere, 
                     layout.fruchterman.reingold, layout.kamada.kawai, layout.spring, 
                     layout.reingold.tilford, layout.fruchterman.reingold.grid, 
                     layout.lgl, layout.graphopt, layout.svd, layout.norm"
             )
+            stop()
         } 
 
         disPrev1 <- input[ , c( 1, 3 ) ]
@@ -129,7 +131,7 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
         g=igraph::graph.edgelist(input[,1:2],directed=FALSE)
         igraph::E(g)$weight=input[,column] 
         
-        if( verbose ) {
+        if( verbose == TRUE ) {
             message( "The network contains ", igraph::vcount( g ), " nodes and ", igraph::ecount( g ), " edges." )
         }
         
@@ -154,8 +156,7 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
                   vertex.label.cex    = 0.8,    #specifies the size of the font of the labels
                   main                = title
             ) 
-            #legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ),col='black',pch=21, pt.bg='lightblue')
-            
+
         }else if (interactive == TRUE){
             tkid <- igraph::tkplot(g, 
                                    vertex.frame.color = "white",
@@ -175,8 +176,7 @@ genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "pa
                                    vertex.label.cex    = 0.8,    #specifies the size of the font of the labels
                                    main                = title
             ) 
-            #legend('bottomright',legend= paste0( disPrev$dis,": " ,disPrev$patients, "patients (", round(disPrev$prevalence, 3) ,"%)" ),col='black',pch=21, pt.bg='lightblue')
-            
+
             
         }
     }

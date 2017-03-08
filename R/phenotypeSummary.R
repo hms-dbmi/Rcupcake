@@ -1,40 +1,41 @@
-#' A graphical summary of the phenotype values 
+#' Describes the phenotypic characteristics for the whole study population then according to the 
+#' status regarding one selected gene
 #'
-#' Given an object of class \code{genopheno}, a figure containing a barplot for each
-#' phenotype is displayed. Each barplot shows the population percentage suffering each
-#' type of the phenotypes according to the values it takes, and distinguishing between
-#' those having or not a mutation. Furthermore, a data.frame with the numerical variables
-#' is obtained.  
+#' Given an object of class \code{genopheno}, a file with the different values for each phenotype, 
+#' and the prevalence of each one in general population and according to the gene status selected
+#' is generated. A figure containing a barplot for each phenotype is displayed. Each barplot shows 
+#' the population percentage suffering each type of the phenotypes according to the values it takes, 
+#' and distinguishing between those having or not a mutation. Furthermore, a data.frame with the 
+#' numerical values is obtained.  
 #'
 #' @param input Object of \code{genopheno} class. 
 #' @param nfactor By default 10. Change it into other number if you consider there is any
-#' categorical variable with more than nfactor values. 
+#' categorical variable with more than \code{nfactor} values. 
 #' @param mutation Determines the mutation of interest for wchich you want to analyze the 
 #' phenotype values
 #' @param showTable By default FALSE. Change it into TRUE in order to visualize the table
 #' with the ressults. 
-#' @param outputFile By default FALSE. Change it into TRUE in order to generate a file with the 
-#' phenotypes and the values for each of them and an extra column to be filled by the user
-#' for further analysis. The output file is called 'phenoSummary.txt'
 #' @param path By default the working directory. Define the path where you want the file to 
 #' be saved
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @return A multiple graph containing a barplot with age distribution,  
-#' a boxplot representing age distribution by gender and a pie chart representing 
-#' gender distribution.
+#' @return A file .
 #' @examples
-#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
-#' phenotypeSummary( input      = data2b2, 
+#' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
+#' phenotypeSummary( input     = genophenoExData, 
 #'                  mutation   = "CHD8",
 #'                  verbose    = FALSE 
 #'            )
 #' @export phenotypeSummary
 
-phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, outputFile = FALSE, path = "", verbose = FALSE ){
+phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, path = "", verbose = FALSE ){
     
     
-    message("Checking the input object")
+    if( verbose == TRUE){
+        message("Checking the input object")
+    } 
+    
+    
     checkClass <- class(input)[1]
     
     if(checkClass != "genopheno"){
@@ -69,7 +70,9 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
         stop()
     }
 
-    
+    if( verbose == TRUE ){
+        message( "A graphic will be generated for each phenotype" )
+    }
 
     #grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(ph), nrow(mt))))
     #vplayout <- function(x, y) grid::viewport(layout.pos.row = x, layout.pos.col = y)
@@ -81,7 +84,10 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
         
         if( length( unique( tt[,pcolumn])) <= nfactor){
             
-            message( as.character(ph$variable[i]), " phenotype is considered as a categorical variable")
+            if( verbose == TRUE ){
+                message( as.character(ph$variable[i]), " phenotype is considered as a categorical variable")
+            }
+            
             selection <- as.data.frame((round(100*summary(as.factor(tt[,pcolumn]))/length(unique(tt$patient_id)),2)))
             colnames(selection) <- ph$variable[i]
             
@@ -145,7 +151,9 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
             
         }else{
             
-            message( as.character(ph$variable[i]), " phenotype is considerede as a continuous variable")
+            if( verbose == TRUE ){
+                message( as.character(ph$variable[i]), " phenotype is considerede as a continuous variable")            }
+
             
             for( j in 1:nrow(mt)){
                 
@@ -180,17 +188,14 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
     
     multiplot(plotlist = plots, cols = 2)
     
-    
-    if( outputFile == TRUE){
-        
-        resultTable$yesno <- NA
-        write.table( resultTable, file = paste0(path, "phenoSummary.txt"), 
+    resultTable$yesno <- NA
+
+    write.table( resultTable, file = paste0(path, "phenoSummary.txt"), 
                      col.names = TRUE, 
                      row.names = FALSE, 
                      quote     = FALSE, 
                      sep       = "\t" )
         
-    }
     
     if( showTable == TRUE){
         return( resultTable )       

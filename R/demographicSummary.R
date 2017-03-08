@@ -1,11 +1,11 @@
-#' A graphical summary of the database content. 
+#' Describes the demographic characteristics (sex, age) of the population under study
 #'
 #' Given an object of class \code{genopheno}, and the characters used to 
-#' specify the gender, a figure containing 3 plots, one of the age distribution, 
+#' specify the gender, a graphic containing 3 plots, one of the age distribution, 
 #' another one of the age distribution and the third one with the relation 
-#' between age and gender distribution. 
+#' between age and gender distribution, is obtained. 
 #'
-#' @param inputObject Object of \code{genopheno} class. 
+#' @param input Object of \code{genopheno} class. 
 #' @param maleCode Characters(s) used to determine the male condition of a patient. 
 #' Depending on the database it can be determined, for example, as \code{Male}, .
 #' \code{MALE}, \code{M}, with digits as \code{0} or \code{1}. 
@@ -20,19 +20,24 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
-#' demographicSummary( inputObject = queryExample, 
-#'                maleCode   = "MALE", 
-#'                femaleCode = "FEMALE"
+#' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
+#' demographicSummary( input = genophenoExData, 
+#'                      maleCode   = "MALE", 
+#'                      femaleCode = "FEMALE"
 #'            )
 #' @export demographicSummary
 
 
 
-demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FALSE, warnings = TRUE) {
+demographicSummary <- function( input , maleCode, femaleCode, verbose = FALSE, warnings = TRUE) {
     
-    message("Checking the input object")
-    checkClass <- class(inputObject)[1]
+    
+    if( verbose == TRUE){
+        message("Checking the input object")
+    } 
+    
+    
+    checkClass <- class(input)[1]
     
     if(checkClass != "genopheno"){
         message("Check the input object. Remember that this
@@ -54,12 +59,17 @@ demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FA
         message( "Creating a summary table with the main characteristics of population" )
     }
     
-    tt <- inputObject@iresult
+    tt <- input@iresult
     
     male<- tt[ tt$Gender == maleCode, ]
     female<- tt[ tt$Gender == femaleCode, ]
     
     ### sex distribution
+    
+    if( verbose == TRUE){
+        message("Generating the sex distribution plot")
+    } 
+    
     slices<-c(length ( unique( female$patient_id ) ), length ( unique( male$patient_id ) ) )
     lbl1 <- paste0(round((length (unique( female$patient_id ) ) ) /length ( unique( tt$patient_id ) ) *100, 2 ), "%")
     lbl2 <- paste0(round((length (unique( male$patient_id ) ) ) /length ( unique( tt$patient_id ) ) *100, 2 ), "%")
@@ -103,8 +113,13 @@ demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FA
     
     }
     
-    
+
     ### age distribution
+    
+    if( verbose == TRUE){
+        message("Generating the age distribution plot")
+    } 
+    
     p <-ggplot2::ggplot( ttNotNA ) +
         ggplot2::geom_bar( ggplot2::aes(Age) ) +
         ggplot2::labs ( title = "Age distribution" , x = "age", y = "# of patients") +
@@ -116,6 +131,11 @@ demographicSummary <- function( inputObject , maleCode, femaleCode, verbose = FA
                                                          axis.text.x = ggplot2::element_text ( angle = 45, size = 9, hjust = 1 ))
     
     #Boxplot
+    
+    if( verbose == TRUE){
+        message("Generating the plot showing age distribution according to gender")
+    } 
+    
     maleNotNA<- ttNotNA[ ttNotNA$Gender == maleCode, ]
     femaleNotNA<- ttNotNA[ ttNotNA$Gender == femaleCode, ]
     

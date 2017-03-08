@@ -19,9 +19,9 @@ setMethod( "show",
                cat( " . Patients in the age and gender interval:", object@patients, "\n" )
                cat( " . Patients with mutation selected:", object@tpatients, "\n" )
                cat( " . Prevalence:", round(as.numeric(object@prevalence), 3), "\n")
-               cat( " . Minimum odds ratio:", object@minimumOR, "\n")
-               cat( " . Minimum relative risk:", object@minimumRR, "\n")
-               cat( " . Minimum phi value:", object@minimumPhi, "\n")
+               cat( " . Odds ratio range:", object@ORrange, "\n")
+               cat( " . Relative risk range:", object@RRrange, "\n")
+               cat( " . Phi range:", object@PHIrange, "\n")
                cat( " . Number of comorbidities:", object@dispairs, "\n")
            }
 )

@@ -36,9 +36,6 @@ By default it is set to \code{"red"}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
-
-\item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see
-the warnings.}
 }
 \value{
 A heatmap

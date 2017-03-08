@@ -1,12 +1,12 @@
 #' Comorbidity Analysis \code{genophenoComor}
 #'
 #' Given an object of type \code{genopheno}, a comorbidity analysis is perform, 
-#' for the subset of population under specific conditions of age and gender. It 
-#' generates a \code{cgpAnalysis} object.
+#' for the subset of population under specific conditions of age, gender and gene status. 
+#' It generates a \code{genophenoComor} object.
 #'
 #' @param input  A \code{genopheno} object, obtained with the queryPheno function. 
-#' @param pth Determines the path where the required input file with 
-#' the yes/no phenotype data is located.
+#' @param pth Determines the path where the required file with phenotype data is located.
+#' This file is generated applying the \code{phenotypeSummary} function. 
 #' @param aggregate By default TRUE. Change it to FALSE if you want to 
 #' analyze the comorbidity taking into all the values of each phenotype.
 #' @param ageRange Determines what is the age range of interest for
@@ -36,13 +36,11 @@
 #' with multiple cores or CPUs, the cores argument can be changed. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
-#' the warnings.
-#' @return An object of class \code{cgpAnalysis}
+#' @return An object of class \code{genophenoComor}
 #' @examples
-#' load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+#' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 #' ex1 <- genoPhenoComorbidity( 
-#'               input         = queryExample,
+#'               input         = genophenoExData,
 #'               pth           = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,16),
@@ -51,9 +49,11 @@
 #'               )
 #' @export genoPhenoComorbidity
 
-genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE ){
+genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE){
     
-    message("Checking the input object")
+    if( verbose == TRUE){
+        message("Checking the input object")
+    } 
     checkClass <- class(input)[1]
     
     if(checkClass != "genopheno"){
@@ -66,28 +66,39 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
     
     data <- input@iresult
     
-    message( "Staring the comorbidity analysis" )
-    message( "Loading the phenotype data file" )
+    
+    if( verbose == TRUE){
+        message( "Staring the comorbidity analysis" )
+        message( "Loading the phenotype data file" )
+    } 
+    
+
  
-    codes <- read.delim ( file.path(pth, "phenoValues.txt"),
+    codes <- read.delim ( file.path(pth, "phenoSummary.txt"),
                           header=TRUE, 
                           sep="\t", 
                           colClasses="character" ) 
     
     if( aggregate == TRUE ){
 
-        message( "Checking the phenotype data file" )
+        if( verbose == TRUE){
+            message( "Checking the phenotype data file" )
+        } 
+
         checkPheno <- as.data.frame( summary( as.factor( codes$yesno ) ) )
         good       <-  c("no", "yes")
         
         if( nrow( checkPheno) != 2 | 
             ! tolower( rownames( checkPheno)[1] ) %in% good |
             ! tolower( rownames( checkPheno)[2] ) %in% good){
-            message("The yesno column in the phenoValues file is not filled correctly. Please, revise it,\nand check that the only possible values for this column are: yes and no.")
+            message("The yesno column in the phenoSummary file is not filled correctly. Please, revise it,\nand check that the only possible values for this column are: yes and no.")
             stop()
         }
         
-        message( "Aggregating the phenotypes values as yes/no" )
+        if( verbose == TRUE){
+            message( "Aggregating the phenotypes values as yes/no" )
+        } 
+        
         
         for( i in 1:nrow(input@phenotypes)){
             
@@ -107,6 +118,9 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
                 if( mutation[1] %in% mt$variable ){
                     mt <- mt[ mt$variable == mutation[1], ]        
                 }else{
+                    
+                    
+                    
                     message( "Your mutation of interest is not in the mutation list")
                     message( "The mutations availabe for this analysis are: ")
                     for( i in 1:nrow(mt)){
@@ -139,14 +153,21 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
         
     }
     else if( aggregate == FALSE ){
-        message( "For each phenotypes, all the possible values will be used")
+        
+        if( verbose == TRUE){
+            message( "For each phenotypes, all the possible values will be used")
+        } 
+        
+        
         
         for( i in 1:nrow(input@phenotypes)){
             
             pcolumn <- which(colnames(data) == as.character(input@phenotypes[i,1]))
             
             if( length( unique( data[,pcolumn])) > nfactor){
-                message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
+                if( verbose == TRUE){
+                    message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
+                } 
             }else{
                 data[ ,pcolumn] <- paste0( input@phenotypes[i,3], ": " ,data[ ,pcolumn] )
                 
@@ -234,7 +255,11 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
             phenos.f <- phenosC.c[sapply(phenosC.c, function(x) x[1] != x[2])]
         }
         
-        message( "Generating the genophenoComor object" )
+        
+        if( verbose == TRUE){
+            message( "Generating the genophenoComor object" )
+        } 
+
         finalCP  <- parallel::mclapply( activePatients, phenoPairs, mc.preschedule = TRUE, mc.cores = cores )
         finalCP <- finalCP[ sapply(finalCP, function(x) { length(x) != 0 }) ]
         
@@ -283,7 +308,7 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
             resultad2 <- resultad2[ resultad2$fdr > rr, ]
         }
         if ( !missing( phi ) ) {
-            resultad2 <- resultad2[ resultad2$fdr > phi, ]        
+            resultad2 <- resultad2[ resultad2$fdr < phi, ]        
         }
         
         resultad2$fisher <- round(as.numeric(resultad2$fisher), 3)
@@ -306,9 +331,9 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
                                patients  = totPatients,
                                tpatients = length(activePatients),
                                prevalence= (length(activePatients)/totPatients)*100,
-                               minimumOR = round(min(as.numeric(resultad2$oddsRatio)), digits = 3),
-                               minimumRR = round(min(as.numeric(resultad2$relativeRisk)), digits = 3),
-                               minimumPhi= round(min(as.numeric(resultad2$phi)), digits = 3),
+                               ORrange   = paste0( "[", round(min(as.numeric(resultad2$oddsRatio)), digits = 3), " , " , round(max(as.numeric(resultad2$oddsRatio)), digits = 3), "]"  ),
+                               RRrange   = paste0( "[", round(min(as.numeric(resultad2$relativeRisk)), digits = 3), " , ",  round(max(as.numeric(resultad2$relativeRisk)), digits = 3), "]"  ),
+                               PHIrange  = paste0( "[", round(min(as.numeric(resultad2$phi)), digits = 3), " , ",  round(max(as.numeric(resultad2$phi)), digits = 3) , "]" ),
                                dispairs  = nrow( resultad2 ),
                                result    = resultad2 
         )

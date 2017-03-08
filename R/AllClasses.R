@@ -28,9 +28,9 @@ setClass( "genophenoComor",
                               patients  = "numeric",    # subsetPatients
                               tpatients = "numeric",    # totalPatients
                               prevalence= "numeric",    # prevalence respet to the total population
-                              minimumOR = "numeric",    # minimum value of the OR
-                              minimumRR = "numeric",    # minimum value of the relative risk
-                              minimumPhi = "numeric",    # minimum value of the phi value
+                              ORrange   = "character",  # OR range 
+                              RRrange   = "character",  # relative risk range 
+                              PHIrange  = "character",  # phi range
                               dispairs  = "numeric",    # number of pairs
                               result    = "data.frame"  # result
               ),
@@ -42,9 +42,9 @@ setClass( "genophenoComor",
                          patients  = numeric(),
                          tpatients = numeric(),
                          prevalence= numeric(),
-                         minimumOR = numeric(),
-                         minimumRR = numeric(),
-                         minimumPhi= numeric(),
+                         ORrange   = character(),
+                         RRrange   = character(),
+                         PHIrange  = character(),
                          dispairs  = numeric(),
                          result    = data.frame()
               )

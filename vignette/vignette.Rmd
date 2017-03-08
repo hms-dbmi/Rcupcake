@@ -53,13 +53,13 @@ library(genophenoR)
   
 
 ```{r genophenoR.SSC1, echo=FALSE}
-load("C:/Users/AG440/Desktop/genophenoPackage/inst/extdata/genopheno.RData")
-queryExample
+load("C:/Users/AG440/Desktop/genophenoR/inst/extdata/genophenoExData.RData")
+genophenoExData
 ```
 
 ```{r genophenoR.SSC2}
-queryExample
-class( queryExample )
+genophenoExData
+class( genophenoExData )
 ```
 
 
@@ -67,7 +67,7 @@ class( queryExample )
 # Descriptive demographics analysis with genophenoR
 The function `demographicSummary` describes the demographic characteristics (sex, age) of the population under study.
 The `demographicSummary` function requires three arguments:
-  * inputObject: the genopheno object.
+  * input: the genopheno object.
   * maleCode: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
   * femaleCode: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
 
@@ -78,7 +78,7 @@ The `demographicSummary` function output includes:
   * A pie chart representing the gender distribution.
 
 ```{r search_gene_1, fig.width=6, fig.height=6}
-demographicSummary (inputObject = queryExample, 
+demographicSummary (input = genophenoExData, 
                     maleCode    = "MALE", 
                     femaleCode  ="FEMALE")
 ```
@@ -100,10 +100,9 @@ The `phenotypeSummary` function output includes:
 * A table if the showTable argument is TRUE
 
 ```{r phenosumm, fig.width=10, fig.height=8}
-phenotypeSummary(input      = queryExample,
+phenotypeSummary(input      = genophenoExData,
                  mutation   = "CHD8", 
-                 showTable  = TRUE, 
-                 outputFile = TRUE)
+                 showTable  = TRUE)
 ```
 
 # Phenotypes co-occurrence and prevalence using 
@@ -135,8 +134,8 @@ The `genoPhenoComorbidity` function output is an object named `genophenoComo` th
 
 ```{r phenoCooccurrence}
 genophenoComorCHD8no <- genoPhenoComorbidity( 
-              input         = queryExample,
-              pth           = "C:/Users/AG440/Desktop/genophenoPackage/inst/extdata/",
+              input         = genophenoExData,
+              pth           = "C:/Users/AG440/Desktop/genophenoR/inst/extdata/",
               aggregate    = FALSE, 
               ageRange      = c(4,18),
               gender        = "ALL", 

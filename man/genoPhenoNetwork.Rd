@@ -47,9 +47,6 @@ on-time log from the function.}
 \item{databasePth}{Determines the path where the intermediate RData objects 
 have been created. It is the same path where the three required input files 
 (patientData, diagnosisData, admissionData) are located.}
-
-\item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see
-the warnings.}
 }
 \value{
 A network

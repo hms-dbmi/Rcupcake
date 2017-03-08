@@ -6,13 +6,13 @@
 \usage{
 genoPhenoComorbidity(input, pth, ageRange = c(0, 100), aggregate = TRUE,
   gender = "ALL", mutation = c("ALL", "ALL"), nfactor = 10, score, fdr,
-  oddsRatio, rr, phi, cores = 1, verbose = FALSE, warnings = TRUE)
+  oddsRatio, rr, phi, cores = 1, verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{genopheno} object, obtained with the queryPheno function.}
 
-\item{pth}{Determines the path where the required input file with 
-the yes/no phenotype data is located.}
+\item{pth}{Determines the path where the required file with phenotype data is located.
+This file is generated applying the \code{phenotypeSummary} function.}
 
 \item{ageRange}{Determines what is the age range of interest for
 performing the comorbidity analysis. By default it is set from 0 to 100 
@@ -54,22 +54,19 @@ with multiple cores or CPUs, the cores argument can be changed.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
-
-\item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see
-the warnings.}
 }
 \value{
-An object of class \code{cgpAnalysis}
+An object of class \code{genophenoComor}
 }
 \description{
 Given an object of type \code{genopheno}, a comorbidity analysis is perform, 
-for the subset of population under specific conditions of age and gender. It 
-generates a \code{cgpAnalysis} object.
+for the subset of population under specific conditions of age, gender and gene status. 
+It generates a \code{genophenoComor} object.
 }
 \examples{
-load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 ex1 <- genoPhenoComorbidity( 
-              input         = queryExample,
+              input         = genophenoExData,
               pth           = system.file("extdata", package="genophenoR"),
               aggregate     = TRUE, 
               ageRange      = c(0,16),
