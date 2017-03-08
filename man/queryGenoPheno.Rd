@@ -8,7 +8,9 @@ queryGenoPheno(inputDataFile, verbose = FALSE, warnings = TRUE)
 }
 \arguments{
 \item{inputDataFile}{Determines the file with the complete path where the required 
-input file is located.}
+input file is located. This input file must contain three columns: "patient_id" with
+the patient identifier, "Gender" and "Age". Mutation columns must start with "M." while
+phenotype ones must start with a "P."}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
@@ -19,9 +21,13 @@ the warnings.}
 \value{
 An object of class \code{phenotype}
 }
+\description{
+Given a tabulated file, checks if it contains the data in the 
+correct format and generates a \code{phenotype} object.
+}
 \examples{
 queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
                                                 "/genophenoExData.txt"),
-                                  verbose     = FALSE)
+                                  verbose     = TRUE)
 queryExample
 }

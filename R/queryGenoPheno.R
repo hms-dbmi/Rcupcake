@@ -1,10 +1,12 @@
 #' Query your data and generates a \code{genopheno}
 #'
-#' Given 1 file (testResults.txt), generates some RData and create an object of type 
-#' \code{phenotype}.}.
+#' Given a tabulated file, checks if it contains the data in the 
+#' correct format and generates a \code{phenotype} object.
 #'
 #' @param inputDataFile Determines the file with the complete path where the required 
-#' input file is located. 
+#' input file is located. This input file must contain three columns: "patient_id" with
+#' the patient identifier, "Gender" and "Age". Mutation columns must start with "M." while
+#' phenotype ones must start with a "P."
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
@@ -13,20 +15,26 @@
 #' @examples
 #' queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
 #'                                                 "/genophenoExData.txt"),
-#'                                   verbose     = FALSE)
+#'                                   verbose     = TRUE)
 #' queryExample
 #' @export queryGenoPheno
 
 
 queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
+   
+    if( verbose == TRUE){
+        message( "Loading the input datasets" )
+    } 
     
-    message( "Loading the input datasets" )
-    patients <- read.delim( inputDataFile, ,
+    patients <- read.delim( inputDataFile, 
                             header = TRUE, 
                             sep = "\t", 
                             colClasses = "character" )
     
-    message("Checking the inputData file structure")
+    if( verbose == TRUE){
+        message("Checking the inputData file structure")
+    }
+    
         colnamesPatients   <- c("patient_id","Gender", "Age")   
         check <- colnamesPatients[colnamesPatients %in% colnames(patients)]
         if(length(check) != length(colnamesPatients)){
@@ -35,18 +43,21 @@ queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
                     names as follows:\n -> patient_id \n -> Gender \n -> Age")
             stop()
         }
+
         
-        #message("Removing those patients for which there is not complete information")
-        #patientComplete <- patients[complete.cases(patients),]
-        
-        message("Removing duplicated data")
+        if( verbose == TRUE){
+            message("Removing duplicated data")
+        }
+    
         patientComplete <- patients[! duplicated( patients), ]
 
-    if( verbose ) {
-        message( "There are ", length( unique ( patientComplete$patient_id)), " patients in your input data whith complete information for all your variables, from the initial ", length( unique ( patients$patient_id ) ), " patients in your list.")
-    }
     
-    message("Checking the number of mutations in the inputData file")
+        if( verbose == TRUE) {
+        message( "There are ", length( unique ( patientComplete$patient_id)), " patients in your input data whith complete information for all your variables, from the initial ", length( unique ( patients$patient_id ) ), " patients in your list.")
+        message("Checking the number of mutations in the inputData file")
+        }
+    
+    
         colnamesInput   <- colnames(patientComplete) 
         check <- as.data.frame(as.character(colnamesInput))
         check <- check[! check[,1] %in% colnamesPatients,]
@@ -59,27 +70,20 @@ queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
         phenotypes <- check[ check$firstL == "P", ]
         
 
+        if( verbose == TRUE) {
+            message("Generating the result object")
+        }
             #with the data we have, we create a comorbidity object
-    result <- new( "genopheno", 
-                   nMutations   = nrow(mutations),
-                   nPhenotype   = nrow(phenotypes),
-                   nPatient     = length( unique ( patientComplete$patient_id ) ), 
-                   iresult      = patientComplete, 
-                   mutations    = mutations, 
-                   phenotypes   = phenotypes
-    )
-    
-    #we create a second object with all the data of the dataset
-    allData <- new( "genopheno", 
-                    nMutations   = nrow(mutations),
-                    nPhenotype   = nrow(phenotypes),
-                    nPatient     = length( unique ( patientComplete$patient_id ) ), 
-                    iresult      = patients, 
-                    mutations    = mutations, 
-                    phenotypes   = phenotypes )
-    save(allData, file=paste0(inputDataFile, "allData.RData"))
-    
-    return( result )
+   
+        result <- new( "genopheno", 
+                       nMutations   = nrow(mutations),
+                       nPhenotype   = nrow(phenotypes),
+                       nPatient     = length( unique ( patientComplete$patient_id ) ), 
+                       iresult      = patientComplete, 
+                       mutations    = mutations, 
+                       phenotypes   = phenotypes
+        )
+        return( result )
 
 }
 
