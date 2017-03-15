@@ -88,27 +88,58 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
                 message( as.character(ph$variable[i]), " phenotype is considered as a categorical variable")
             }
             
-            selection <- as.data.frame((round(100*summary(as.factor(tt[,pcolumn]))/length(unique(tt$patient_id)),2)))
-            colnames(selection) <- ph$variable[i]
+            selection <- as.data.frame(summary(as.factor(tt[,pcolumn])))
+            selection$perc <- round(100*selection[,1] / length(unique(tt$patient_id)), 2)
+            
+            for( cont in 1:nrow(selection)){
+                confint <-  binom.test( selection[cont,1], length(unique(tt$patient_id)))$conf.int
+                selection$confint[cont] <- paste0("[", round(confint[[1]]*100,1),"-",round(confint[[2]]*100,1), "]")
+                
+            }
+            
+            colnames(selection)[1] <- ph$variable[i]
+            
+            
             
             for( j in 1:nrow(mt)){
 
                 mcolumn <- which(colnames(tt) == as.character(mt[j,1]))
                 mtyes <- tt[ tt[,mcolumn] =="yes",]
-                mtyes <- as.data.frame((round(100*summary(as.factor(mtyes[,pcolumn]))/length(unique(mtyes$patient_id)),2)))
-                colnames(mtyes) <- paste0("P_", mt$variable[j], "yes")
+
+                mtyesTable <- as.data.frame(summary(as.factor(mtyes[,pcolumn])))
+                mtyesTable$perc <- round(100*mtyesTable[,1] / length(unique(mtyes$patient_id)), 2)
+                
+                for( cont in 1:nrow(mtyesTable)){
+                    confint <-  binom.test( mtyesTable[cont,1], length(unique(mtyes$patient_id)))$conf.int
+                    mtyesTable$confint[cont] <- paste0("[", round(confint[[1]]*100,1),"-",round(confint[[2]]*100,1), "]")
+                    
+                }
+
+                colnames(mtyesTable) <- c( paste0("P_", mt$variable[j], "yes"), "P_yes", "CI_yes")
+               
+                
                 
                 mtno  <- tt[ tt[,mcolumn] =="no",]
-                mtno <- as.data.frame((round(100*summary(as.factor(mtno[,pcolumn]))/length(unique(mtno$patient_id)),2)))
-                colnames(mtno) <- paste0("P_", mt$variable[j], "no")
-                mtoutput <- merge( mtyes, mtno, all = TRUE, by=0 )
-                rownames(mtoutput) <- mtoutput[,1]
-                mtoutput <- mtoutput[,2:3]
                 
+                mtnoTable <- as.data.frame(summary(as.factor(mtno[,pcolumn])))
+                mtnoTable$perc <- round(100*mtnoTable[,1] / length(unique(mtno$patient_id)), 2)
+                
+                for( cont in 1:nrow(mtnoTable)){
+                    confint <-  binom.test( mtnoTable[cont,1], length(unique(mtno$patient_id)))$conf.int
+                    mtnoTable$confint[cont] <- paste0("[", round(confint[[1]]*100,1),"-",round(confint[[2]]*100,1), "]")
+                    
+                }
+                
+                colnames(mtnoTable) <- c( paste0("P_", mt$variable[j], "no"), "P_no", "CI_no")
+                
+                mtoutput <- merge( mtyesTable, mtnoTable, all = TRUE, by=0 )
+                rownames(mtoutput) <- mtoutput[,1]
+                mtoutput <- mtoutput[,2:7]
+
             }
             
             output <- merge( mtoutput, selection, all = TRUE, by=0 )
-            output <- output[,c(1,4,2,3)]
+            output <- output[,c(1,8,9,10,2:7)]
             output[is.na(output)] <- 0
             colnames(output)[1] <- "PhenotypeValue"
             
@@ -117,18 +148,28 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
                 resultTable              <- output
                 resultTable$phenotype    <- colnames(output)[2]
                 colnames(resultTable)[2] <- "P_AllPatients"
-                resultTable              <- resultTable[,c(5,1:4)]
+                resultTable              <- resultTable[,c(11,1,3,6,9)]
+                
+                resultShowTable          <- output
+                resultShowTable[,2]      <- colnames(resultShowTable)[2]
+                colnames(resultShowTable)[2] <- "phenotype"
+                
             }else{
                 
                 resultmidd               <- output
                 resultmidd$phenotype    <- colnames(output)[2]
                 colnames(resultmidd)[2] <- "P_AllPatients"
-                resultmidd              <- resultmidd[,c(5,1:4)] 
+                resultmidd              <- resultmidd[,c(11,1,3,6,9)] 
                 
-                resultTable             <- rbind( resultTable, resultmidd )
+                
+                output[,2]      <- colnames(output)[2]
+                colnames(output)[2] <- "phenotype"
+                resultShowTable         <- rbind( resultShowTable, output )
+                
             }
             
-            output.m <- reshape2::melt(output, id.vars='PhenotypeValue')
+            output4plot <- output[,c(1, 3, 6, 9)]
+            output.m <- reshape2::melt(output4plot, id.vars='PhenotypeValue')
             output.m$value <- as.numeric( as.character(output.m$value ))
             output.m$PhenotypeValue <- as.character(output.m$PhenotypeValue )
             
@@ -188,9 +229,9 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
     
     multiplot(plotlist = plots, cols = 2)
     
-    resultTable$yesno <- NA
+    resultShowTable$yesno <- NA
 
-    write.table( resultTable, file = paste0(path, "phenoSummary.txt"), 
+    write.table( resultShowTable, file = paste0(path, "phenoSummary.txt"), 
                      col.names = TRUE, 
                      row.names = FALSE, 
                      quote     = FALSE, 
@@ -198,7 +239,7 @@ phenotypeSummary <- function( input, mutation, nfactor = 10, showTable = FALSE, 
         
     
     if( showTable == TRUE){
-        return( resultTable )       
+        return( resultShowTable )       
     }
 
 }

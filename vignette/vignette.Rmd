@@ -105,6 +105,7 @@ phenotypeSummary(input      = genophenoExData,
                  showTable  = TRUE)
 ```
 
+
 # Phenotypes co-occurrence and prevalence using 
 
 The `genoPhenoComorbidity` identifies all the possible phenotype co-ocurrence and quantify them.  Five different quantification measures are estimated:   
@@ -183,7 +184,20 @@ genoPhenoHeatmap ( input       = genophenoComorCHD8no,
                    cutOff      = 0)
 ```
 
+### Prevalence
 
+The function `genophenoPrevalence`  displays in a data frame:
+    * Phenotype
+    * Number of patients (N_patients)
+    * Prevalence
+    * Confidence interval
+
+
+
+```{r genophenoPrevalence}
+prevalence <- genoPhenoPrevalence( input = genophenoComorCHD8no )
+prevalence
+```
 
 # References
 
