@@ -49,7 +49,7 @@
 #'               )
 #' @export genoPhenoComorbidity
 
-genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE){
+genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", mutation=c("", ""), nfactor = 10, score, fdr, oddsRatio, rr, phi, cores = 1, verbose = FALSE){
     
     if( verbose == TRUE){
         message("Checking the input object")
@@ -173,18 +173,37 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
                 
                 mt <- input@mutations
                 
-                if( mutation[1] %in% mt$variable ){
-                    mt <- mt[ mt$variable == mutation[1], ]        
-                }else{
-                    message( "Your mutation of interest is not in the mutation list")
-                    message( "The mutations availabe for this analysis are: ")
-                    for( i in 1:nrow(mt)){
-                        message("-> ", mt$variable[i])
+                if(mutation[2] !=""){
+                    if( mutation[1] %in% mt$variable ){
+                        mt <- mt[ mt$variable == mutation[1], ]        
+                    }else{
+                        message( "Your mutation of interest is not in the mutation list")
+                        message( "The mutations availabe for this analysis are: ")
+                        for( i in 1:nrow(mt)){
+                            message("-> ", mt$variable[i])
+                        }
+                        stop()
                     }
-                    stop()
-                }
                     
-                subset <- data[c("patient_id", "Gender", "Age", as.character(mt$check[1]), as.character(input@phenotypes[i,1]))]
+                    subset <- data[c("patient_id", "Gender", "Age", as.character(mt$check[1]), as.character(input@phenotypes[i,1]))]
+                    
+                }else{
+                    if( nrow(mt) != 0){
+                        if(verbose == TRUE ){
+                            message("All the genotypes will be taken into account")
+                            
+                        }
+                    }else {
+                        if( verbose == TRUE ){
+                            message("There is not genotype information")
+                            
+                        }
+                    }
+                    subset <- data[c("patient_id", "Gender", "Age", as.character(input@phenotypes[i,1]))]
+                    
+                }
+              
+                    
                 subcolumn <- which(colnames(subset) == as.character(input@phenotypes[i,1]))
                 colnames(subset)[subcolumn] <- "phenotype"
                 
@@ -321,6 +340,12 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
         
         if( nrow( resultad2 ) == 0 ){
             warning("None of the disease pairs has pass the filters") 
+        }
+        
+        if( mutation[1] == "" & nrow(mt) != 0){
+            mutation <- c("ALL")
+        }else if( mutation[1] == "" & nrow(mt) == 0){
+            mutation <- c("NONE")
         }
         
         genophenoComor <- new( "genophenoComor", 

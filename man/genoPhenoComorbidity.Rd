@@ -5,7 +5,7 @@
 \title{Comorbidity Analysis \code{genophenoComor}}
 \usage{
 genoPhenoComorbidity(input, pth, ageRange = c(0, 100), aggregate = TRUE,
-  gender = "ALL", mutation = c("ALL", "ALL"), nfactor = 10, score, fdr,
+  gender = "ALL", mutation = c("", ""), nfactor = 10, score, fdr,
   oddsRatio, rr, phi, cores = 1, verbose = FALSE)
 }
 \arguments{
