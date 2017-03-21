@@ -1,0 +1,73 @@
+{
+  "select": [
+      {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/pcbs/PCB153 (ng per g)/",
+          "dataType": "STRING"
+        },
+        "alias": "P.pcb153"
+      },
+   {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/viral infection/HIV antibody test result/Yes",
+          "dataType": "STRING"
+        },
+        "alias": "P.HIV"
+      },
+   {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/viral infection/HIV antibody test result/No",
+          "dataType": "STRING"
+        },
+        "alias": "P.HIV"
+      },
+
+   {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/viral infection/Herpes I/Yes",
+          "dataType": "STRING"
+        },
+        "alias": "P.Herpes"
+      },
+   {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/viral infection/Herpes I/No",
+          "dataType": "STRING"
+        },
+        "alias": "P.Herpes"
+      },
+    {
+        "field": {
+         "pui": "/nhanes/Demo/demographics/demographics/AGE/",
+         "dataType": "STRING"
+        },
+        "alias": "Age"
+    },
+{
+        "field": {
+          "pui": "/nhanes/Demo/demographics/demographics/SEX/female/",
+          "dataType": "STRING"
+        },
+        "alias": "Gender"
+      }, 
+  {
+            "field": {
+              "pui": "/nhanes/Demo/demographics/demographics/SEX/male/",
+              "dataType": "STRING"
+            },
+            "alias": "Gender"
+          } 
+  ],
+  "where": [
+      {
+        "field": {
+          "pui": "/nhanes/Demo/demographics/demographics/AGE/",
+          "dataType": "STRING"
+        },
+        "predicate": "CONTAINS",
+        "fields": {
+          "ENOUNTER": "YES"
+        }
+      }
+  ]
+}

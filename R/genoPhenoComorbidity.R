@@ -349,18 +349,18 @@ genoPhenoComorbidity <- function ( input, pth, ageRange=c(0,100), aggregate = TR
         }
         
         genophenoComor <- new( "genophenoComor", 
-                               ageMin    = ageRange[ 1 ], 
-                               ageMax    = ageRange[ 2 ], 
-                               gender    = gender, 
-                               mutation  = mutation, 
-                               patients  = totPatients,
-                               tpatients = length(activePatients),
-                               prevalence= (length(activePatients)/totPatients)*100,
-                               ORrange   = paste0( "[", round(min(as.numeric(resultad2$oddsRatio)), digits = 3), " , " , round(max(as.numeric(resultad2$oddsRatio)), digits = 3), "]"  ),
-                               RRrange   = paste0( "[", round(min(as.numeric(resultad2$relativeRisk)), digits = 3), " , ",  round(max(as.numeric(resultad2$relativeRisk)), digits = 3), "]"  ),
-                               PHIrange  = paste0( "[", round(min(as.numeric(resultad2$phi)), digits = 3), " , ",  round(max(as.numeric(resultad2$phi)), digits = 3) , "]" ),
-                               dispairs  = nrow( resultad2 ),
-                               result    = resultad2 
+                               ageMin     = ageRange[ 1 ], 
+                               ageMax     = ageRange[ 2 ], 
+                               gender     = gender, 
+                               mutation   = mutation, 
+                               patients   = totPatients,
+                               tpatients  = length(activePatients),
+                               prevalence = (length(activePatients)/totPatients)*100,
+                               ORrange    = paste0( "[", round(min(as.numeric(resultad2$oddsRatio)), digits = 3), " , " , round(max(as.numeric(resultad2$oddsRatio)), digits = 3), "]"  ),
+                               RRrange    = paste0( "[", round(min(as.numeric(resultad2$relativeRisk)), digits = 3), " , ",  round(max(as.numeric(resultad2$relativeRisk)), digits = 3), "]"  ),
+                               PHIrange   = paste0( "[", round(min(as.numeric(resultad2$phi)), digits = 3), " , ",  round(max(as.numeric(resultad2$phi)), digits = 3) , "]" ),
+                               dispairs   = nrow( resultad2 ),
+                               result     = resultad2 
         )
         return( genophenoComor )
     
