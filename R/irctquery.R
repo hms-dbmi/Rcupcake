@@ -4,7 +4,7 @@
 #'
 #' @param url  The url.
 #' @param apiKey The personal key to access to the data. 
-#' @param jsonObject A text file containing the JSON query body. 
+#' @param query A text file containing the JSON query body. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @return An object of class \code{data.frame}
@@ -13,11 +13,11 @@
 #' query <- irctquery( 
 #'               url         = "https://nhanes.hms.harvard.edu/", 
 #'               apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9"
-#'               jsonObject  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
+#'               query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
 #'               )
 #' @export irctquery
 
-irctquery <- function( url, apiKey, jsonObject, verbose = FALSE ){
+irctquery <- function( url, apiKey, query, verbose = FALSE ){
     
     IRCT_REST_BASE_URL <- url
     
@@ -51,7 +51,7 @@ irctquery <- function( url, apiKey, jsonObject, verbose = FALSE ){
         
     startSession <- content(GET(paste0(url, "/rest/v1/securityService/startSession?key=", apiKey)))    
 
-    body <- paste(readLines(jsonObject), collapse="")
+    body <- paste(readLines(query), collapse="")
     
     resultId <- content(POST(IRCT_RUN_QUERY_URL, body = body))$resultId
     
@@ -59,7 +59,7 @@ irctquery <- function( url, apiKey, jsonObject, verbose = FALSE ){
         message( "Your request is being processed")
     }
     
-    Sys.sleep( 60 )
+    Sys.sleep( 30 )
     
     response <- content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
     results <- read.csv(text = response)

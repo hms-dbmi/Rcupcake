@@ -4,14 +4,14 @@
 \alias{irctquery}
 \title{Query analysis to the API}
 \usage{
-irctquery(url, apiKey, jsonObject, verbose = FALSE)
+irctquery(url, apiKey, query, verbose = FALSE)
 }
 \arguments{
 \item{url}{The url.}
 
 \item{apiKey}{The personal key to access to the data.}
 
-\item{jsonObject}{A text file containing the JSON query body.}
+\item{query}{A text file containing the JSON query body.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
@@ -27,6 +27,6 @@ Given an url, a key and a JSON object, it generates a \code{data.frame} object.
 query <- irctquery( 
               url         = "https://nhanes.hms.harvard.edu/", 
               apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9"
-              jsonObject  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
+              query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
               )
 }
