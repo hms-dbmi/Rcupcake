@@ -64,6 +64,7 @@ irctquery <- function( url, apiKey, query, verbose = FALSE ){
     response <- content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
     results <- read.csv(text = response)
 
+    colnames(results)[1] <- "patient_id"
     return( results )
     
 }
