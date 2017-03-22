@@ -5,6 +5,7 @@
 #' @param url  The url.
 #' @param apiKey The personal key to access to the data. 
 #' @param query A text file containing the JSON query body. 
+#' @param outputPath Path where the output file will be saved. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
 #' @return An object of class \code{data.frame}
@@ -17,7 +18,7 @@
 #'               )
 #' @export irctquery
 
-irctquery <- function( url, apiKey, query, verbose = FALSE ){
+irctquery <- function( url, apiKey, query, outputPath, verbose = FALSE ){
     
     IRCT_REST_BASE_URL <- url
     
@@ -65,6 +66,14 @@ irctquery <- function( url, apiKey, query, verbose = FALSE ){
     results <- read.csv(text = response)
 
     colnames(results)[1] <- "patient_id"
+    
+    write.table( results, 
+                 file = paste0(outputPath , "/queryOutput.txt"), 
+                 col.names = TRUE, 
+                 row.names = FALSE, 
+                 sep="\t", 
+                 quote = FALSE)
+    
     return( results )
     
 }

@@ -4,7 +4,7 @@
 \alias{irctquery}
 \title{Query analysis to the API}
 \usage{
-irctquery(url, apiKey, query, verbose = FALSE)
+irctquery(url, apiKey, query, outputPath, verbose = FALSE)
 }
 \arguments{
 \item{url}{The url.}
@@ -12,6 +12,8 @@ irctquery(url, apiKey, query, verbose = FALSE)
 \item{apiKey}{The personal key to access to the data.}
 
 \item{query}{A text file containing the JSON query body.}
+
+\item{outputPath}{Path where the output file will be saved.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
