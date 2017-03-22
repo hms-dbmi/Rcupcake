@@ -59,7 +59,7 @@ irctquery <- function( url, apiKey, query, verbose = FALSE ){
         message( "Your request is being processed")
     }
     
-    Sys.sleep( 30 )
+    Sys.sleep( 60 )
     
     response <- content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
     results <- read.csv(text = response)
