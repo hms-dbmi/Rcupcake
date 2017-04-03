@@ -19,13 +19,14 @@ categorical variable with more than nfactor values.}
 on-time log from the function.}
 }
 \value{
-A multiple graph containing a barplot with age distribution,  
-a boxplot representing age distribution by gender and a pie chart representing 
-gender distribution.
+A \code{genopheno} class object with the continuous variable transformed into a categorical
+variable, if possible.
 }
 \description{
 Given an object of class \code{genopheno}, it transforms continuous into categorical variable 
-applying Z-score. As a result a new \code{genopheno} object is generated.
+applying Z-score. As a result a new \code{genopheno} object is generated. Note that is the number
+of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwhise
+a Kolmogorov-Smirnov test is performed.
 }
 \examples{
 load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))

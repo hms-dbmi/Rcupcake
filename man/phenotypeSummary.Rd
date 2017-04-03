@@ -5,19 +5,22 @@
 \title{Describes the phenotypic characteristics for the whole study population then according to the 
 status regarding one selected gene}
 \usage{
-phenotypeSummary(input, mutation, nfactor = 10, showTable = FALSE,
-  path = "", verbose = FALSE)
+phenotypeSummary(input, mutation = FALSE, nfactor = 10, showTable = TRUE,
+  showFigures = FALSE, path = getwd(), verbose = FALSE)
 }
 \arguments{
 \item{input}{Object of \code{genopheno} class.}
 
 \item{mutation}{Determines the mutation of interest for wchich you want to analyze the 
-phenotype values}
+phenotype values. By default FALSE.}
 
 \item{nfactor}{By default 10. Change it into other number if you consider there is any
 categorical variable with more than \code{nfactor} values.}
 
-\item{showTable}{By default FALSE. Change it into TRUE in order to visualize the table
+\item{showTable}{By default TRUE. Change it into FALSE in order to not visualize the table
+with the ressults.}
+
+\item{showFigures}{By default FALSE. Change it into TRUE in order to visualize the table
 with the ressults.}
 
 \item{path}{By default the working directory. Define the path where you want the file to 
@@ -39,8 +42,9 @@ numerical values is obtained.
 }
 \examples{
 load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
-phenotypeSummary( input     = genophenoExData, 
-                 mutation   = "CHD8",
-                 verbose    = FALSE 
+phenotypeSummary( input       = genophenoExData, 
+                  showTable   = TRUE, 
+                  showFigures = TRUE, 
+                 verbose      = FALSE 
            )
 }

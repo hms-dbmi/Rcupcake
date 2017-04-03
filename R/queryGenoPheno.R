@@ -14,7 +14,7 @@
 #' @return An object of class \code{phenotype}
 #' @examples
 #' queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
-#'                                                 "/genophenoExData.txt"),
+#'                                                 "/queryOutput.txt"),
 #'                                   verbose     = TRUE)
 #' queryExample
 #' @export queryGenoPheno

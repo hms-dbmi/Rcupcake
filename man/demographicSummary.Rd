@@ -38,7 +38,7 @@ between age and gender distribution, is obtained.
 \examples{
 load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 demographicSummary( input = genophenoExData, 
-                     maleCode   = "MALE", 
-                     femaleCode = "FEMALE"
+                     maleCode   = "male", 
+                     femaleCode = "female"
            )
 }

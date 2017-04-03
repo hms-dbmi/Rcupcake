@@ -1,24 +1,26 @@
 #' Query analysis to the API
 #'
-#' Given an url, a key and a JSON object, it generates a \code{data.frame} object.
+#' Given an url, a key and a JSON object, it generates a \code{data.frame} object with 
+#' the output of the query. 
 #'
 #' @param url  The url.
-#' @param apiKey The personal key to access to the data. 
+#' @param apiKey The key to access to the data. 
 #' @param query A text file containing the JSON query body. 
-#' @param outputPath Path where the output file will be saved. 
+#' @param outputPath Path where the output file will be saved.By default it will be 
+#' saved in your working directory
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @return An object of class \code{data.frame}
+#' @return An object of class \code{data.frame} with the query output. 
 #' @examples
 #' 
 #' query <- irctquery( 
 #'               url         = "https://nhanes.hms.harvard.edu/", 
-#'               apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9"
+#'               apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9", 
 #'               query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
 #'               )
 #' @export irctquery
 
-irctquery <- function( url, apiKey, query, outputPath, verbose = FALSE ){
+irctquery <- function( url, apiKey, query, outputPath = getwd(), verbose = FALSE ){
     
     IRCT_REST_BASE_URL <- url
     
@@ -50,20 +52,44 @@ irctquery <- function( url, apiKey, query, outputPath, verbose = FALSE ){
     IRCT_GET_RESULTS_FORMATS_URL <- paste(IRCT_RESULTS_BASE_URL,"availableFormats",sep="")
     IRCT_GET_RESULTS_URL <- paste(IRCT_RESULTS_BASE_URL,"result",sep="")
         
-    startSession <- content(GET(paste0(url, "/rest/v1/securityService/startSession?key=", apiKey)))    
+    startSession <- httr::content(GET(paste0(url, "/rest/v1/securityService/startSession?key=", apiKey)))    
 
+    if( startSession[[1]] != "success"){
+        message( "Please check the url and the key access. It is not possible to start a session 
+                 with the url and key provided.")
+        stop()
+    }
+    
     body <- paste(readLines(query), collapse="")
     
     resultId <- content(POST(IRCT_RUN_QUERY_URL, body = body))$resultId
+    
+    if( resultId == "null"){
+        message("Please, revise your query object. Query cannot be run.")
+        stop()
+    }
     
     if( verbose == TRUE ){
         message( "Your request is being processed")
     }
     
-    Sys.sleep( 60 )
     
-    response <- content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
+    response <- httr::content(GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
+
+    while( response[[1]] == "Unable to get available formats for that id" ){
+        Sys.sleep( 3 )
+        response <- httr::content(GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
+
+    }
+
+    
+    response <-  httr::content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
     results <- read.csv(text = response)
+    
+    if( nrow( results ) == 0){
+        message( "There are not results for your query")
+        stop()
+    }
 
     colnames(results)[1] <- "patient_id"
     

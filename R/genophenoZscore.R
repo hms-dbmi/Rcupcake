@@ -1,7 +1,9 @@
 #' Transform continuous in categorical variables and generates a new \code{genopheno} object.
 #'
 #' Given an object of class \code{genopheno}, it transforms continuous into categorical variable 
-#' applying Z-score. As a result a new \code{genopheno} object is generated. 
+#' applying Z-score. As a result a new \code{genopheno} object is generated. Note that is the number
+#' of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwhise
+#' a Kolmogorov-Smirnov test is performed. 
 #' 
 #'     
 #' @param input Object of \code{genopheno} class. 
@@ -11,9 +13,8 @@
 #' to -2 and 2. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
 #' on-time log from the function.
-#' @return A multiple graph containing a barplot with age distribution,  
-#' a boxplot representing age distribution by gender and a pie chart representing 
-#' gender distribution.
+#' @return A \code{genopheno} class object with the continuous variable transformed into a categorical
+#' variable, if possible. 
 #' @examples
 #' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 #' genophenoZscore( input      = genophenoExData,
@@ -60,7 +61,14 @@ genophenoZscore <- function( input, cutOff = c(-2, 2), nfactor = 10, verbose = F
                 message("Checking is the variable follows a normal distribution")
             } 
             
-            normalDist <- shapiro.test(as.numeric(tt[,pcolumn]))
+            if( nrow( tt ) < 5000 ){
+                normalDist <- shapiro.test(as.numeric(tt[,pcolumn]))
+                
+            }else{
+                normalDist <- ks.test(x=rnorm(as.numeric(tt[,pcolumn])),y='pnorm',alternative='two.sided')
+                
+            }
+            
             
             if( normalDist$p.value < 0.05){
                 

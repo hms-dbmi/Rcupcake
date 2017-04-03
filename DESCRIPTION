@@ -27,7 +27,8 @@ Imports:
     RCurl,
     d3heatmap,
     gtools,
-    shiny
+    shiny, 
+    httr
 NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
 Maintainer: Alba Gutierrez-Sacristan <alba.gutierrez@upf.edu>

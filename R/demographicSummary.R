@@ -22,8 +22,8 @@
 #' @examples
 #' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 #' demographicSummary( input = genophenoExData, 
-#'                      maleCode   = "MALE", 
-#'                      femaleCode = "FEMALE"
+#'                      maleCode   = "male", 
+#'                      femaleCode = "female"
 #'            )
 #' @export demographicSummary
 

@@ -12,14 +12,9 @@ output:
 
 # Introduction
 
-The `genophenoR` package contains functions to query Simon Simplex Collection [@REF1], a database containing clinical and molecular information about autistic patients and their families. The `genophenoR` package includes analysis functions to study demographic and phenotypic variables, and their co-occurrence in general population and according to a gene mutation status. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots.
+The `genophenoR` package contains functions to query ... . The `genophenoR` package includes analysis functions to study demographic and phenotypic variables, and their co-occurrence in general population and according to a gene mutation status. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots.
 
 ## Background
-The Simons Simplex Collection (SSC) is a core project and resource of the Simons Foundation Autism Research Initiative (SFARI). The SSC achieved its primary goal to establish a permanent repository of genetic samples from 2,600 simplex families, each of which has one child affected with an autism spectrum disorder, and unaffected parents and siblings.
-
-Each genetic sample has an associated collection of data that provides a precise characterization, or phenotype, of the individual. Rigorous phenotyping maximizes the value of the resource for a wide variety of future research projects on the causes and mechanisms of autism.
-
-
 With `genophenoR` package the user is able to perform a variety of analysis on the molecular and clinical data, and visualize the results through different types of graphical representations.
 
 The tasks that can be performed with `genophenoR` package are the following:
@@ -46,6 +41,9 @@ library(genophenoR)
 
 ## genopheno object
 
+
+
+
 `genopheno` object is obtained when `queryGenoPheno` function is applied. This object is used as input for `demographicSummary` and `phenotypeSummary`  descriptive functions. The `genophenoR.SSC` object contains the table dataset and shows the main characteristic of our dataset:
   * The number of mutations variables
   * The number of phenotypes variables
@@ -58,8 +56,37 @@ genophenoExData
 ```
 
 ```{r genophenoR.SSC2}
-genophenoExData
 class( genophenoExData )
+```
+
+# Query function
+
+```{r queryNhanes}
+query <- irctquery(
+              url         = "https://nhanes.hms.harvard.edu/",
+              apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9", 
+              query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR")
+              )
+```
+
+
+```{r queryNhanesOutput, echo=FALSE}
+library( knitr )
+kable( head ( query ) , format = "rst")
+```
+
+
+```{r convertToGenophenoRobject}
+genophenoExData <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", 
+                                                                      package="genophenoR"), 
+                                                          "/queryOutput.txt"))
+genophenoExData
+```
+
+```{r zscore}
+zscoreExample <- genophenoZscore( input      = genophenoExData,
+                                  verbose    = TRUE 
+          )
 ```
 
 
@@ -78,9 +105,9 @@ The `demographicSummary` function output includes:
   * A pie chart representing the gender distribution.
 
 ```{r search_gene_1, fig.width=6, fig.height=6}
-demographicSummary (input = genophenoExData, 
-                    maleCode    = "MALE", 
-                    femaleCode  ="FEMALE")
+genophenoR::demographicSummary (input = genophenoExData, 
+                    maleCode    = "male", 
+                    femaleCode  ="female")
 ```
 
 
@@ -99,10 +126,10 @@ The `phenotypeSummary` function output includes:
 * A boxplot for each continuous phenotype variable
 * A table if the showTable argument is TRUE
 
-```{r phenosumm, fig.width=10, fig.height=8}
+```{r phenosumm, fig.width=10, fig.height=8, warning= FALSE}
 phenotypeSummary(input      = genophenoExData,
-                 mutation   = "CHD8", 
-                 showTable  = TRUE)
+                    showTable  = TRUE, 
+                   showFigures = TRUE)
 ```
 
 
@@ -134,15 +161,14 @@ The `genoPhenoComorbidity` function output is an object named `genophenoComo` th
 ## Phenotype co-occurrence
 
 ```{r phenoCooccurrence}
-genophenoComorCHD8no <- genoPhenoComorbidity( 
+genophenoComor <- genoPhenoComorbidity( 
               input         = genophenoExData,
               pth           = "C:/Users/AG440/Desktop/genophenoR/inst/extdata/",
               aggregate    = FALSE, 
               ageRange      = c(4,18),
               gender        = "ALL", 
-              mutation      = c("CHD8", "no")
               )
-genophenoComorCHD8no
+genophenoComor
 ```
 
 
@@ -160,7 +186,7 @@ The `genoPhenoNetwork` function requires 3 arguments:
 The `genoPhenoNetowrk` function output is a network. Node size is proportional to the phenotype prevalence. Edge numbers represent the selected value. 
 
 ```{r phenoNetwork, fig.width=6, fig.height=6}
-genoPhenoNetwork ( input       = genophenoComorCHD8no,
+genoPhenoNetwork ( input       = genophenoComor,
                    selectValue = "PercentagePhenoAB", 
                   cutOff      = 10)
 ```
@@ -179,7 +205,7 @@ The `genoPhenoHeatmap` function requires 3 arguments:
 The `genoPhenoHeatmap` function output is a heatmap. Blue color represents the lower values,  red color represets the upper values. The co-occurence measurement value is showed in each cell. 
 
 ```{r phenoHeatmap, fig.width=8, fig.height=8}
-genoPhenoHeatmap ( input       = genophenoComorCHD8no,
+genoPhenoHeatmap ( input       = genophenoComor,
                    selectValue = "PercentagePhenoAB", 
                    cutOff      = 0)
 ```
@@ -195,8 +221,8 @@ The function `genophenoPrevalence`  displays in a data frame:
 
 
 ```{r genophenoPrevalence}
-prevalence <- genoPhenoPrevalence( input = genophenoComorCHD8no )
-prevalence
+prevalence <- genoPhenoPrevalence( input = genophenoComor )
+kable( prevalence, row.names = FALSE)
 ```
 
 # References

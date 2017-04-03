@@ -4,31 +4,33 @@
 \alias{irctquery}
 \title{Query analysis to the API}
 \usage{
-irctquery(url, apiKey, query, outputPath, verbose = FALSE)
+irctquery(url, apiKey, query, outputPath = getwd(), verbose = FALSE)
 }
 \arguments{
 \item{url}{The url.}
 
-\item{apiKey}{The personal key to access to the data.}
+\item{apiKey}{The key to access to the data.}
 
 \item{query}{A text file containing the JSON query body.}
 
-\item{outputPath}{Path where the output file will be saved.}
+\item{outputPath}{Path where the output file will be saved.By default it will be 
+saved in your working directory}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
 on-time log from the function.}
 }
 \value{
-An object of class \code{data.frame}
+An object of class \code{data.frame} with the query output.
 }
 \description{
-Given an url, a key and a JSON object, it generates a \code{data.frame} object.
+Given an url, a key and a JSON object, it generates a \code{data.frame} object with 
+the output of the query.
 }
 \examples{
 
 query <- irctquery( 
               url         = "https://nhanes.hms.harvard.edu/", 
-              apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9"
+              apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9", 
               query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
               )
 }

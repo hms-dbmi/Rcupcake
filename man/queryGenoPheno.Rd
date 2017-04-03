@@ -27,7 +27,7 @@ correct format and generates a \code{phenotype} object.
 }
 \examples{
 queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 
-                                                "/genophenoExData.txt"),
+                                                "/queryOutput.txt"),
                                   verbose     = TRUE)
 queryExample
 }
