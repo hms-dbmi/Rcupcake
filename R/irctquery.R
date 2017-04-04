@@ -52,7 +52,7 @@ irctquery <- function( url, apiKey, query, outputPath = getwd(), verbose = FALSE
     IRCT_GET_RESULTS_FORMATS_URL <- paste(IRCT_RESULTS_BASE_URL,"availableFormats",sep="")
     IRCT_GET_RESULTS_URL <- paste(IRCT_RESULTS_BASE_URL,"result",sep="")
         
-    startSession <- httr::content(GET(paste0(url, "/rest/v1/securityService/startSession?key=", apiKey)))    
+    startSession <- httr::content(httr::GET(paste0(url, "/rest/v1/securityService/startSession?key=", apiKey)))    
 
     if( startSession[[1]] != "success"){
         message( "Please check the url and the key access. It is not possible to start a session 
@@ -62,7 +62,7 @@ irctquery <- function( url, apiKey, query, outputPath = getwd(), verbose = FALSE
     
     body <- paste(readLines(query), collapse="")
     
-    resultId <- content(POST(IRCT_RUN_QUERY_URL, body = body))$resultId
+    resultId <- httr::content(httr::POST(IRCT_RUN_QUERY_URL, body = body))$resultId
     
     if( resultId == "null"){
         message("Please, revise your query object. Query cannot be run.")
@@ -74,11 +74,11 @@ irctquery <- function( url, apiKey, query, outputPath = getwd(), verbose = FALSE
     }
     
     
-    response <- httr::content(GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
+    response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
 
     while( response[[1]] == "Unable to get available formats for that id" ){
         Sys.sleep( 3 )
-        response <- httr::content(GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
+        response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_FORMATS_URL, resultId, sep="/")))
 
     }
 

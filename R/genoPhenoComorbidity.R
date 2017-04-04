@@ -39,13 +39,12 @@
 #' @return An object of class \code{genophenoComor}
 #' @examples
 #' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
-#' ex1 <- genoPhenoComorbidity( 
+#' comorbidityExample <- genoPhenoComorbidity( 
 #'               input         = genophenoExData,
 #'               pth           = system.file("extdata", package="genophenoR"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,16),
-#'               gender        = "MALE", 
-#'               mutation      = c("CHD8", "ALL")
+#'               gender        = "male", 
 #'               )
 #' @export genoPhenoComorbidity
 

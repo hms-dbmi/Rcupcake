@@ -56,15 +56,14 @@ interest, the patients identifiers of those patients having
 both phenotypes are selected.
 }
 \examples{
-load(system.file("extdata", "genopheno.RData", package="genophenoR"))
+load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 ex1 <- genoPhenoPatientsSelection( 
               input         = queryExample,
               pth           = system.file("extdata", package="genophenoR"),
-              phenotypeA    = c("HandMovement", "yes"),
-              phenotypeB    = c("FacialExpression", "yes"),
+              phenotypeA    = c("Herpes", "yes"),
+              phenotypeB    = c("HIV", "yes"),
               aggregate     = TRUE, 
               ageRange      = c(0,16),
-              gender        = "MALE", 
-              mutation      = c("CHD8", "ALL")
+              gender        = "male", 
               )
 }

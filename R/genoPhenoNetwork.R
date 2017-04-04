@@ -10,7 +10,7 @@
 #' (patientData, diagnosisData, admissionData) are located. 
 #' @param layout By default \code{'layout.fruchterman.reingold'}. It can be set 
 #' to any other of the possible igraph layouts. 
-#' @param selectValue By default \code{"AB"} variable will be selected. Change
+#' @param selectValue By default \code{"patientsPhenoAB"} variable will be selected. Change
 #' it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'odds ratio'}, 
 #' \code{'phi'}, \code{'rr'}).  
 #' @param cutOff By default \code{'0.05'}. The value of the argument can be changed 

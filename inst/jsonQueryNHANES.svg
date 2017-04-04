@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.0 r15299"
+   sodipodi:docname="jsonQueryNHANES.svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient10981">
+      <stop
+         style="stop-color:#87cdde;stop-opacity:1;"
+         offset="0"
+         id="stop10977" />
+      <stop
+         style="stop-color:#87cdde;stop-opacity:0;"
+         offset="1"
+         id="stop10979" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient10941">
+      <stop
+         style="stop-color:#ffb380;stop-opacity:1;"
+         offset="0"
+         id="stop10937" />
+      <stop
+         style="stop-color:#ffb380;stop-opacity:0;"
+         offset="1"
+         id="stop10939" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient10899"
+       inkscape:collect="always">
+      <stop
+         id="stop10895"
+         offset="0"
+         style="stop-color:#ffe6d5;stop-opacity:1" />
+      <stop
+         id="stop10897"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient10771">
+      <stop
+         style="stop-color:#d5f6ff;stop-opacity:1"
+         offset="0"
+         id="stop10767" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="1"
+         id="stop10769" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10771"
+       id="linearGradient10773"
+       x1="294.53101"
+       y1="63.940971"
+       x2="9.0871944"
+       y2="63.940971"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.96468405,0,0,1.1909091,-5.062224,-17.717525)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10899"
+       id="linearGradient10903"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.92878553,0,0,1.5022516,14.373926,562.99794)"
+       x1="294.53101"
+       y1="63.940971"
+       x2="9.0871944"
+       y2="63.940971" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10941"
+       id="linearGradient10943"
+       x1="-11.268581"
+       y1="663.47502"
+       x2="4.1217004"
+       y2="663.47502"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99739627,0,0,1.0793336,-0.00930414,-47.836449)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10981"
+       id="linearGradient10983"
+       x1="-11.325878"
+       y1="308.15025"
+       x2="4.0674028"
+       y2="308.15025"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,1.0199355,0,-11.987241)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="-1576.3486"
+     inkscape:cy="-369.96148"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4507"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion4509"><rect
+           id="rect4511"
+           width="739.43164"
+           height="1088.9445"
+           x="28.284271"
+           y="15.392496" /></flowRegion><flowPara
+         id="flowPara4513" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4659"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion4661"><rect
+           id="rect4663"
+           width="1145.5129"
+           height="1278.8531"
+           x="34.345188"
+           y="19.433105" /></flowRegion><flowPara
+         id="flowPara4665" /></flowRoot>    <g
+       id="g11358"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
+      <rect
+         y="3.3100321"
+         x="-10.825878"
+         height="730.0578"
+         width="294.85861"
+         id="rect11009"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         transform="scale(0.26458333)"
+         style="font-style:normal;font-weight:normal;font-size:20px;line-height:37.79527664px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot7807"
+         xml:space="preserve"><flowRegion
+           style="font-size:20px;line-height:37.79527664px"
+           id="flowRegion7809"><rect
+             style="font-size:20px;line-height:37.79527664px"
+             y="13.37219"
+             x="20.203051"
+             height="3099.1482"
+             width="1135.4113"
+             id="rect7811" /></flowRegion><flowPara
+           id="flowPara10094">{</flowPara><flowPara
+           id="flowPara10621">  &quot;select&quot;: [</flowPara><flowPara
+           id="flowPara10623">      {</flowPara><flowPara
+           id="flowPara10625">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10627">          &quot;pui&quot;: &quot;/nhanes/Demo/laboratory/laboratory/pcbs/PCB153 (ng per g)/&quot;,</flowPara><flowPara
+           id="flowPara10629">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10631">        },</flowPara><flowPara
+           id="flowPara10633">        &quot;alias&quot;: &quot;P.pcb153&quot;</flowPara><flowPara
+           id="flowPara10635">      },</flowPara><flowPara
+           id="flowPara10637">   {</flowPara><flowPara
+           id="flowPara10639">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10641">          &quot;pui&quot;: &quot;/nhanes/Demo/laboratory/laboratory/viral infection/HIV antibody test result/Yes&quot;,</flowPara><flowPara
+           id="flowPara10643">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10645">        },</flowPara><flowPara
+           id="flowPara10647">        &quot;alias&quot;: &quot;P.HIV&quot;</flowPara><flowPara
+           id="flowPara10649">      },</flowPara><flowPara
+           id="flowPara10651">   {</flowPara><flowPara
+           id="flowPara10653">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10655">          &quot;pui&quot;: &quot;/nhanes/Demo/laboratory/laboratory/viral infection/HIV antibody test result/No&quot;,</flowPara><flowPara
+           id="flowPara10657">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10659">        },</flowPara><flowPara
+           id="flowPara10661">        &quot;alias&quot;: &quot;P.HIV&quot;</flowPara><flowPara
+           id="flowPara10663">      },</flowPara><flowPara
+           id="flowPara10665" /><flowPara
+           id="flowPara10667">   {</flowPara><flowPara
+           id="flowPara10669">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10671">          &quot;pui&quot;: &quot;/nhanes/Demo/laboratory/laboratory/viral infection/Herpes I/Yes&quot;,</flowPara><flowPara
+           id="flowPara10673">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10675">        },</flowPara><flowPara
+           id="flowPara10677">        &quot;alias&quot;: &quot;P.Herpes&quot;</flowPara><flowPara
+           id="flowPara10679">      },</flowPara><flowPara
+           id="flowPara10681">   {</flowPara><flowPara
+           id="flowPara10683">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10685">          &quot;pui&quot;: &quot;/nhanes/Demo/laboratory/laboratory/viral infection/Herpes I/No&quot;,</flowPara><flowPara
+           id="flowPara10687">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10689">        },</flowPara><flowPara
+           id="flowPara10691">        &quot;alias&quot;: &quot;P.Herpes&quot;</flowPara><flowPara
+           id="flowPara10693">      },</flowPara><flowPara
+           id="flowPara10695">    {</flowPara><flowPara
+           id="flowPara10697">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10699">         &quot;pui&quot;: &quot;/nhanes/Demo/demographics/demographics/AGE/&quot;,</flowPara><flowPara
+           id="flowPara10701">         &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10703">        },</flowPara><flowPara
+           id="flowPara10705">        &quot;alias&quot;: &quot;Age&quot;</flowPara><flowPara
+           id="flowPara10707">    },</flowPara><flowPara
+           id="flowPara10709">{</flowPara><flowPara
+           id="flowPara10711">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10713">          &quot;pui&quot;: &quot;/nhanes/Demo/demographics/demographics/SEX/female/&quot;,</flowPara><flowPara
+           id="flowPara10715">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10717">        },</flowPara><flowPara
+           id="flowPara10719">        &quot;alias&quot;: &quot;Gender&quot;</flowPara><flowPara
+           id="flowPara10721">      }, </flowPara><flowPara
+           id="flowPara10723">  {</flowPara><flowPara
+           id="flowPara10725">            &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10727">              &quot;pui&quot;: &quot;/nhanes/Demo/demographics/demographics/SEX/male/&quot;,</flowPara><flowPara
+           id="flowPara10729">              &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10731">            },</flowPara><flowPara
+           id="flowPara10733">            &quot;alias&quot;: &quot;Gender&quot;</flowPara><flowPara
+           id="flowPara10735">          } </flowPara><flowPara
+           id="flowPara10737">  ],</flowPara><flowPara
+           id="flowPara10739">  &quot;where&quot;: [</flowPara><flowPara
+           id="flowPara10741">      {</flowPara><flowPara
+           id="flowPara10743">        &quot;field&quot;: {</flowPara><flowPara
+           id="flowPara10745">          &quot;pui&quot;: &quot;/nhanes/Demo/demographics/demographics/AGE/&quot;,</flowPara><flowPara
+           id="flowPara10747">          &quot;dataType&quot;: &quot;STRING&quot;</flowPara><flowPara
+           id="flowPara10749">        },</flowPara><flowPara
+           id="flowPara10751">        &quot;predicate&quot;: &quot;CONTAINS&quot;,</flowPara><flowPara
+           id="flowPara10753">        &quot;fields&quot;: {</flowPara><flowPara
+           id="flowPara10755">          &quot;ENOUNTER&quot;: &quot;YES&quot;</flowPara><flowPara
+           id="flowPara10757">        }</flowPara><flowPara
+           id="flowPara10759">      }</flowPara><flowPara
+           id="flowPara10761">  ]</flowPara><flowPara
+           id="flowPara10763">}</flowPara><flowPara
+           id="flowPara10096" /><flowPara
+           id="flowPara10098" /><flowPara
+           id="flowPara10100" /><flowPara
+           id="flowPara10102" /><flowPara
+           id="flowPara10104" /><flowPara
+           id="flowPara10106" /><flowPara
+           id="flowPara10108" /><flowPara
+           id="flowPara10110" /><flowPara
+           id="flowPara10112" /><flowPara
+           id="flowPara10114" /><flowPara
+           id="flowPara10116" /><flowPara
+           id="flowPara10118" /><flowPara
+           id="flowPara10120" /><flowPara
+           id="flowPara10122" /><flowPara
+           id="flowPara10124" /><flowPara
+           id="flowPara10126" /><flowPara
+           id="flowPara10128" /><flowPara
+           id="flowPara10130" /><flowPara
+           id="flowPara10132" /><flowPara
+           id="flowPara10134" /><flowPara
+           id="flowPara10136" /><flowPara
+           id="flowPara10138" /><flowPara
+           id="flowPara10140" /><flowPara
+           id="flowPara10142" /><flowPara
+           id="flowPara10144" /><flowPara
+           id="flowPara10146" /><flowPara
+           id="flowPara10148" /><flowPara
+           id="flowPara10150" /><flowPara
+           id="flowPara10152" /><flowPara
+           id="flowPara10154" /><flowPara
+           id="flowPara10156" /><flowPara
+           id="flowPara10158" /><flowPara
+           id="flowPara10160" /><flowPara
+           id="flowPara10162" /><flowPara
+           id="flowPara10164" /><flowPara
+           id="flowPara10166" /><flowPara
+           id="flowPara10168" /><flowPara
+           id="flowPara10170" /><flowPara
+           id="flowPara10172" /><flowPara
+           id="flowPara10174" /><flowPara
+           id="flowPara10176" /><flowPara
+           id="flowPara10178" /><flowPara
+           id="flowPara10180" /><flowPara
+           id="flowPara10182" /><flowPara
+           id="flowPara10184" /><flowPara
+           id="flowPara10186" /><flowPara
+           id="flowPara10188" /><flowPara
+           id="flowPara10190" /><flowPara
+           id="flowPara10192" /></flowRoot>      <rect
+         y="603.13489"
+         x="3.5375004"
+         height="130.24783"
+         width="264.02966"
+         id="rect10905"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.97034138;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="3.2923288"
+         x="3.5496995"
+         height="598.02759"
+         width="263.99319"
+         id="rect10905-3"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.00679767;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="603.2337"
+         x="-10.751344"
+         height="130.08154"
+         width="14.355805"
+         id="rect10905-0"
+         style="opacity:1;fill:url(#linearGradient10943);fill-opacity:1;stroke:#000000;stroke-width:0.99909705;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(0,-0.26458333,0.26458333,0,-693.40436,566.24013)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot10945"
+         xml:space="preserve"><flowRegion
+           id="flowRegion10947"><rect
+             y="2598.2339"
+             x="-515.71429"
+             height="242.85715"
+             width="440"
+             id="rect10949" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+           id="flowPara10951">where clause</flowPara></flowRoot>      <rect
+         y="3.3100321"
+         x="-10.825878"
+         height="597.99219"
+         width="14.393281"
+         id="rect10905-0-6"
+         style="opacity:1;fill:url(#linearGradient10983);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(0,-0.26458333,0.26458333,0,-693.46016,209.91801)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot10945-1"
+         xml:space="preserve"><flowRegion
+           id="flowRegion10947-6"><rect
+             y="2598.2339"
+             x="-515.71429"
+             height="242.85715"
+             width="440"
+             id="rect10949-9" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold'"
+           id="flowPara10951-9">select clause</flowPara></flowRoot>      <rect
+         y="24.003839"
+         x="6.1468325"
+         height="68.419662"
+         width="256.9949"
+         id="rect11011"
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:#88ceed;stroke-width:1.00509274;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="94.599472"
+         x="6.1466584"
+         height="137.94987"
+         width="256.99527"
+         id="rect11011-6"
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:#88ceed;stroke-width:1.00474489;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="242.76825"
+         x="6.1466622"
+         height="140.21349"
+         width="256.99524"
+         id="rect11011-6-4"
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:#88ceed;stroke-width:1.00475347;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="454.60229"
+         x="6.1466579"
+         height="138.15948"
+         width="256.99527"
+         id="rect11011-6-2"
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:#88ceed;stroke-width:1.00474489;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="386.1506"
+         x="6.1357064"
+         height="65.418091"
+         width="257.01715"
+         id="rect11011-60"
+         style="opacity:1;fill:#000000;fill-opacity:0;stroke:#88ceed;stroke-width:0.98284143;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         y="454.59991"
+         x="223.83478"
+         height="12.473214"
+         width="39.309525"
+         id="rect11079"
+         style="opacity:1;fill:#88ceed;fill-opacity:1;stroke:#88ceed;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,6.5684316,2.5420252)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot11081"
+         xml:space="preserve"><flowRegion
+           id="flowRegion11083"><rect
+             y="1718.1729"
+             x="845.98969"
+             height="47.142857"
+             width="148.57143"
+             id="rect11085" /></flowRegion><flowPara
+           style="font-size:26.66666794px"
+           id="flowPara11087">Gender</flowPara></flowRoot>      <g
+         transform="translate(-8.6205993,0.52377704)"
+         id="g11184">
+        <rect
+           style="opacity:1;fill:#88ceed;fill-opacity:1;stroke:#88ceed;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11079-6"
+           width="39.309525"
+           height="12.473214"
+           x="232.45535"
+           y="385.63541" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot11081-2"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+           transform="matrix(0.26458333,0,0,0.26458333,21.691624,-67.213132)"><flowRegion
+             id="flowRegion11083-1"><rect
+               id="rect11085-1"
+               width="148.57143"
+               height="47.142857"
+               x="845.98969"
+               y="1718.1729" /></flowRegion><flowPara
+             id="flowPara11087-4"
+             style="font-size:26.66666794px">Age</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-3.1399472,-1.5064508)"
+         id="g11177">
+        <rect
+           style="opacity:1;fill:#88ceed;fill-opacity:1;stroke:#88ceed;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11079-7"
+           width="39.309525"
+           height="12.473214"
+           x="226.9747"
+           y="244.27232" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot11081-7"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+           transform="matrix(0.26458333,0,0,0.26458333,10.194113,-208.55727)"><flowRegion
+             id="flowRegion11083-0"><rect
+               id="rect11085-8"
+               width="148.57143"
+               height="47.142857"
+               x="845.98969"
+               y="1718.1729" /></flowRegion><flowPara
+             id="flowPara11087-1"
+             style="font-size:26.66666794px">Herpes</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-2.0059984,-2.0755231)"
+         id="g11170">
+        <rect
+           style="opacity:1;fill:#88ceed;fill-opacity:1;stroke:#88ceed;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11079-77"
+           width="39.309525"
+           height="12.473214"
+           x="225.84077"
+           y="96.672623" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot11081-4"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+           transform="matrix(0.26458333,0,0,0.26458333,14.808328,-355.44728)"><flowRegion
+             id="flowRegion11083-7"><rect
+               id="rect11085-9"
+               width="148.57143"
+               height="47.142857"
+               x="845.98969"
+               y="1718.1729" /></flowRegion><flowPara
+             id="flowPara11087-8"
+             style="font-size:26.66666794px">HIV</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(-2.3839921,0.27807993)"
+         id="g11163">
+        <rect
+           style="opacity:1;fill:#88ceed;fill-opacity:1;stroke:#88ceed;stroke-width:1;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect11079-5"
+           width="39.309525"
+           height="12.473214"
+           x="226.21875"
+           y="23.723213" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot11081-6"
+           style="font-style:normal;font-weight:normal;font-size:40px;line-height:24.79999924px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+           transform="matrix(0.26458333,0,0,0.26458333,9.0144145,-428.99097)"><flowRegion
+             id="flowRegion11083-8"><rect
+               id="rect11085-0"
+               width="148.57143"
+               height="47.142857"
+               x="845.98969"
+               y="1718.1729" /></flowRegion><flowPara
+             id="flowPara11087-9"
+             style="font-size:26.66666794px">pcb153</flowPara></flowRoot>      </g>
+    </g>
+  </g>
+</svg>

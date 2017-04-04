@@ -16,7 +16,7 @@ by applying the \code{comorbidityAnalysis} function}
 \item{layout}{By default \code{'layout.fruchterman.reingold'}. It can be set 
 to any other of the possible igraph layouts.}
 
-\item{selectValue}{By default \code{"AB"} variable will be selected. Change
+\item{selectValue}{By default \code{"patientsPhenoAB"} variable will be selected. Change
 it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'odds ratio'}, 
 \code{'phi'}, \code{'rr'}).}
 

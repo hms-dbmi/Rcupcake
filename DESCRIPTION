@@ -1,9 +1,8 @@
 Package: genophenoR
 Type: Package
-Title: Integrative analysis of phenotype and genotype information from
-    electronic health record data
+Title: genophenoR: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API
 Version: 0.99.0
-Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = c("aut", "cre")))
+Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba_gutierrez@hms.harvard.edu", role = c("aut", "cre")))
 Description: Package to integrate, analyze and visualize phenotype and genotype
     information from electronic health record data.
 Depends:
