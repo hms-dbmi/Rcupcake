@@ -21,7 +21,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: 
-  BiocStyle::html_document2:
+  BiocStyle::html_document:
     toc_float: true
 ---
 
@@ -91,16 +91,13 @@ This object comes with a series of functions to allow users to interact with the
 
 ### `genophenoComor`
 
-`genophenoComor` object is obtained when `genoPhenoComorbidity` function is applied. This object is used as input for `genoPhenoPrevalence`, `genoPhenoHeatmap`and `genoPhenoNetwork`  functions. The `genophenoComor` object contains the comorbidity results and shows the main specifications of the comorbidity analysis:
+`genophenoComor` object is obtained when `genoPhenoComorbidity` function is applied. This object is used as input for `genoPhenoPrevalence`, `genoPhenoHeatmap`and `genoPhenoNetwork`  functions. The `genophenoComor` object contains the comorbidity results as well as the comorbidity analysis results and a summary of the different measurements:
 
   - Minimum age of the patients in the dataset (Age Min)
   - Minimum age of the patients in the dataset (Age Max)
   - Patients gender
   - Mutation, if selected
-  
-And a summary of the results:
-
-  - Number of patients in the age and gender interval in the database\
+  - Number of patients in the age and gender interval in the database
   - Number of patients in the age and gender interval with the mutation select
   - The prevalence of the mutation in the dataset
   - Odds ratio range 
@@ -117,18 +114,19 @@ genophenoComor
 class( genophenoComor )
 ```
 
-The `extract` function can be applied to `genophenoComor` objects. It returns a formatted `data.frame` with the comorbidity results contained in the object. 
+The `genophenoComor` object come with the `extract` function . The `extract` function allows the user to retrieve data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the comorbidity analysis.
 
 # Retrieve data from the database
+The first step in order to perform any analysis is extracting the data related to the patients of interest, according to a set of variables of interest, demographic variables, as well as phenotypic or genotypic variables. 
 
-`genophenoR` package allows exploring the database information using the specifc url, the key and a JSON query in text format. It retrieves the information that is available in the database according to the user query and allows the analysis and results visualization in different  ways.
+The `irctquerty` function allows the user to extract the data from a specific database and store it in a `data.frame` object. `genophenoR` package allows exploring the database information using the specifc url, the key and a JSON query in text format. It retrieves the information that is available in the database according to the user query and allows the analysis and results visualization in different  ways.
 
-In order to perform a query in a database, the user can apply the `irctquerty` function. This function retrieves database information using:
+In order to perform a query in a database, the user can apply the `irctquerty` function. As input the `irctquerty` function requires:
 
-  - url
-  - key
-  - query
-
+  - _url_: the ulr of the database
+  - _key_: the personal key to access to the data
+  - _query_: a text file containing the JSON query body
+  - _outputPath_: path where the output file will be saved.By default it will be saved in your working directory
 
 As an example data from NHANES database [@patel2016database] will be retrieve applying the `irctquerty` function to:
 
@@ -160,17 +158,47 @@ In the particular example used, by inspecting the `data.frame` object, we can se
     
 
 # Transform the data in a genopheno object 
+Once the data is in a data.frame format, it has to be transformed into a `genopheno` class object. Note that to perform a correct analysis, the data frame should contain:
 
+  - 3 demographic variables: patient_id, Gender and Age. 
+  - phenotype variables name should start with a "P"
+  - mutation variables name, if present, should start with a "M"
+  
+In order to transform the data.frame into a `genopheno` object, the `queryGenoPheno` function has to be applied. The only input needed is the `inputDataFile`, that dedtermines the file with the complete path where the required input file is located. 
 
 
 ```{r convertToGenophenoRobject}
 genophenoExData <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), "/queryOutput.txt"), 
-                                   verbose       = TRUE )
-genophenoExData
+                                verbose       = TRUE )
+```
+
+As a result a `genopheno` object class is obtained. 
+```{r convertToGenophenoRobject2}
+class( genophenoExData )
+genophenoExData 
 head( genophenoR::extract( genophenoExData ) )
 ```
 
 # Transform continuous in categorical variables: zscore
+Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `P.Herpes`, that has `yes` or `no` values. Variables like `P.pcb153` are continuous. To add it to the analysis it should be transformed into a categorical. 
+
+If desired, user can appy the `genophenoZscore` function, that given an object of class `genopheno`, it transforms continuous into categorical variable applying Z-score. As a result a new `genopheno` object is generated. 
+
+Note that if the number of individuals is lower than 5000 a Saphiro test [@shapiro1965analysis] will be done to test the normal distribution, otherwhise a Kolmogorov-Smirnov test [@razali2011power] will be performed. The steps followed in this process are the next:
+
+  1. Checking is the variable follows a normal distribution
+  2. If the variable does not follow a normal distribution the Z-score will not be estimated.
+  3. If the variable follows a normal distribution (p-value of the shapiro or Kolmogorov-Smirnov test is lower than 0.05) then:
+        3.1. it is checked if there is correlation between the age and the variable. When correlation is observed, it is fitted a linear model. 
+        
+  4. Z-score will be estimated for this variable
+
+
+As an input `genophenoZscore` function requires:
+
+  * input: a `genopheno` object, obtained with the `queryGenoPheno` function. 
+  * cutOff: determines Z-score cut-off to categorize the continuous variable. By default it is set to -2 and 2. 
+  * nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
 
 
 ```{r zscore}
@@ -178,19 +206,25 @@ zscoreExample <- genophenoZscore( input      = genophenoExData,
                                   cutOff     = c( -2, 2 ), 
                                   nfactor    = 10, 
                                   verbose    = TRUE )
-zscoreExample
+```
+
+As a result a new `genopheno` object is obtained. Note that the transformation cannot always be done. 
+
+```{r zscoreExample}
+head( genophenoR::extract( genophenoExData ) )
 head( genophenoR::extract( zscoreExample ) )
 ```
 
 
 # Demographic analysis 
+The `genophenoR` R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the `demographicSummary` function.
 
 The function `demographicSummary` describes the demographic characteristics (sex, age) of the population under study.
 The `demographicSummary` function requires three arguments:
 
-  - input: the genopheno object.
-  - maleCode: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
-  - femaleCode: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
+  - _input_: the genopheno object.
+  - _maleCode_: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
+  - _femaleCode_: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
 
 
 The `demographicSummary` function output includes:
@@ -208,17 +242,18 @@ genophenoR::demographicSummary ( input       = genophenoExData,
 
 
 # Phenotype analysis
+The `genophenoR` R package includes the `phenotypeSummary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected mutation if genotype information available. Otherwhise a general summary of the different phenotype values is displayed.     
 
-The function `phenotypeSummary` describes the phenotypic characteristics for the whole study population then according to the status regarding one selected gene.    
-
-The `phenotypeSummary` function requires 2 arguments: 
+The `phenotypeSummary` function requires as input the next arguments: 
 
   - input: the `genopheno` object.
   - mutation: the mutation of interest
-  - ifile: to create a file summarizing the information displayed in the barplots. It will be saved in your working directory.
+  - nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
   - showTable: the table is displayed before the barplot. 
+  - showFigures: results are visualized in barplot or boxplot, depending on the kind of variable. 
+  - path: define the path where the output file generated will be saved. 
 
-The `phenotypeSummary` function output includes:   
+The `phenotypeSummary` function output could include:   
   
   - A barplot for each categorical phenotype variable
   - A boxplot for each continuous phenotype variable
@@ -232,17 +267,47 @@ phenotypeSummary( input       = genophenoExData,
 
 
 # Phenotypes co-occurrence and prevalence using 
+Having a general overview about the demographics and the phentoypes included in our data, the next step is to perform the phenotype co-occurrence analysis.
 
+The user can estimate the statistically significant comorbidities by applying the `genoPhenoComorbidity` function to the `genopheno`object previously generated with the `queryGenoPheno` function.
+
+### Comorbidity Measurements
 The `genoPhenoComorbidity` identifies all the possible phenotype co-ocurrence and quantify them.  Five different quantification measures are estimated:   
+  - Fisher test
+  - Comorbidity score
+  - Relative risk (RR)
+  - Phi value (Pearsons correlation for binary variables)  
+  - Odds ratio
 
-  - fisher test with Benjamini-Hochberg FDR [@hidalgo2009dynamic]
-  - comorbidity score [@roque2011using] 
-  - relative risk [@hidalgo2009dynamic]
-  - Pearson correlation   
-  - odds ratio. 
+##### Fisher test
+A Fisher exact test for each pair of diseases is performed to assess the null hypothesis of independence between the two diseases. Four groups of patients are defined in order to perform the statistical testing: patients with phenotype A and phenotype B, patients with phenotype A but not phenotype B, patients with phenotype B but not phenotype A and patients without any of the two phenotypes. The Fisher exact test is then applied to estimated the p-value for each pair of diseases. The Benjamini-Hochberg false discovery rate method is applied on the ranked list to correct for multiple testing.
+  
+##### Comorbidity score
+This score is defined in Roque et al. [@roque2011using] as follows:$$comorbidity score =log_2 \left( \cfrac{observed + 1}{expected + 1} \right)$$
+$$expected = \cfrac{n_{A} n_{B}}{N}$$
 
-According to the type of study, the user can select the co-ocurence measures needed as well as the cut-off value. As a result of the phenotype co-occurrence analysis, a table containing the different estimated measurements is obtained. 
+where _observed_ stands for the number of disease-disease associations (disease A and disease B), and _expected_ is estimated based on the occurrence of each disease (number of patients diagnosed with disease A, _nA_, multiplied by the number of patients diagnosed with the comorbid disorder B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a comorbidity score of 1.0 means that the observed comorbidities are higher than two fold (approximately) than expected.
+    
+#### Relative risk (RR)
+The relative risk (RR) expresses the relationship between the rate of incidence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. The RR value moves from 0 to infinite.
 
+  * RR = 1: The risk is the same for patients exposed to the factor of risk than for those patients that are not exposed. 
+  * RR > 1: The patients exposed to the factor of risk are more likely to suffer the disease. It is a risk factor.
+  * RR < 1: The patients exposed to the factor of risk are less likely to suffer the disease. It is a protection factor.
+
+The RR is estimated as the fraction between the number of patients diagnosed with both diseases and random expectation based on disease prevalence [@hidalgo2009dynamic]. The RR of observing a pair of diseases A and B affecting the same patient is given by: $$RR_{AB} = \cfrac{C_{AB} N}{P_A P_B}$$
+
+where _CAB_ is the number of patients affected by both diseases, _N_ is the total number of patients in the population and _PA_ and _PB_ are the prevalences of diseases A and B.
+
+#### Phi value (Pearsons correlation for binary variables) 
+Phi value measures the robustness of the comorbidity association. It can be expressed mathematically as:$$\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}$$
+
+where _N_ is the total number of patients in the population, _PA_ i and _PB_ are incidences/prevalences of phenotypes A and B respectively. _CAB_ is the number of patients that have been diagnosed with both phenotypes A and B, and _PA PB_ is the random expectation based on disease prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.
+
+#### Odds ratio
+The odds ratio represents the increased chance that someone suffering phenotypes A will have the comorbid phenotypes B. It shows the extent to which suffering a phenotypes increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype
+
+** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to asses phenotype co-occurrence.**
 
 The `genoPhenoComorbidity` function requires 6 arguments:  
 
@@ -254,8 +319,6 @@ The `genoPhenoComorbidity` function requires 6 arguments:
   - mutation: determine the mutation of interest and the value of this mutation.
 
 
-## Phenotype co-occurrence
-
 ```{r phenoCooccurrence}
 genophenoComor <- genoPhenoComorbidity( 
               input         = genophenoExData,
@@ -264,6 +327,12 @@ genophenoComor <- genoPhenoComorbidity(
               ageRange      = c(4,18),
               gender        = "ALL", 
               )
+```
+
+As a result, a `genophenoComor` object is obtained. This object contains a summary of the phenotype co-occurrences that have been found.
+
+```{r phenoCooccurrence2}
+class( genophenoComor )
 genophenoComor
 ```
 
@@ -274,7 +343,6 @@ The function `genophenoPrevalence`  displays in a data frame:
     * Number of patients (N_patients)
     * Prevalence
     * Confidence interval
-
 
 
 ```{r genophenoPrevalence}
