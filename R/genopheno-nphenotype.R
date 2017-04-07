@@ -1,4 +1,4 @@
-#' @describeIn nphenotype get the distinc phenotypes 
+#' @describeIn nphenotype get the distinct phenotypes 
 #' @return The number of unique phenotypes
 setMethod( "nphenotype",
     signature = "genopheno",

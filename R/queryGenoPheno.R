@@ -1,13 +1,13 @@
 #' Query your data and generates a \code{genopheno}
 #'
 #' Given a tabulated file, checks if it contains the data in the 
-#' correct format and generates a \code{phenotype} object.
+#' correct format and generates a \code{genopheno} object.
 #'
 #' @param inputDataFile Determines the file with the complete path where the required 
 #' input file is located. This input file must contain three columns: "patient_id" with
 #' the patient identifier, "Gender" and "Age". Mutation columns must start with "M." while
 #' phenotype ones must start with a "P."
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
@@ -53,7 +53,7 @@ queryGenoPheno <- function( inputDataFile ,verbose = FALSE, warnings= TRUE) {
 
     
         if( verbose == TRUE) {
-        message( "There are ", length( unique ( patientComplete$patient_id)), " patients in your input data whith complete information for all your variables, from the initial ", length( unique ( patients$patient_id ) ), " patients in your list.")
+        message( "There are ", length( unique ( patientComplete$patient_id)), " patients in your input data with complete information for all your variables, from the initial ", length( unique ( patients$patient_id ) ), " patients in your list.")
         message("Checking the number of mutations in the inputData file")
         }
     

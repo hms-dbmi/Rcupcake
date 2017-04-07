@@ -13,10 +13,10 @@ irctquery(url, apiKey, query, outputPath = getwd(), verbose = FALSE)
 
 \item{query}{A text file containing the JSON query body.}
 
-\item{outputPath}{Path where the output file will be saved.By default it will be 
+\item{outputPath}{Path where the output file will be saved. By default it will be 
 saved in your working directory}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 }
 \value{

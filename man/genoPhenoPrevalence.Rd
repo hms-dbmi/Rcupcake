@@ -10,7 +10,7 @@ genoPhenoPrevalence(input, verbose = FALSE, warnings = FALSE)
 \item{input}{A \code{genophenoComor} object, obtained 
 by applying the \code{comorbidityAnalysis} function}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see

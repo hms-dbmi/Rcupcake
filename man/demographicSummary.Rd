@@ -18,7 +18,7 @@ Depending on the database it can be determined, for example, as \code{Male}, .
 Depending on the database it can be determined, for example, as \code{Female}, .
 \code{FEMALE}, \code{F}, with digits as \code{0} or \code{1}.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see

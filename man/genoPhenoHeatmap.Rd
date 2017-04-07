@@ -34,7 +34,7 @@ By default it is set to \code{"#cde6ff"}.}
 \item{highColor}{Determines the heatmap color for the highest value.
 By default it is set to \code{"red"}.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 }
 \value{

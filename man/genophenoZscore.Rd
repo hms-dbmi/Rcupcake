@@ -15,7 +15,7 @@ to -2 and 2.}
 \item{nfactor}{By default 10. Change it into other number if you consider there is any
 categorical variable with more than nfactor values.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 }
 \value{
@@ -24,8 +24,8 @@ variable, if possible.
 }
 \description{
 Given an object of class \code{genopheno}, it transforms continuous into categorical variable 
-applying Z-score. As a result a new \code{genopheno} object is generated. Note that is the number
-of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwhise
+applying Z-score. As a result a new \code{genopheno} object is generated. Note that if the number
+of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwise
 a Kolmogorov-Smirnov test is performed.
 }
 \examples{

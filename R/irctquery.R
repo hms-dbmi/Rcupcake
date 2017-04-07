@@ -6,9 +6,9 @@
 #' @param url  The url.
 #' @param apiKey The key to access to the data. 
 #' @param query A text file containing the JSON query body. 
-#' @param outputPath Path where the output file will be saved.By default it will be 
+#' @param outputPath Path where the output file will be saved. By default it will be 
 #' saved in your working directory
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @return An object of class \code{data.frame} with the query output. 
 #' @examples
@@ -83,7 +83,7 @@ irctquery <- function( url, apiKey, query, outputPath = getwd(), verbose = FALSE
     }
 
     
-    response <-  httr::content(GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
+    response <-  httr::content(httr::GET(paste(IRCT_GET_RESULTS_URL, resultId, "CSV", sep="/")), as="text")
     results <- read.csv(text = response)
     
     if( nrow( results ) == 0){

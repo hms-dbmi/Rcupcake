@@ -12,7 +12,7 @@
 #' @param femaleCode Characters(s) used to determine the female condition of a patient. 
 #' Depending on the database it can be determined, for example, as \code{Female}, .
 #' \code{FEMALE}, \code{F}, with digits as \code{0} or \code{1}. 
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.

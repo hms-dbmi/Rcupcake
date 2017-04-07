@@ -1,16 +1,16 @@
-#' Raw data from \code{genopheno} and \code{genophenoComor}.
-#' 
-#' Obtain the raw data from a query  stored in a 
-#' \code{genopheno} object or the raw data with all the phenotype
-#' comorbidity measures of a \code{genophenoComor} object.
+#' Obtain the raw query from a \code{genopheno} and \code{genophenoComor} object.
 #'
 #' @name extract
-# @rdname extract-methods
-#' @aliases extract
-#' @param object Object of class \code{genopheno} or \code{genophenoComor}
-#' @param ... NO USED
-#' @return A \code{data.frame} containing \code{data.frame}  with the results
-#' from a query or a \code{data.frame} with the phenotype comorbidity result.
+#' @rdname extract-methods
+#' @param object of class \code{genophenoComor} or \code{genopheno} object
+#' @return A \code{data.frame} containing the raw result from the initial data 
+#' (genopheno)or comorbidity analysis (genophenoComor)
+#' @examples
+#' \dontrun{
+#' #Being x an genophenoComor
+#' qr <- extract(x) 
+#' }
+#' @export
 setGeneric ("extract",
             function(object, ...){standardGeneric("extract")}
 )

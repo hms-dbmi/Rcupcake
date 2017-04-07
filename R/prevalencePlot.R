@@ -1,9 +1,12 @@
-#' Plot the phenotype prevalence related to a mutation in a network
+#' Plot the phenotype prevalence in a barplot (when there is not any mutation) and in a network 
+#' if a mutation is defined
 #'
-#'Given mutation and a \code{genophenoComor} object table a network is obtained.
+#'Given a \code{genophenoComor} object a barplot or a network is obtained.
 #'
 #' @param input A \code{genophenoComor} object, obtained 
 #' by applying the \code{comorbidityAnalysis} function
+#' @param mutation Determine what is the mutation value of interest for 
+#' performing the comorbidity analysis. 
 #' @param layout By default \code{'layout.fruchterman.reingold'}. It can be set 
 #' to any other of the possible igraph layouts. 
 #' @param title Determines the title of the network figure. By default 
@@ -12,21 +15,21 @@
 #' By default the \code{interactive} argument is set up as \code{FALSE}. The value 
 #' of the argument can be changed to \code{TRUE}, as a result an interactive 
 #' network will be obtained.
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
 #'  
-#' @return A network
+#' @return A barplot or a network
 #' @examples
 #' load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
-#' ntwk <- prevalenceNetwork( 
+#' ntwk <- prevalencePlot( 
 #'               input            = genophenoComor 
 #'               )
-#' @export prevalenceNetwork
+#' @export prevalencePlot
 #' 
 
-prevalenceNetwork <- function( input, layout = "layout.circle", title = "Phenotype prevalence network", interactive = FALSE, verbose = FALSE ) {
+prevalencePlot <- function( input, layout = "layout.circle", title = "Phenotype prevalence", mutation, interactive = FALSE, verbose = FALSE ) {
     
     message("Checking the input object")
     checkClass <- class(input)[1]
@@ -60,11 +63,14 @@ prevalenceNetwork <- function( input, layout = "layout.circle", title = "Phenoty
     
     
     prevalenceTable <- disPrev
-    prevalenceTable$mutation <- paste0( input@mutation[1], ": ", input@mutation[2])
     
-    edges <- data.frame( prevalenceTable[ , c("phenotype", "mutation")] )
-    netw  <- igraph::graph.data.frame( edges, directed = FALSE )
-    netw  <- igraph::simplify( netw )
+    if( !missing( mutation ) )
+    {
+        prevalenceTable$mutation <- paste0( input@mutation[1], ": ", input@mutation[2])
+        
+        edges <- data.frame( prevalenceTable[ , c("phenotype", "mutation")] )
+        netw  <- igraph::graph.data.frame( edges, directed = FALSE )
+        netw  <- igraph::simplify( netw )
         
         if(layout == "layout.fruchterman.reingold"){
             lay   <- igraph::layout.fruchterman.reingold( netw )
@@ -103,20 +109,20 @@ prevalenceNetwork <- function( input, layout = "layout.circle", title = "Phenoty
                     layout.lgl, layout.graphopt, layout.svd, layout.norm"
             )
         } 
-
-    
+        
+        
         sizes <- c( as.numeric(prevalenceTable[ , "Prevalence(%)" ]), 30)
         names( sizes ) <- c(prevalenceTable[ , "phenotype" ], paste0( input@mutation[1], ": ", input@mutation[2]))
-
-      
-
+        
+        
+        
         if( verbose ) {
             message( "The network contains ", igraph::vcount( netw ), " nodes and ", igraph::ecount( netw ), " edges." )
         }
         
-
         
-
+        
+        
         if(interactive == FALSE){
             plot( netw, 
                   vertex.frame.color = "white",
@@ -159,4 +165,22 @@ prevalenceNetwork <- function( input, layout = "layout.circle", title = "Phenoty
             
             
         }
+            
+    }else{
+
+        colnames( prevalenceTable )[3] <- "Prevalence"
+        
+        p <- ggplot2::qplot(x=phenotype, y=Prevalence, fill=phenotype,
+                               data=prevalenceTable)+
+            ggplot2::geom_bar(position = "dodge", 
+                              stat="identity", 
+                              colour = "black")
+
+        p <- p + ggplot2::scale_fill_grey()
+        p <- p + ggplot2::theme_classic( ) + ggplot2::theme( plot.margin = ggplot2::unit ( x = c ( 5, 15, 5, 15 ), units = "mm" ), 
+                                                             axis.line = ggplot2::element_line ( size = 0.7, color = "black" ), text = ggplot2::element_text ( size = 11 ) ,
+                                                             axis.text.x = ggplot2::element_text ( angle = 45, size = 10, hjust = 1 ))
+        p
+
+    }
 }

@@ -1,8 +1,8 @@
 #' Transform continuous in categorical variables and generates a new \code{genopheno} object.
 #'
 #' Given an object of class \code{genopheno}, it transforms continuous into categorical variable 
-#' applying Z-score. As a result a new \code{genopheno} object is generated. Note that is the number
-#' of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwhise
+#' applying Z-score. As a result a new \code{genopheno} object is generated. Note that if the number
+#' of individuals is lower than 5000 a Saphiro test is done to test the normal distribution, otherwise
 #' a Kolmogorov-Smirnov test is performed. 
 #' 
 #'     
@@ -11,7 +11,7 @@
 #' categorical variable with more than nfactor values. 
 #' @param cutOff Z-score cut-off to categorize the continuous variable. By default it is set 
 #' to -2 and 2. 
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @return A \code{genopheno} class object with the continuous variable transformed into a categorical
 #' variable, if possible. 
@@ -57,7 +57,7 @@ genophenoZscore <- function( input, cutOff = c(-2, 2), nfactor = 10, verbose = F
         }else{
             
             if( verbose == TRUE){
-                message( as.character(ph$variable[i]), " phenotype is considerede as a continuous variable")
+                message( as.character(ph$variable[i]), " phenotype is considered as a continuous variable")
                 message("Checking is the variable follows a normal distribution")
             } 
             

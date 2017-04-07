@@ -5,7 +5,7 @@
 #'
 #' @param input A \code{genophenoComor} object, obtained 
 #' by applying the \code{comorbidityAnalysis} function
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.

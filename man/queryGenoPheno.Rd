@@ -12,7 +12,7 @@ input file is located. This input file must contain three columns: "patient_id" 
 the patient identifier, "Gender" and "Age". Mutation columns must start with "M." while
 phenotype ones must start with a "P."}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see
@@ -23,7 +23,7 @@ An object of class \code{phenotype}
 }
 \description{
 Given a tabulated file, checks if it contains the data in the 
-correct format and generates a \code{phenotype} object.
+correct format and generates a \code{genopheno} object.
 }
 \examples{
 queryExample <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), 

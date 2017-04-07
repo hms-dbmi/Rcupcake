@@ -26,7 +26,7 @@ performing the comorbidity analysis. By default \code{ALL}. Change it to the
 gender of interest for your comorbidity analysis.}
 
 \item{mutation}{Determine what is the mutation value of interest for 
-performing the comorbidity analysis. By default \code{c("ALL", "ALL")}. Change it to the 
+performing the comorbidity analysis. By default \code{c("", "")}. Change it to the 
 value of interest for your comorbidity analysis. For example, \code{c("CHD8", "yes")}}
 
 \item{nfactor}{By default 10. Change it into other number if you consider there is any
@@ -52,7 +52,7 @@ robustness of the comorbidity association.}
 \item{cores}{By default \code{1}. To run parallel computations on machines 
 with multiple cores or CPUs, the cores argument can be changed.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 }
 \value{

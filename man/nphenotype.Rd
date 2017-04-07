@@ -21,7 +21,7 @@ Obtain the phenotypes in a \code{genopheno}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{genopheno}: get the distinc phenotypes
+\item \code{genopheno}: get the distinct phenotypes
 }}
 
 \examples{

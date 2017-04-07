@@ -9,7 +9,7 @@
 #' the yes/no phenotype data is located.
 #' @param phenotypeA One of the phenotypes of interest and the value 
 #' in which user is interested. For example, c("FacialExpression", "yes)
-#' @param phenotypeB The second phenotype of interest.and the value 
+#' @param phenotypeB The second phenotype of interest and the value 
 #' in which user is interested. For example, c("HandMovement", "yes)
 #' @param aggregate By default TRUE. Change it to FALSE if you want to 
 #' analyze the comorbidity taking into all the values of each phenotype.
@@ -26,7 +26,7 @@
 #' categorical variable with more than nfactor values. 
 #' @param cores By default \code{1}. To run parallel computations on machines 
 #' with multiple cores or CPUs, the cores argument can be changed. 
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
@@ -34,17 +34,18 @@
 #' @examples
 #' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 #' ex1 <- genoPhenoPatientsSelection( 
-#'               input         = queryExample,
+#'               input         = genophenoExData,
 #'               pth           = system.file("extdata", package="genophenoR"),
 #'               phenotypeA    = c("Herpes", "yes"),
 #'               phenotypeB    = c("HIV", "yes"),
 #'               aggregate     = TRUE, 
-#'               ageRange      = c(0,16),
+#'               ageRange      = c(18,40),
 #'               gender        = "male", 
 #'               )
 #' @export genoPhenoPatientsSelection
 
 genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotypeA, phenotypeB, aggregate = TRUE, gender="ALL", mutation=c("ALL", "ALL"), nfactor = 10, cores = 1, verbose = FALSE, warnings = TRUE ){
+    
     
     message("Checking the input object")
     checkClass <- class(input)[1]
@@ -61,7 +62,7 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
     
     message( "Loading the phenotype data file" )
  
-    codes <- read.delim ( file.path(pth, "phenoValues.txt"),
+    codes <- read.delim ( file.path(pth, "phenoSummary.txt"),
                           header=TRUE, 
                           sep="\t", 
                           colClasses="character" ) 
@@ -75,7 +76,7 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
         if( nrow( checkPheno) != 2 | 
             ! tolower( rownames( checkPheno)[1] ) %in% good |
             ! tolower( rownames( checkPheno)[2] ) %in% good){
-            message("The yesno column in the phenoValues file is not filled correctly. Please, revise it,\nand check that the only possible values for this column are: yes and no.")
+            message("The yesno column in the phenoSummary file is not filled correctly. Please, revise it,\nand check that the only possible values for this column are: yes and no.")
             stop()
         }
 
@@ -86,8 +87,8 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
                                      codes$phenotype == phenotypeB[1], c(1,2,ncol(codes)),]
             
         for( j in 1:nrow(codesSelection)){
-                data[ ,pAcolumn][ data[ ,pAcolumn] == codesSelection$PhenotypeValue[j]] <- codesSelection$yesno[j]
-                data[ ,pBcolumn][ data[ ,pBcolumn] == codesSelection$PhenotypeValue[j]] <- codesSelection$yesno[j]
+                data[ ,pAcolumn][ data[ ,pAcolumn] == codesSelection$phenotypeValue[j]] <- codesSelection$yesno[j]
+                data[ ,pBcolumn][ data[ ,pBcolumn] == codesSelection$phenotypeValue[j]] <- codesSelection$yesno[j]
                 }
         
         qresult <- data[ data[,pAcolumn] == phenotypeA[2] & data[,pBcolumn] == phenotypeB[2], ]
@@ -133,7 +134,7 @@ genoPhenoPatientsSelection <- function ( input, pth, ageRange=c(0,100), phenotyp
             message( "For each phenotypes, all the possible values will be used")
             pAcolumn <- which(colnames(data) == paste0("P.", phenotypeA[1]))
             pBcolumn <- which(colnames(data) == paste0("P.", phenotypeB[1]))
-            qresult <- data[ data[,pAcolumn] == phenotypeA[2] & data[,pBcolumn] == phenotypeB[2], ]
+            qresult <- data[ tolower(data[,pAcolumn]) == tolower(phenotypeA[2]) & tolower(data[,pBcolumn]) == tolower(phenotypeB[2]), ]
             
             if ( !missing( ageRange ) ) {
                 

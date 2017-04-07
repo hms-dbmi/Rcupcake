@@ -21,7 +21,7 @@ years old.}
 \item{phenotypeA}{One of the phenotypes of interest and the value 
 in which user is interested. For example, c("FacialExpression", "yes)}
 
-\item{phenotypeB}{The second phenotype of interest.and the value 
+\item{phenotypeB}{The second phenotype of interest and the value 
 in which user is interested. For example, c("HandMovement", "yes)}
 
 \item{aggregate}{By default TRUE. Change it to FALSE if you want to 
@@ -41,7 +41,7 @@ categorical variable with more than nfactor values.}
 \item{cores}{By default \code{1}. To run parallel computations on machines 
 with multiple cores or CPUs, the cores argument can be changed.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
 \item{warnings}{By default \code{TRUE}. Change it to \code{FALSE} to don't see
@@ -58,12 +58,12 @@ both phenotypes are selected.
 \examples{
 load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
 ex1 <- genoPhenoPatientsSelection( 
-              input         = queryExample,
+              input         = genophenoExData,
               pth           = system.file("extdata", package="genophenoR"),
               phenotypeA    = c("Herpes", "yes"),
               phenotypeB    = c("HIV", "yes"),
               aggregate     = TRUE, 
-              ageRange      = c(0,16),
+              ageRange      = c(18,40),
               gender        = "male", 
               )
 }

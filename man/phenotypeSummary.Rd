@@ -2,8 +2,8 @@
 % Please edit documentation in R/phenotypeSummary.R
 \name{phenotypeSummary}
 \alias{phenotypeSummary}
-\title{Describes the phenotypic characteristics for the whole study population then according to the 
-status regarding one selected gene}
+\title{Describes the phenotypic characteristics for the whole study population. If gene is selected, 
+the summary will contain the results regardin the selected gene.}
 \usage{
 phenotypeSummary(input, mutation = FALSE, nfactor = 10, showTable = TRUE,
   showFigures = FALSE, path = getwd(), verbose = FALSE)
@@ -11,22 +11,22 @@ phenotypeSummary(input, mutation = FALSE, nfactor = 10, showTable = TRUE,
 \arguments{
 \item{input}{Object of \code{genopheno} class.}
 
-\item{mutation}{Determines the mutation of interest for wchich you want to analyze the 
+\item{mutation}{Determines the mutation of interest for which you want to analyze the 
 phenotype values. By default FALSE.}
 
 \item{nfactor}{By default 10. Change it into other number if you consider there is any
 categorical variable with more than \code{nfactor} values.}
 
 \item{showTable}{By default TRUE. Change it into FALSE in order to not visualize the table
-with the ressults.}
+with the results.}
 
 \item{showFigures}{By default FALSE. Change it into TRUE in order to visualize the table
-with the ressults.}
+with the results.}
 
 \item{path}{By default the working directory. Define the path where you want the file to 
 be saved}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 }
 \value{
@@ -34,11 +34,11 @@ A file .
 }
 \description{
 Given an object of class \code{genopheno}, a file with the different values for each phenotype, 
-and the prevalence of each one in general population and according to the gene status selected
-is generated. A figure containing a barplot for each phenotype is displayed. Each barplot shows 
-the population percentage suffering each type of the phenotypes according to the values it takes, 
-and distinguishing between those having or not a mutation. Furthermore, a data.frame with the 
-numerical values is obtained.
+and the prevalence of each one in general population and according to the gene status, if present,
+is generated. A figure containing a barplot or boxplot for each phenotype is displayed. 
+Each barplot shows the population percentage suffering each type of the phenotypes according to the values it takes, 
+and distinguishing between those having or not a mutation, if present. 
+Furthermore, a data.frame with the numerical values is obtained.
 }
 \examples{
 load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))

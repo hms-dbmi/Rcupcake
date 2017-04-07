@@ -30,6 +30,6 @@ Imports:
     httr
 NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
-Maintainer: Alba Gutierrez-Sacristan <alba.gutierrez@upf.edu>
+Maintainer: Alba Gutierrez-Sacristan <alba_gutierrez@hms.harvard.edu>
 biocViews: Software, BiomedicalInformatics, Genetics, DataRepresentation
 RoxygenNote: 6.0.0

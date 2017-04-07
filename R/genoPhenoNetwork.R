@@ -28,7 +28,7 @@
 #' network will be obtained.
 #' @param comorColor  Determines the node color for the comorbid disorders. 
 #' By default it is set to \code{"lightblue"}.
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get a
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #'  
 #' @return A network

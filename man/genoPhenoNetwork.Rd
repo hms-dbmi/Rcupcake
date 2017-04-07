@@ -41,7 +41,7 @@ network will be obtained.}
 \item{comorColor}{Determines the node color for the comorbid disorders. 
 By default it is set to \code{"lightblue"}.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get a
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
 \item{databasePth}{Determines the path where the intermediate RData objects 
