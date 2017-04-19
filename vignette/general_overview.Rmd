@@ -20,7 +20,7 @@ author:
   affiliation: *dbmi
 - name: Paul Avillach
   affiliation: *dbmi
-  date: "`r doc_date()`"
+date: "`r doc_date()`"
 package: "`r pkg_ver('genophenoR')`"
 bibliography: general_overview.bib
 csl: biomed-central.csl
@@ -30,7 +30,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 output: 
   BiocStyle::html_document2:
-  toc_float: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}

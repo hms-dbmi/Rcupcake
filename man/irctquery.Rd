@@ -4,13 +4,9 @@
 \alias{irctquery}
 \title{Query analysis to the API}
 \usage{
-irctquery(url, apiKey, query, outputPath = getwd(), verbose = FALSE)
+irctquery(query, outputPath = getwd(), verbose = FALSE)
 }
 \arguments{
-\item{url}{The url.}
-
-\item{apiKey}{The key to access to the data.}
-
 \item{query}{A text file containing the JSON query body.}
 
 \item{outputPath}{Path where the output file will be saved. By default it will be 
@@ -29,8 +25,6 @@ the output of the query.
 \examples{
 
 query <- irctquery( 
-              url         = "https://nhanes.hms.harvard.edu/", 
-              apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9", 
               query  = system.file("extdata", "jsonQueryNhanes", package="genophenoR"))
               )
 }

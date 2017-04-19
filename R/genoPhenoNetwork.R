@@ -26,8 +26,6 @@
 #' By default the \code{interactive} argument is set up as \code{FALSE}. The value 
 #' of the argument can be changed to \code{TRUE}, as a result an interactive 
 #' network will be obtained.
-#' @param comorColor  Determines the node color for the comorbid disorders. 
-#' By default it is set to \code{"lightblue"}.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #'  
@@ -44,7 +42,7 @@
 #' @export genoPhenoNetwork
 #' 
 
-genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "patientsPhenoAB", title = "Phenotype comorbidity network", cutOff = 0, npairs = 0, prop  = 1, interactive = FALSE, comorColor = "lightblue", verbose = FALSE ) {
+genoPhenoNetwork <- function( input, layout = "layout.circle", selectValue = "patientsPhenoAB", title = "Phenotype comorbidity network", cutOff = 0, npairs = 0, prop  = 1, interactive = FALSE,verbose = FALSE ) {
     
     
     if( verbose == TRUE){

@@ -27,7 +27,8 @@ Imports:
     d3heatmap,
     gtools,
     shiny, 
-    httr
+    httr, 
+    jsonlite
 NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
 Maintainer: Alba Gutierrez-Sacristan <alba_gutierrez@hms.harvard.edu>
