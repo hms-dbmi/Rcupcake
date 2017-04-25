@@ -1,12 +1,12 @@
-# genophenoR
+# Rcupcake
 
-`genophenoR` is an R package to the integrative analysis of phenotype and genotype information from electronic health record data
+`Rcupcake` is an R package for querying and analyzing the different layers of biomedical data through the BD2K PIC-SURE RESTful API
 
 
 
 ## What is this repository for?
 
-This repository is used for `genophenoR` package. 
+This repository is used for `Rcupcake` package. 
 
 ## Package' Status
 
