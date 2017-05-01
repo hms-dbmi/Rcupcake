@@ -1,19 +1,19 @@
 #' \code{genopheno} obtained from quering NHANES with an example query.
 #'
 #' A dataset obtained from NHANES after being queried with 
-#' \code{irctquery} on \code{"NHANES"} database.
+#' \code{my.data} on \code{"NHANES"} database.
 #'
 #' @usage data("qr")
 #' @format   The format is:
-#' Formal class 'genopheno' [package "genophenoR"] with 6 slots
-#'   .. nMutations    : int 0
+#' Formal class 'genopheno' [package "Rcupcake"] with 6 slots
+#'   .. nVariations   : int 0
 #'   .. nPhenotype    : int 3
 #'   .. nPatient      : int 41474
 #'   .. iresult       : 'data.frame'
-#'   .. mutations     : 'data.frame'
+#'   .. variations    : 'data.frame'
 #'   .. phenotypes    : 'data.frame' 
-#' @return A \code{genopheno} object.
+#' @return A \code{cupcakeData} object.
 #' @examples
-#' nmutation(qr)
-#' nphenotype(qr)
+#' n.variations(qr)
+#' n.phenotype(qr)
 #' @export qr

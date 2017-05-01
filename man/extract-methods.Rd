@@ -2,23 +2,23 @@
 % Please edit documentation in R/allGenerics.R
 \name{extract}
 \alias{extract}
-\title{Obtain the raw query from a \code{genopheno} and \code{genophenoComor} object.}
+\title{Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.}
 \usage{
 extract(object, ...)
 }
 \arguments{
-\item{object}{of class \code{genophenoComor} or \code{genopheno} object}
+\item{object}{of class \code{cupcakeData} or \code{cupcakeResults} object}
 }
 \value{
-A \code{data.frame} containing the raw result from the initial data 
-(genopheno)or comorbidity analysis (genophenoComor)
+A \code{data.frame} containing the raw data 
+(cupcakeData)or co-occurrence analysis results (cupcakeResults)
 }
 \description{
-Obtain the raw query from a \code{genopheno} and \code{genophenoComor} object.
+Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.
 }
 \examples{
 \dontrun{
-#Being x an genophenoComor
+#Being x an cupcakeResults
 qr <- extract(x) 
 }
 }

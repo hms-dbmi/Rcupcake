@@ -1,13 +1,13 @@
-#' Obtain the raw query from a \code{genopheno} and \code{genophenoComor} object.
+#' Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.
 #'
 #' @name extract
 #' @rdname extract-methods
-#' @param object of class \code{genophenoComor} or \code{genopheno} object
-#' @return A \code{data.frame} containing the raw result from the initial data 
-#' (genopheno)or comorbidity analysis (genophenoComor)
+#' @param object of class \code{cupcakeData} or \code{cupcakeResults} object
+#' @return A \code{data.frame} containing the raw data 
+#' (cupcakeData)or co-occurrence analysis results (cupcakeResults)
 #' @examples
 #' \dontrun{
-#' #Being x an genophenoComor
+#' #Being x an cupcakeResults
 #' qr <- extract(x) 
 #' }
 #' @export
@@ -16,34 +16,34 @@ setGeneric ("extract",
 )
 
 
-#' Getter from \code{genopheno}.
+#' Getter from \code{cupcakeData}.
 #' 
-#' Obtain the mutations in a \code{genopheno}.
+#' Obtain the alteration variables in a \code{cupcakeData}.
 #'
-#' @name nmutation
-# @rdname nmutation-methods
-#' @aliases nmutation
-#' @param object Object of class \code{genopheno}.
+#' @name n.variation
+# @rdname n.variation-methods
+#' @aliases n.variation
+#' @param object Object of class \code{cupcakeData}.
 #' @examples
 #' data(qr)
-#' nmutation(qr)
+#' n.variation(qr)
 #' @export
-setGeneric ("nmutation",
-            function(object){standardGeneric("nmutation")}
+setGeneric ("n.variation",
+            function(object){standardGeneric("n.variation")}
 )
 
-#' Getter from \code{genopheno}.
+#' Getter from \code{cupcakeData}.
 #' 
-#' Obtain the phenotypes in a \code{genopheno}.
+#' Obtain the phenotypes in a \code{cupcakeData}.
 #'
-#' @name nphenotype
-# @rdname nphenotype-methods
-#' @aliases nphenotype
-#' @param object Object of class \code{genopheno}.
+#' @name n.phenotype
+# @rdname n.phenotype-methods
+#' @aliases n.phenotype
+#' @param object Object of class \code{cupcakeData}.
 #' @examples
 #' data(qr)
-#' nphenotype(qr)
+#' n.phenotype(qr)
 #' @export
-setGeneric ("nphenotype",
-            function(object){standardGeneric("nphenotype")}
+setGeneric ("n.phenotype",
+            function(object){standardGeneric("n.phenotype")}
 )

@@ -1,5 +1,5 @@
 ---
-title: "genophenoR: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API"
+title: "Rcupcake: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API"
 author:
 - name: Alba Gutierrez-Sacristan
   affiliation: 
@@ -21,11 +21,11 @@ author:
 - name: Paul Avillach
   affiliation: *dbmi
 date: "`r doc_date()`"
-package: "`r pkg_ver('genophenoR')`"
+package: "`r pkg_ver('Rcupcake')`"
 bibliography: general_overview.bib
 csl: biomed-central.csl
 vignette: >
-  %\VignetteIndexEntry{genophenoR: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API}
+  %\VignetteIndexEntry{Rcupcake: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: 
@@ -39,21 +39,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The `genophenoR` package contains functions to query different databases through the BD2K RESTful API, a programmatic interface that provides access to different data sources, making easier data accessibility, analysis reproducibility and scalability. The `genophenoR` package includes analysis functions to study demographic population, phenotype descriptive analysis, prevalence and co-occurrence, according to patient age, gender and mutation status if data available. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
+The `Rcupcake` package contains functions to query different databases through the BD2K RESTful API, a programmatic interface that provides access to different data sources, making easier data accessibility, analysis reproducibility and scalability. The `Rcupcake` package includes analysis functions to study demographic population, phenotype descriptive analysis, prevalence and co-occurrence, according to patient age, gender and variation status if data available. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
 
 
 ## Background
 
 In the era of big data and precision medicine, the number of databases containing clinical and genomic information is increasing in an exponential way. Enables the experts to focus on their research questions rather than in the computation data merging, access and management is one of the biggest challenges nowadays. 
 
-Towards the aim of developing reproducible and scalable analysis, the `genophenoR` package has been developed. This R package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover it allows to easily reproducible analysis between different databases as well as its integra-tion with other packages available in R to develop bioinformatics analy-sis workflows. 
+Towards the aim of developing reproducible and scalable analysis, the `Rcupcake` package has been developed. This R package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover it allows to easily reproducible analysis between different databases as well as its integration with other packages available in R to develop bioinformatics analysis workflows. 
 
-The tasks that can be performed with `genophenoR` package are the following:
+The tasks that can be performed with `Rcupcake` package are the following:
 
-  1. query through the BD2K PIC-SURE API RESTful API
+  1. Query through the BD2K PIC-SURE API RESTful API
   2. Demographic descriptive analysis based on age and gender
   3. Phenotype descriptive analysis taking into account continuous and categorical variables. 
-  4. Phenotype prevalence and co-occurrence analysis according to age, gender and gene mutation status if available. 
+  4. Phenotype prevalence and co-occurrence analysis according to age, gender and gene variation status if available. 
   5. Extract those patients that have been diagnosed with a determined pair of phenotypes. 
 
   
@@ -61,10 +61,10 @@ In the following sections the specific functions that can be used to address eac
 
 ## Installation 
 
-The package \texttt{genophenoR} is provided through GitHub. To install \texttt{genophenoR} the user must type the two following commands in an R session:
+The package \texttt{Rcupcake} is provided through GitHub. To install \texttt{Rcupcake} the user must type the two following commands in an R session:
 
 ```{r bioC, eval=FALSE}
-install_github("hms-dbmi/genophenoR")
+install_github("hms-dbmi/Rcupcake")
 ```
 
 ```{r knirt, echo=FALSE, message=FALSE, warning=FALSE}
@@ -72,142 +72,157 @@ library(knitr)
 ```
 
 ```{r load_library, message=FALSE, warning=FALSE}
-library(genophenoR)
+library(Rcupcake)
 ```
 
 
 ## S4 objects 
 
-### `genopheno`
+### `cupcakeData`
 
-`genopheno` object is obtained when `queryGenoPheno` and `genophenoZscore` functions are applied. This object is used as input for `demographicSummary` and `phenotypeSummary`  descriptive functions. The `genopheno` object contains the table dataset and shows the main characteristic:
+`cupcakeData` object is obtained when `dataframe2cupcake` and `z.score` functions are applied. This object is used as input for `demographicSummary` and `phenotypeSummary`  descriptive functions. The `cupcakeData` object contains the table dataset and shows the main characteristic:
 
-  - The number of mutation variables (N. Mutations)
+  - The number of variations (N. Variations)
   - The number of phenotype variables (N. Phenotypes)
   - The number of patients (N. Patients)
 
-```{r genophenoObj1, echo=FALSE}
-load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
+```{r cupcakeDataObj1, echo=FALSE}
+load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
 ```
 
-```{r genophenoObj2}
-genophenoExData
-class( genophenoExData )
+```{r cupcakeDataObj2}
+RcupcakeExData
+class( RcupcakeExData )
 ```
 
-This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `nphenotype`, `nmutation` and `extract`. 
+This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `nphenotype`, `nvariation` and `extract`. 
 
 The `nphenotype` function returns the phenotypes present in the output of the given query.
 ```{r nphenotype}
-nphenotypeExample <- genophenoR::nphenotype( genophenoExData )
+nphenotypeExample <- Rcupcake::n.phenotype( RcupcakeExData )
 class( nphenotypeExample )
 nphenotypeExample
 ```
 
-The `nmutation` function returns the mutations present in the output of the given query.
+The `nvariation` function returns the variations present in the output of the given query.
 ```{r extract}
-extractExample <- genophenoR::extract( genophenoExData )
+extractExample <- Rcupcake::extract( RcupcakeExData )
 class( extractExample )
 kable( head( extractExample ) )
 ```
 
 
 The `extract` function returns a formatted `data.frame` with the complete set of information contained in the object, the query results. 
-```{r nmutation}
-nmutationExample <- genophenoR::nmutation( genophenoExData )
-class( nmutationExample )
-nmutationExample
+```{r nvariation}
+nvariationExample <- Rcupcake::n.variation( RcupcakeExData )
+class( nvariationExample )
+nvariationExample
 ```
 
 
-### `genophenoComor`
+### `cupcakeResults`
 
-`genophenoComor` object is obtained when `genoPhenoComorbidity` function is applied. This object is used as input for `genoPhenoPrevalence`, `genoPhenoHeatmap`and `genoPhenoNetwork`  functions. The `genophenoComor` object contains the comorbidity results as well as the comorbidity analysis results and a summary of the different measurements:
+`cupcakeResults` object is obtained when `cupcakeResultsbidity` function is applied. This object is used as input for `pheno.prevalence`, `cooc.heatmap`and `cooc.network`  functions. The `cupcakeResults` object contains the co-occurrence results as well as the co-occurrence analysis results and a summary of the different measurements:
 
   - Minimum age of the patients in the dataset (Age Min)
   - Minimum age of the patients in the dataset (Age Max)
   - Patients gender
-  - Mutation, if selected
+  - variation, if selected
   - Number of patients in the age and gender interval in the database
-  - Number of patients in the age and gender interval with the mutation select
-  - The prevalence of the mutation in the dataset
+  - Number of patients in the age and gender interval with the variation select
+  - The prevalence of the variation in the dataset
   - Odds ratio range 
   - Relative risk range
   - Phi value range
-  - Number of resultant comorbidities
+  - Number of resultant co-occurrences
 
-```{r genophenoComorObj1, echo=FALSE}
-load(system.file("extdata", "genophenoComor.RData", package="genophenoR"))
+```{r cupcakeResultsObj1, echo=FALSE}
+load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
 ```
 
-```{r genophenoComorObj2}
-genophenoComor
-class( genophenoComor )
+```{r cupcakeResultsObj2}
+RcupcakeExData
+class( RcupcakeExData )
 ```
 
-The `genophenoComor` object come with the `extract` function. The `extract` function allows the user to retrieve data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the comorbidity analysis.
+The `cupcakeResults` object come with the `extract` function. The `extract` function allows the user to retrieve data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the co-occurrence analysis.
 
 # Retrieve data from the database
-The first step in order to perform any analysis is extracting the data related to the patients of interest, according to a set of variables of interest, demographic variables, as well as phenotypic or genotypic variables. 
+The first step in order to perform any analysis is extracting the data related to the patients of interest. The next steps should be followed:
+   
+  1. Start session
+  2. Select the variables of interest. 
+  3. Build the JSON query
+  4. Run the query. 
 
-The `irctquerty` function allows the user to extract the data from a specific database and store it in a `data.frame` object. `genophenoR` package allows exploring the database information using the specific url, the key and a JSON query in text format. It retrieves the information that is available in the database according to the user query and allows the analysis and results visualization in different  ways.
-
-In order to perform a query in a database, the user can apply the `irctquerty` function. As input the `irctquerty` function requires:
-
-  - _url_: the ulr of the database
-  - _key_: the personal key to access to the data
-  - _query_: a text file containing the JSON query body
-  - _outputPath_: path where the output file will be saved. By default it will be saved in your working directory
-
-As an example data from NHANES database [@patel2016database] will be retrieve applying the `irctquerty` function to:
-
-  - __url__: "https://nhanes.hms.harvard.edu/"
-  - __key__: to access to the data
-  - __JSON query__: _ select the variables pcb153, HIV, herpes, patient age and gender from all those patients in NHANES database that have age information_. The example of the JSON query provided as input is shown in Figure 1. 
+## Start session 
 
 
-```{r irctquery, eval= TRUE, message=FALSE, warning=FALSE}
-query <- irctquery( 
+```{r startSession, eval=FALSE}
+sessionEx <- start.session( 
               url         = "https://nhanes.hms.harvard.edu/", 
-              apiKey      = "a77l42anvcgdtkfcvbl7hnp2v9", 
-              query       = system.file("extdata", "jsonQueryNhanes", package="genophenoR")
+              apiKey      = "YOURKEY"
               )
+sessionEx
 ```
 
-Figure 1, Query example in NHANES database: 
-![wssss](C:/Users/AG440/Desktop/genophenoR/inst/queryNhanes.png)
 
-The result is a `data.frame` object:
+## Select the variables of interest
 
-```{r irctExample}
-class( query )
-kable( head( query ) )
+```{r get.children, eval=FALSE}
+nhanesPcbs <- get.children( 
+                 fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/", 
+                 url         = "https://nhanes.hms.harvard.edu/"
+              )
+head( nhanesPcbs )
+
+[1] "/nhanes/Demo/laboratory/laboratory/pcbs/3,3,4,4,5,5-hxcb (fg%2Fg)/"
+[2] "/nhanes/Demo/laboratory/laboratory/pcbs/3,3,4,4,5-pncb (fg%2Fg)/"  
+[3] "/nhanes/Demo/laboratory/laboratory/pcbs/3,4,4,5-tcb (fg%2Fg)/"     
+[4] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB101 (ng%2Fg)/"          
+[5] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB105 (ng%2Fg)/"          
+[6] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB110 (ng%2Fg)/"   
 ```
 
-In the particular example used, by inspecting the `data.frame` object, we can see that there are 41474 patients in the database that have age data, and the pcb153, hiv and herpes information for these patients have been extracted correctly. 
+## Build the JSON query
 
-    
+```{r my.query, eval=FALSE}
+queryExample <- my.query( myfields = "PCB153", 
+                          myvector = nhanesPcbs
+               )
+```
 
-# Transform the data in a genopheno object 
-Once the data is in a data.frame format, it has to be transformed into a `genopheno` class object. Note that to perform a correct analysis, the data frame should contain:
+
+## Run the query
+ 
+ 
+```{r my.data, eval=FALSE}
+query <- my.data( 
+              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
+              url    = "https://nhanes.hms.harvard.edu/"
+              )
+```   
+
+# Transform the data in a cupcakeData object 
+Once the data is in a data.frame format, it has to be transformed into a `cupcakeData` class object. Note that to perform a correct analysis, the data frame should contain:
 
   - 3 demographic variables: patient_id, Gender and Age. 
   - phenotype variables name should start with a "P"
-  - mutation variables name, if present, should start with a "M"
+  - variation variables name, if present, should start with a "M"
   
-In order to transform the data.frame into a `genopheno` object, the `queryGenoPheno` function has to be applied. The only input needed is the `inputDataFile`, that determines the file with the complete path where the required input file is located. 
+In order to transform the data.frame into a `cupcakeData` object, the `dataframe2cupcake` function has to be applied. The only input needed is the `input`, that determines the file with the complete path where the required input file is located. 
 
 
-```{r convertToGenophenoRobject}
-genophenoExData <- queryGenoPheno( inputDataFile = paste0(system.file("extdata", package="genophenoR"), "/queryOutput.txt"), 
-                                verbose       = TRUE )
+```{r convertToRcupcakeobject}
+cupcakeExData <- dataframe2cupcake( input = paste0(system.file("extdata", package="Rcupcake"), "/queryOutput.txt"), 
+                                  verbose = TRUE )
 ```
 
 As a result a `genopheno` object class is obtained. 
-```{r convertToGenophenoRobject2}
-class( genophenoExData )
-genophenoExData 
-head( genophenoR::extract( genophenoExData ) )
+```{r convertToRcupcakeobject2}
+class( RcupcakeExData )
+RcupcakeExData 
+head( Rcupcake::extract( RcupcakeExData ) )
 ```
 
 # Transform continuous in categorical variables: zscore
@@ -227,71 +242,71 @@ Note that if the number of individuals is lower than 5000 a Saphiro test [@shapi
 
 As an input `genophenoZscore` function requires:
 
-  * input: a `genopheno` object, obtained with the `queryGenoPheno` function. 
-  * cutOff: determines Z-score cut-off to categorize the continuous variable. By default it is set to -2 and 2. 
+  * input: a `cupcakeData` object, obtained with the `dataframe2cupcake` function. 
+  * zscoreCutOff: determines Z-score cut-off to categorize the continuous variable. By default it is set to -2 and 2. 
   * nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
 
 
 ```{r zscore}
-zscoreExample <- genophenoZscore( input      = genophenoExData,
-                                  cutOff     = c( -2, 2 ), 
-                                  nfactor    = 10, 
-                                  verbose    = TRUE )
+zscoreExample <- z.score( input        = RcupcakeExData,
+                          zscoreCutOff = c( -2, 2 ), 
+                          nfactor      = 10, 
+                          verbose      = TRUE )
 ```
 
-As a result a new `genopheno` object is obtained. Note that the transformation cannot always be done. 
+As a result a new `cupcakeData` object is obtained. Note that the transformation cannot always be done. 
 
 ```{r zscoreExample}
-head( genophenoR::extract( genophenoExData ) )
-head( genophenoR::extract( zscoreExample ) )
+head( Rcupcake::extract( RcupcakeExData ) )
+head( Rcupcake::extract( zscoreExample ) )
 ```
 
 
 # Demographic analysis 
-The `genophenoR` R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the `demographicSummary` function.
+The `Rcupcake` R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the `demographic.summary` function.
 
-The function `demographicSummary` describes the demographic characteristics (sex, age) of the population under study.
-The `demographicSummary` function requires three arguments:
+The function `demographic.summary` describes the demographic characteristics (sex, age) of the population under study.
+The `demographic.summary` function requires three arguments:
 
   - _input_: the genopheno object.
   - _maleCode_: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
   - _femaleCode_: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
 
 
-The `demographicSummary` function output includes:
+The `demographic.summary` function output includes:
   
   - A barplot with the age distribution of the whole study population
   - A boxplot showing the age distribution by gender.
   - A pie chart representing the gender distribution.
 
 ```{r demographicAnalysis, fig.width=8, fig.height=8}
-genophenoR::demographicSummary ( input       = genophenoExData, 
-                                 maleCode    = "male", 
-                                 femaleCode  ="female", 
-                                 verbose     = TRUE )
+Rcupcake::demographic.summary ( input       = RcupcakeExData, 
+                               maleCode    = "male", 
+                               femaleCode  ="female", 
+                               verbose     = TRUE )
 ```
 
 
 # Phenotype analysis
-The `genophenoR` R package includes the `phenotypeSummary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected mutation if genotype information available. otherwise a general summary of the different phenotype values is displayed.     
+The `Rcupcake` R package includes the `phenotype.summary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected variation if genotype information available. otherwise a general summary of the different phenotype values is displayed.     
 
-The `phenotypeSummary` function requires as input the next arguments: 
+The `phenotype.summary` function requires as input the next arguments: 
 
   - input: the `genopheno` object.
-  - mutation: the mutation of interest
+  - variation: the variation of interest
   - nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
   - showTable: the table is displayed before the barplot. 
   - showFigures: results are visualized in barplot or boxplot, depending on the kind of variable. 
   - path: define the path where the output file generated will be saved. 
 
-The `phenotypeSummary` function output could include:   
+The `phenotype.summary` function output could include:   
   
   - A barplot for each categorical phenotype variable
   - A boxplot for each continuous phenotype variable
   - A table if the showTable argument is TRUE
 
 ```{r phenosumm, fig.width=8, fig.height=8, warning= FALSE}
-phenotypeSummary( input       = genophenoExData,
+phenotype.summary( input      = RcupcakeExData,
                   showTable   = TRUE, 
                   showFigures = FALSE)
 ```
@@ -300,12 +315,12 @@ phenotypeSummary( input       = genophenoExData,
 # Phenotypes co-occurrence and prevalence using 
 Having a general overview about the demographics and the phenotypes included in our data, the next step is to perform the phenotype co-occurrence analysis.
 
-The user can estimate the statistically significant comorbidities by applying the `genoPhenoComorbidity` function to the `genopheno`object previously generated with the `queryGenoPheno` function.
+The user can estimate the statistically significant co-occurrences by applying the `co.occurrence` function to the `cupcakeData`object previously generated with the `dataframe2cupcake` function.
 
-### Comorbidity Measurements
-The `genoPhenoComorbidity` identifies all the possible phenotype co-occurrence and quantify them.  Five different quantification measures are estimated:   
+### co-occurrence Measurements
+The `co.occurrence` identifies all the possible phenotype co-occurrence and quantify them.  Five different quantification measures are estimated:   
   - Fisher test
-  - Comorbidity score
+  - co-occurrence score
   - Relative risk (RR)
   - Phi value (Pearson's correlation for binary variables)  
   - Odds ratio
@@ -313,11 +328,11 @@ The `genoPhenoComorbidity` identifies all the possible phenotype co-occurrence a
 ##### Fisher test
 A Fisher exact test for each pair of diseases is performed to assess the null hypothesis of independence between the two diseases. Four groups of patients are defined in order to perform the statistical testing: patients with phenotype A and phenotype B, patients with phenotype A but not phenotype B, patients with phenotype B but not phenotype A and patients without any of the two phenotypes. The Fisher exact test is then applied to estimated the p-value for each pair of diseases. The Benjamini-Hochberg false discovery rate method is applied on the ranked list to correct for multiple testing.
   
-##### Comorbidity score
+##### co-occurrence score
 This score is defined in Roque et al. [@roque2011using] as follows:$$comorbidity score =log_2 \left( \cfrac{observed + 1}{expected + 1} \right)$$
 $$expected = \cfrac{n_{A} n_{B}}{N}$$
 
-where _observed_ stands for the number of disease-disease associations (disease A and disease B), and _expected_ is estimated based on the occurrence of each disease (number of patients diagnosed with disease A, _nA_, multiplied by the number of patients diagnosed with the comorbid disorder B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a comorbidity score of 1.0 means that the observed comorbidities are higher than two fold (approximately) than expected.
+where _observed_ stands for the number of disease-disease associations (disease A and disease B), and _expected_ is estimated based on the occurrence of each disease (number of patients diagnosed with disease A, _nA_, multiplied by the number of patients diagnosed with the comorbid disorder B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.
     
 #### Relative risk (RR)
 The relative risk (RR) expresses the relationship between the rate of prevalence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. The RR value moves from 0 to infinite.
@@ -331,7 +346,7 @@ The RR is estimated as the fraction between the number of patients diagnosed wit
 where _CAB_ is the number of patients affected by both diseases, _N_ is the total number of patients in the population and _PA_ and _PB_ are the prevalence of diseases A and B.
 
 #### Phi value (Pearsons correlation for binary variables) 
-Phi value measures the robustness of the comorbidity association. It can be expressed mathematically as:$$\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}$$
+Phi value measures the robustness of the co-occurrence association. It can be expressed mathematically as:$$\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}$$
 
 where _N_ is the total number of patients in the population, _PA_ i and _PB_ are prevalence of phenotypes A and B respectively. _CAB_ is the number of patients that have been diagnosed with both phenotypes A and B, and _PA PB_ is the random expectation based on disease prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.
 
@@ -340,36 +355,36 @@ The odds ratio represents the increased chance that someone suffering phenotypes
 
 ** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to asses phenotype co-occurrence.**
 
-The `genoPhenoComorbidity` function requires 6 arguments:  
+The `co.occurrence` function requires 6 arguments:  
 
   - input: the `genopheno` object
   - pth: the path where the file with the phenotype values generated previously is located.
   - aggregate: if all the possible phenotypes values want to be considered individually, aggregate must be FALSE. otherwise, the phenotype values should be manually completed by the user (column yes/no) and aggregate must be TRUE. 
   - ageRange: determines what is the age range of interest for performing the analysis.
   - gender: determine what is the gender of interest for performing the co-occurrence analysis. 
-  - mutation: determine the mutation of interest and the value of this mutation.
+  - variation: determine the variation of interest and the value of this variation.
 
 
 ```{r phenoCooccurrence}
-genophenoComor <- genoPhenoComorbidity( 
-              input         = genophenoExData,
-              pth           = system.file("extdata", package="genophenoR"), 
+cupcakeResults <- co.occurrence( 
+              input         = RcupcakeExData,
+              pth           = system.file("extdata", package="Rcupcake"), 
               aggregate    = FALSE, 
-              ageRange      = c(4,18),
+              ageRange      = c(0,85),
               gender        = "ALL", 
               )
 ```
 
-As a result, a `genophenoComor` object is obtained. This object contains a summary of the phenotype co-occurrences that have been found.
+As a result, a `cupcakeResults` object is obtained. This object contains a summary of the phenotype co-occurrences that have been found.
 
 ```{r phenoCooccurrence2}
-class( genophenoComor )
-genophenoComor
+class( cupcakeResults )
+cupcakeResults
 ```
 
 ## Prevalence
 
-The function `genophenoPrevalence`  displays in a data frame:
+The function `pheno.prevalence`  displays in a data frame:
     * Phenotype
     * Number of patients (N_patients)
     * Prevalence
@@ -377,83 +392,82 @@ The function `genophenoPrevalence`  displays in a data frame:
 
 
 ```{r genophenoPrevalence}
-prevalence <- genoPhenoPrevalence( input = genophenoComor )
+prevalence <- pheno.prevalence( input = cupcakeResults )
 
 kable( prevalence, row.names = FALSE)
 ```
 
 ## Plotting the co-occurrence results
 
-`genophenoR` offers several options to visualize the results from the phenotype co-occurrence analysis, in networks and heatmaps.
+`Rcupcake` offers several options to visualize the results from the phenotype co-occurrence analysis, in networks and heatmaps.
 
 ### Network
-By applying the `genophenoNetwork` function. A network showing the phenotypes comorbidities is obtained. By default `genophenoR` package shows a network with `layout.fruchterman.reingold` layout where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different comorbidity measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+By applying the `cooc.network` function. A network showing the phenotypes co-occurrences is obtained. By default `Rcupcake` package shows a network with `layout.fruchterman.reingold` layout where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
-The `genoPhenoNetwork` function requires 3 arguments as input:  
+The `cooc.network` function requires 3 arguments as input:  
 
-   - input: the `genophenoComor` object
-   - selectValue: the co-occurrence measurement 
-   - cutOff: the numeral value of the cutOff
+   - input: the `cupcakeResults` object
+   - representedVariable: the co-occurrence measurement 
+   - variableCutOff: the numeral value of the cutOff
 
-The `genoPhenoNetowrk` function output is a network. Node size is proportional to the phenotype prevalence. Edge numbers represent the selected value. 
+The `cooc.network` function output is a network. Node size is proportional to the phenotype prevalence. Edge numbers represent the selected value. 
 
 
 ```{r phenoNetwork, fig.width=10, fig.height=10}
-genoPhenoNetwork ( input       = genophenoComor,
-                   selectValue = "PercentagePhenoAB", 
-                   cutOff      = 10)
+cooc.network ( input               = cupcakeResults,
+               representedVariable = "patientsPhenoAB", 
+               variableCutOff      = 10)
 ```
 
 
 ### Heatmap
-By applying the `genophenoHeatmap` function, a heatmap is displayed. This function is homologous to the `genophenoNetwork` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different comorbidity measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+By applying the `cooc.heatmap` function, a heatmap is displayed. This function is homologous to the `genophenoNetwork` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
-The `genoPhenoHeatmap` function requires 3 arguments:  
+The `cooc.heatmap` function requires 3 arguments:  
 
-  - input: the `genophenoComor` object
-  - selectValue: the co-occurrence measurement 
-  - cutOff: the numeral value of the cutOff
+  - input: the `cupcakeResults` object
+  - representedVariable: the co-occurrence measurement 
+  - variableCutOff: the numeral value of the cutOff
 
-The `genoPhenoHeatmap` function output is a heatmap. Blue color represents the lower values,  red color represents the upper values. The co-occurrence measurement value is showed in each cell. 
+The `cooc.heatmap` function output is a heatmap. Blue color represents the lower values,  red color represents the upper values. The co-occurrence measurement value is showed in each cell. 
 
 ```{r phenoHeatmap, fig.width=10, fig.height=10 }
-genoPhenoHeatmap ( input       = genophenoComor,
-                   selectValue = "PercentagePhenoAB", 
-                   cutOff      = 0)
+cooc.heatmap ( input               = cupcakeResults,
+               representedVariable = "patientsPhenoAB", 
+               variableCutOff      = 0)
 ```
 
 ## Plotting the prevalence results
 
 ```{r phenoPrevalencePlot, fig.width=10, fig.height=10 }
-prevalencePlot( input   = genophenoComor, 
-                   title   = "Phenotype prevalence", 
+prevalence.plot( input   = cupcakeResults,
                    verbose = TRUE
               )
 ```
 
 
-# Summary of `genophenoR` functions available
+# Summary of `Rcupcake` functions available
 
-| Input Object    | `genophenoR` function | Output Generated                                  |
+| Input Object    | `Rcupcake` function | Output Generated                                  |
 | ----------------|-----------------------|---------------------------------------------------|
-| -               | `irctquery`           | Given an url, a key and a JSON object, it generates a data.frame object with the output of the query|
-|-                | `queryGenoPheno`           | Given a tabulated file, checks if it contains the data in the correct format and generates a `genopheno` objec|
+| -               | `my.data`             | Given an url, a key and a JSON object, it generates a data.frame object with the output of the query|
+|-                | `dataframe2cupcake`           | Given a tabulated file, checks if it contains the data in the correct format and generates a `cupcakeData` objec|
 |
-| `genopheno`     | `demographicSummary`  | 3 plots: age and gender distribution, relation between age and gender distribution|
-|                 | `phenotypeSummary`     | A data.frame with the prevalence of each phenotype according to the value it takes, is retrieved. A figure showing the results can be also obtained. |
+| `cupcakeData`     | `demographic.summary`  | 3 plots: age and gender distribution, relation between age and gender distribution|
+|                 | `phenotype.summary`     | A data.frame with the prevalence of each phenotype according to the value it takes, is retrieved. A figure showing the results can be also obtained. |
 |                 | `extract`             | It generates a data.frame containing the raw data from a query |
-|                 | `genophenoZscore`     | It transforms continuous into categorical variable applying Z-score |
-|                 | `genoPhenoComorbidity`| It generates a genophenoComor object              |
-|                 | `genoPhenoPatientsSelection`| It retrieves a list of patients suffering two phenotypes of interest |
-|                 | `nmutation`           | It retrieves the mutations of your data |
-|                 | `nphenotype`           | It retrieves the phenotypes of your data |
-| genophenoComor  | `genoPhenoHeatmap`    | It generates a heatmap showing the comorbidity analysis results |
-|                 | `genoPhenoNetwork`    | It generates a network showing the comorbidity analysis results |
-|                 | `extract`             | It generates a data.frame containing the comorbidity results |
-|                 | `genoPhenoPrevalence` | It generates a data.frame containing the prevalence of each phenotype |
-|                 | `prevalencePlot`      | It generates a barplot or a network showing the results of the  phenotype's prevalence |
+|                 | `z.score`     | It transforms continuous into categorical variable applying Z-score |
+|                 | `co.occurrence`| It generates a cupcakeResults object              |
+|                 | `patient.selection`| It retrieves a list of patients suffering two phenotypes of interest |
+|                 | `n.variation`           | It retrieves the variations of your data |
+|                 | `n.phenotype`           | It retrieves the phenotypes of your data |
+| cupcakeResults  | `cooc.heatmap`    | It generates a heatmap showing the co-occurrence analysis results |
+|                 | `cooc.network`    | It generates a network showing the co-occurrence analysis results |
+|                 | `extract`             | It generates a data.frame containing the co-occurrence results |
+|                 | `pheno.prevalence` | It generates a data.frame containing the prevalence of each phenotype |
+|                 | `prevalence.plot`      | It generates a barplot or a network showing the results of the  phenotype's prevalence |
 
-: (\#tab:viz-opt) Functions in `genophenoR` R package
+: (\#tab:viz-opt) Functions in `Rcupcake` R package
 
 
 

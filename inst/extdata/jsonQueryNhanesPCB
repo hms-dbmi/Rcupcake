@@ -1,0 +1,100 @@
+{
+"select": [
+      {
+        "field": {
+          "pui": "/nhanes/Demo/laboratory/laboratory/pcbs/PCB153 (ng per g)/",
+          "dataType": "STRING"
+        },
+        "alias": "M.PCB153"
+      },
+  {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/liver_cancer_self_report/No",
+        "datatype": "STRING"
+      },
+      "alias": "P.LiverCancer"
+    },
+    {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/liver_cancer_self_report/Yes",
+        "datatype": "STRING"
+      },
+      "alias": "P.LiverCancer"
+    },
+  {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Any Diabetes (FBG >= 126 mg per dL or self-report)/No",
+        "datatype": "STRING"
+      },
+      "alias": "P.Diabetes"
+    },
+    {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Any Diabetes (FBG >= 126 mg per dL or self-report)/Yes",
+        "datatype": "STRING"
+      },
+      "alias": "P.Diabetes"
+    },
+ {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Ever arthritis?/No",
+        "datatype": "STRING"
+      },
+      "alias": "P.Arthritis"
+    },
+    {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Ever arthritis?/Yes",
+        "datatype": "STRING"
+      },
+      "alias": "P.Arthritis"
+    },
+  {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Any cancer or malignancy?/No",
+        "datatype": "STRING"
+      },
+      "alias": "P.AnyCancer"
+    },
+    {
+      "field": {
+        "pui": "/nhanes/Demo/questionnaire/questionnaire/disease/Any cancer or malignancy?/Yes",
+        "datatype": "STRING"
+      },
+      "alias": "P.AnyCancer"
+    },
+    {
+        "field": {
+         "pui": "/nhanes/Demo/demographics/demographics/AGE/",
+         "dataType": "STRING"
+        },
+        "alias": "Age"
+    },
+ {
+      "field": {
+        "pui": "/nhanes/Demo/demographics/demographics/SEX/female",
+        "datatype": "STRING"
+      },
+      "alias": "Gender"
+    }, 
+    {
+      "field": {
+        "pui": "/nhanes/Demo/demographics/demographics/SEX/male",
+        "datatype": "STRING"
+      },
+      "alias": "Gender"
+    }
+  ],
+  "where": [
+      {
+        "field": {
+          "pui": "/nhanes/Demo/demographics/demographics/AGE/",
+          "dataType": "STRING"
+        },
+        "predicate": "CONTAINS",
+        "fields": {
+          "ENOUNTER": "YES"
+        }
+      }
+  ]
+}

@@ -1,30 +1,30 @@
-setClass( "genopheno",
+setClass( "cupcakeData",
           representation =
               representation( 
-                  nMutations   = "numeric",    # number of mutations
+                  nVariations  = "numeric",    # number of variations
                   nPhenotype   = "numeric",    # number of phenotypes
                   nPatient     = "numeric",    # number of patients
-                  iresult      = "data.frame",  # result
-                  mutations    = "data.frame", # mutations
-                  phenotypes   = "data.frame" # phenotypes
+                  iresult      = "data.frame", # result
+                  variations   = "data.frame", # variations
+                  phenotypes   = "data.frame"  # phenotypes
               ),
           prototype = 
-              prototype( nMutations  = numeric(),
+              prototype( nVariations = numeric(),
                          nPhenotype  = numeric(),
                          nPatient    = numeric(),
                          iresult     = data.frame(),
-                         mutations     = data.frame(),
-                         phenotypes     = data.frame()
+                         variations  = data.frame(),
+                         phenotypes  = data.frame()
               )
 )
 
 
-setClass( "genophenoComor",
+setClass( "cupcakeResults",
           representation =
-              representation( ageMin    = "numeric",  # single or list
+              representation( ageMin    = "numeric",    # single or list
                               ageMax    = "numeric",    # max age
                               gender    = "character",  # gender
-                              mutation  = "character",  #mutation
+                              variation = "character",  # variation
                               patients  = "numeric",    # subsetPatients
                               tpatients = "numeric",    # totalPatients
                               prevalence= "numeric",    # prevalence respet to the total population
@@ -38,7 +38,7 @@ setClass( "genophenoComor",
               prototype( ageMin    = numeric(),
                          ageMax    = numeric(),
                          gender    = character(),
-                         mutation  = character(),
+                         variation = character(),
                          patients  = numeric(),
                          tpatients = numeric(),
                          prevalence= numeric(),
