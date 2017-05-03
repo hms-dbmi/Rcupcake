@@ -2,7 +2,7 @@
 % Please edit documentation in R/allGenerics.R
 \name{n.variation}
 \alias{n.variation}
-\title{Getter from \code{cupcakeData}.}
+\title{Get the alteration variables from \code{cupcakeData}.}
 \usage{
 n.variation(object)
 }

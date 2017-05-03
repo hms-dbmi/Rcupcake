@@ -2,7 +2,7 @@
 % Please edit documentation in R/allGenerics.R
 \name{extract}
 \alias{extract}
-\title{Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.}
+\title{Obtain the raw data from a \code{cupcakeData} and \code{cupcakeResults} object.}
 \usage{
 extract(object, ...)
 }
@@ -14,7 +14,7 @@ A \code{data.frame} containing the raw data
 (cupcakeData)or co-occurrence analysis results (cupcakeResults)
 }
 \description{
-Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.
+Obtain the raw data from a \code{cupcakeData} and \code{cupcakeResults} object.
 }
 \examples{
 \dontrun{

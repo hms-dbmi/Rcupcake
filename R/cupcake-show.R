@@ -2,7 +2,7 @@ setMethod( "show",
            signature = "cupcakeData",
            definition = function( object ) {
                cat( "Object of class 'cupcakeData'\n" )
-               cat( " . N. Mutations:   ", nrow ( object@variations ) , "\n" )
+               cat( " . N. Variations:   ", nrow ( object@variations ) , "\n" )
                cat( " . N. Phenotypes:  ", nrow ( object@phenotypes ), "\n" )
                cat( " . N. Patients:    ", length( unique ( object@iresult$patient_id ) ), "\n" )
            }

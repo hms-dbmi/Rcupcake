@@ -3,7 +3,7 @@
 #' Given an url and a JSON object, it generates a \code{data.frame} object with 
 #' the output of the query. 
 #'
-#' @param query A text file containing the JSON query body. 
+#' @param query A text file containing the JSON query. 
 #' @param url  The url.
 #' @param outputPath Path and the file name where the output file will be saved. By default it
 #' will be saved in the working directory with the name queryData.

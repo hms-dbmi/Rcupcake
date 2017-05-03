@@ -1,6 +1,6 @@
 #' Start the connection to the database
 #'
-#' Given an url and a key it start the connection to the database 
+#' Given a URL and a key access it starts the connection to the database 
 #'
 #' @param url  The url.
 #' @param apiKey The key to access to the data. 

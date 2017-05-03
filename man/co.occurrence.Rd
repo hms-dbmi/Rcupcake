@@ -4,36 +4,36 @@
 \alias{co.occurrence}
 \title{Co-occurrence Analysis \code{cupcakeResults}}
 \usage{
-co.occurrence(input, pth, ageRange = c(0, 100), aggregate = TRUE,
+co.occurrence(input, pth, ageRange = c(0, 100), aggregate = FALSE,
   gender = "ALL", variation = c("", ""), nfactor = 10, scoreCutOff,
   fdrCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1,
   verbose = FALSE)
 }
 \arguments{
-\item{input}{A \code{cupcakeData} object, obtained with the my.data function.}
+\item{input}{A \code{cupcakeData} object, obtained after applying the my.data function.}
 
 \item{pth}{Determines the path where the required file with phenotype data is located.
-This file is generated applying the \code{phenotypeSummary} function.}
+This file is generated applying the \code{phenotype.summary} function.}
 
 \item{ageRange}{Determines what is the age range of interest for
-performing the comorbidity analysis. By default it is set from 0 to 100 
+performing the co-occurrence analysis. By default it is set from 0 to 100 
 years old.}
 
-\item{aggregate}{By default TRUE. Change it to FALSE if you want to 
-analyze the comorbidity taking into all the values of each phenotype.}
+\item{aggregate}{By default FALSE. Change it to TRUE if you want to 
+analyze the co-occurrence aggregating the values of several phenotypes as the same category.}
 
 \item{gender}{Determine what is the gender of interest for 
-performing the comorbidity analysis. By default \code{ALL}. Change it to the 
-gender of interest for your comorbidity analysis.}
+performing the co-occurrence analysis. By default \code{ALL}. Change it to the 
+gender of interest for your co-occurrence analysis if interested.}
 
 \item{variation}{Determine what is the variation of interest for 
-performing the comorbidity analysis. By default \code{c("", "")}. Change it to the 
-value of interest for your comorbidity analysis. For example, \code{c("CHD8", "yes")}}
+performing the co-occurrence analysis. By default \code{c("", "")}. Change it to the 
+values of interest for your co-occurrence analysis. For example, \code{c("CHD8", "yes")}}
 
 \item{nfactor}{By default 10. Change it into other number if you consider there is any
-categorical variable with more than nfactor values.}
+categorical variable with more than \code{nfactor} values.}
 
-\item{scoreCutOff}{The comorbidity score is a measure based on  the observed comorbidities
+\item{scoreCutOff}{The co-occurrence score is a measure based on the observed co-occurrence
 and the expected ones, based on the occurrence of each disease.}
 
 \item{fdrCutOff}{A Fisher exact test for each pair of diseases is performed to assess 
@@ -41,17 +41,17 @@ the null hypothesis of independence between the two diseases. The Benjamini-Hoch
 false discovery rate method (FDR) is applied to correct for multiple testing.}
 
 \item{oddsRatioCutOff}{The odds ratio represents the increased chance that someone 
-suffering disease X will have the comorbid disorder Y.}
+suffering disease X will have the disorder Y.}
 
 \item{relativeRiskCutOff}{The relative risk refers to the fraction between the number of 
 patients diagnosed with both diseases and random expectation based on disease 
 prevalence.}
 
 \item{phiCutOff}{The Pearsons correlation for binary variables (Phi) measures the 
-robustness of the comorbidity association.}
+robustness of the co-occurrence association.}
 
 \item{cores}{By default \code{1}. To run parallel computations on machines 
-with multiple cores or CPUs, the cores argument can be changed.}
+with multiple CPUs, the cores argument can be changed.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
@@ -60,14 +60,15 @@ on-time log from the function.}
 An object of class \code{cupcakeResults}
 }
 \description{
-Given an object of type \code{cupcakeData}, a co-occurrence analysis is perform, 
-for the subset of population under specific conditions of age, gender and gene status. 
+Given an object of type \code{cupcakeData}, a co-occurrence analysis is performed, 
+for the subset of population under specific conditions of age, gender and variation status
+(exposure, gene mutation). 
 It generates a \code{cupcakeResults} object.
 }
 \examples{
-load(system.file("extdata", "genophenoExData.RData", package="Rcupcake"))
+load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
 cooccurrenceExample <- co.occurrence( 
-              input         = genophenoExData,
+              input         = RcupcakeExData,
               pth           = system.file("extdata", package="Rcupcake"),
               aggregate     = TRUE, 
               ageRange      = c(0,16),

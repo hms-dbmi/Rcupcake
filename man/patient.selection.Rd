@@ -2,44 +2,38 @@
 % Please edit documentation in R/patient.selection.R
 \name{patient.selection}
 \alias{patient.selection}
-\title{Patients selection \code{genophenoPatientsSelection}}
+\title{Patients selection}
 \usage{
 patient.selection(input, pth, ageRange = c(0, 100), phenotypeA, phenotypeB,
   aggregate = TRUE, gender = "ALL", variation = c("ALL", "ALL"),
-  nfactor = 10, cores = 1, verbose = FALSE, warnings = TRUE)
+  verbose = FALSE, warnings = TRUE)
 }
 \arguments{
-\item{input}{A \code{genopheno} object, obtained with the queryPheno function.}
+\item{input}{A \code{cupcakeData} object, obtained with the \code{my.data} function.}
 
 \item{pth}{Determines the path where the required input file with 
-the yes/no phenotype data is located.}
+the phenotypic data is located.}
 
 \item{ageRange}{Determines what is the age range of interest for
-performing the comorbidity analysis. By default it is set from 0 to 100 
+performing the co-occurrence analysis. By default it is set from 0 to 100 
 years old.}
 
 \item{phenotypeA}{One of the phenotypes of interest and the value 
-in which user is interested. For example, c("FacialExpression", "yes)}
+in which user is interested. For example, c("Arthritis", "Yes")}
 
 \item{phenotypeB}{The second phenotype of interest and the value 
-in which user is interested. For example, c("HandMovement", "yes)}
+in which user is interested. For example, c("Diabetes", "Yes")}
 
 \item{aggregate}{By default TRUE. Change it to FALSE if you want to 
-analyze the comorbidity taking into all the values of each phenotype.}
+analyze the co-occurrence taking into all the values of each phenotype.}
 
 \item{gender}{Determine what is the gender of interest for 
-performing the comorbidity analysis. By default \code{ALL}. Change it to the 
-gender of interest for your comorbidity analysis.}
+performing the co-occurrence analysis. By default \code{ALL}. Change it to the 
+gender of interest for your co-occurrence analysis.}
 
 \item{variation}{Determine what is the variation value of interest for 
-performing the comorbidity analysis. By default \code{c("ALL", "ALL")}. Change it to the 
-value of interest for your comorbidity analysis. For example, \code{c("CHD8", "yes")}}
-
-\item{nfactor}{By default 10. Change it into other number if you consider there is any
-categorical variable with more than nfactor values.}
-
-\item{cores}{By default \code{1}. To run parallel computations on machines 
-with multiple cores or CPUs, the cores argument can be changed.}
+performing the co-occurrence analysis. By default \code{c("ALL", "ALL")}. Change it to the 
+value of interest for your co-occurrence analysis. For example, \code{c("CHD8", "yes")}}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
@@ -51,19 +45,18 @@ the warnings.}
 An object of class \code{cgpAnalysis}
 }
 \description{
-Given an object of type \code{genopheno} and two phenotypes of
-interest, the patients identifiers of those patients having
-both phenotypes are selected.
+Given an object of type \code{cupcakeData} and two phenotypes of
+interest, the patients having both phenotypes are selected.
 }
 \examples{
-load(system.file("extdata", "cupcakeData.RData", package="Rcupcake"))
+load(system.file("extdata", "RcupcakeDataExData.RData", package="Rcupcake"))
 ex1 <- patient.selection( 
-              input         = cupcakeData,
+              input         = RcupcakeExData,
               pth           = system.file("extdata", package="Rcupcake"),
-              phenotypeA    = c("Herpes", "yes"),
-              phenotypeB    = c("HIV", "yes"),
+              phenotypeA    = c("Arthritis", "Yes"),
+              phenotypeB    = c("Diabetes", "Yes"),
               aggregate     = TRUE, 
-              ageRange      = c(18,40),
+              ageRange      = c(0,100),
               gender        = "male", 
               )
 }

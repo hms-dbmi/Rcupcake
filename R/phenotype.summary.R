@@ -1,14 +1,14 @@
-#' Describes the phenotypic characteristics for the whole study population. If gene is selected, 
-#' the summary will contain the results regardin the selected gene. 
+#' Describes the phenotypic characteristics for the whole study population. If variation status is selected, 
+#' the summary will contain the results regarding the selected variation 
 #'
-#' Given an object of class \code{genopheno}, a file with the different values for each phenotype, 
-#' and the prevalence of each one in general population and according to the gene status, if present,
+#' Given an object of class \code{cupcakeData}, a file with the different values for each phenotype, 
+#' and the prevalence of each one in general population and according to the variation status, if present,
 #' is generated. A figure containing a barplot or boxplot for each phenotype is displayed. 
 #' Each barplot shows the population percentage suffering each type of the phenotypes according to the values it takes, 
 #' and distinguishing between those having or not a variation, if present. 
 #' Furthermore, a data.frame with the numerical values is obtained.  
 #'
-#' @param input Object of \code{genopheno} class. 
+#' @param input Object of \code{cupcakeData} class. 
 #' @param nfactor By default 10. Change it into other number if you consider there is any
 #' categorical variable with more than \code{nfactor} values. 
 #' @param variation Determines the variation of interest for which you want to analyze the 
@@ -23,8 +23,8 @@
 #' on-time log from the function.
 #' @return A file .
 #' @examples
-#' load(system.file("extdata", "genophenoExData.RData", package="genophenoR"))
-#' phenotype.summary( input       = genophenoExData, 
+#' load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
+#' phenotype.summary( input       = RcupcakeExData, 
 #'                   showTable   = TRUE, 
 #'                   showFigures = TRUE, 
 #'                   verbose      = FALSE 
@@ -59,7 +59,7 @@ phenotype.summary <- function( input, variation = FALSE, nfactor = 10, showTable
     
     
     if( variation == FALSE ){
-        message("No genomic information will be taken into account")
+        message("No variation information will be taken into account")
     }else if( variation %in% mt$variable ){
         mt <- mt[ mt$variable == variation, ]        
     }else{

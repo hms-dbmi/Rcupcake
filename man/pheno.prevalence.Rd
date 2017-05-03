@@ -25,7 +25,7 @@ a prevalence table is obtained.
 }
 \examples{
 load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
-pheno.prevalence <- genoPhenoPrevalence( 
+phenoPrevalenceExample <- pheno.prevalence( 
               input            = cupcakeResults
               )
 }

@@ -2,25 +2,25 @@
 % Please edit documentation in R/cooc.heatmap.R
 \name{cooc.heatmap}
 \alias{cooc.heatmap}
-\title{Plot the comorbidity analysis results in a heatmap.}
+\title{Plot the co-occurrence analysis results in a heatmap.}
 \usage{
 cooc.heatmap(input, representedVariable = "patientsPhenoAB",
-  variableCutOff = 0.05, coocPatients = 0, interactive = FALSE,
+  variableCutOff = 0, coocPatients = 0, interactive = FALSE,
   lowColor = "#cde6ff", highColor = "red", verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeResults} object, obtained 
-by applying the \code{comorbidityAnalysis} function}
+by applying the \code{co.occurrence} function}
 
 \item{representedVariable}{By default \code{"patientsPhenoAB"} variable will be selected. Change
 it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'oddsRatio'}, 
 \code{'phi'}, \code{'relativeRisk'}, \code{'PercentagePhenoAB'}).}
 
-\item{variableCutOff}{By default \code{'0.05'}. The value of the argument can be changed 
+\item{variableCutOff}{By default \code{'0'}. The value of the argument can be changed 
 to any other numeric variable, according to the range of the selected value.}
 
 \item{coocPatients}{by default \code{'0'}.  The value of the argument can be changed
-to any other numeric variable to show in the network only those comorbidities 
+to any other numeric variable to show in the heatmap only those comorbidities 
 suffered by at least \code{coocPatients} of patients.}
 
 \item{interactive}{Determines if the output heatmap is interactive or not. 
@@ -41,11 +41,11 @@ on-time log from the function.}
 A heatmap
 }
 \description{
-Given an object of class \code{cupcakeResults} obtained from a comorbidity analysis, 
+Given an object of class \code{cupcakeResults} obtained from a co-occurrence analysis, 
 a heatmap is obtained.
 }
 \examples{
-load(system.file("extdata", "RcupcakeExResult.RData", package="genophenoR"))
+load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
 htmp <- cooc.heatmap( input        = cupcakeResults, 
               representedVariable  = "patientsPhenoAB", 
               variableCutOff       = 1, 

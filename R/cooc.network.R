@@ -1,23 +1,20 @@
-#' Plot the comorbidity analysis results in a network
+#' Plot the co-occurrence analysis results in a network
 #'
-#'Given an object of class \code{genophenoComor} obtained from a comorbidity analysis, 
+#' Given an object of class \code{cupcakeResults} obtained from a co-occurrence analysis, 
 #' a network is obtained.
 #'
-#' @param input A \code{genophenoComor} object, obtained 
-#' by applying the \code{comorbidityAnalysis} function
-#' @param databasePth Determines the path where the intermediate RData objects 
-#' have been created. It is the same path where the three required input files 
-#' (patientData, diagnosisData, admissionData) are located. 
-#' @param layout By default \code{'layout.fruchterman.reingold'}. It can be set 
-#' to any other of the possible igraph layouts. 
+#' @param input A \code{cupcakeResults} object, obtained 
+#' by applying the \code{co.occurrence} function
 #' @param representedVariable By default \code{"patientsPhenoAB"} variable will be selected. Change
 #' it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'oddsRatio'}, 
 #' \code{'phi'}, \code{'relativeRisk'}, \code{'PercentagePhenoAB'}).  
-#' @param variableCutOff By default \code{'0.05'}. The value of the argument can be changed 
+#' @param variableCutOff By default \code{'0'}. The value of the argument can be changed 
 #' to any other numeric variable, according to the range of the selected value.
 #' @param coocPatients by default \code{'0'}.  The value of the argument can be changed
-#' to any other numeric variable to show in the network only those comorbidities 
+#' to any other numeric variable to show in the heatmap only those comorbidities 
 #' suffered by at least \code{coocPatients} of patients.
+#' @param layout By default \code{'layout.circle'}. It can be set 
+#' to any other of the possible igraph layouts. 
 #' @param nodeProportion  Determines the node size proportionality. By default it is set to 
 #' \code{1}. The value of the argument can be changed to any other numeric variable.
 #' @param interactive Determines if the output network is interactive or not. 

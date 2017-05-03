@@ -8,7 +8,7 @@ my.data(query, url, responseFormat = "CSV", outputPath = paste0(getwd(),
   "/queryData.txt"), verbose = FALSE)
 }
 \arguments{
-\item{query}{A text file containing the JSON query body.}
+\item{query}{A text file containing the JSON query.}
 
 \item{url}{The url.}
 

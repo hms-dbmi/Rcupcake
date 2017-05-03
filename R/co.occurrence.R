@@ -1,46 +1,47 @@
 #' Co-occurrence Analysis \code{cupcakeResults}
 #'
-#' Given an object of type \code{cupcakeData}, a co-occurrence analysis is perform, 
-#' for the subset of population under specific conditions of age, gender and gene status. 
+#' Given an object of type \code{cupcakeData}, a co-occurrence analysis is performed, 
+#' for the subset of population under specific conditions of age, gender and variation status
+#' (exposure, gene mutation). 
 #' It generates a \code{cupcakeResults} object.
 #'
-#' @param input  A \code{cupcakeData} object, obtained with the my.data function. 
+#' @param input  A \code{cupcakeData} object, obtained after applying the my.data function. 
 #' @param pth Determines the path where the required file with phenotype data is located.
-#' This file is generated applying the \code{phenotypeSummary} function. 
-#' @param aggregate By default TRUE. Change it to FALSE if you want to 
-#' analyze the comorbidity taking into all the values of each phenotype.
+#' This file is generated applying the \code{phenotype.summary} function. 
+#' @param aggregate By default FALSE. Change it to TRUE if you want to 
+#' analyze the co-occurrence aggregating the values of several phenotypes as the same category.
 #' @param ageRange Determines what is the age range of interest for
-#' performing the comorbidity analysis. By default it is set from 0 to 100 
+#' performing the co-occurrence analysis. By default it is set from 0 to 100 
 #' years old. 
 #' @param gender Determine what is the gender of interest for 
-#' performing the comorbidity analysis. By default \code{ALL}. Change it to the 
-#' gender of interest for your comorbidity analysis.
+#' performing the co-occurrence analysis. By default \code{ALL}. Change it to the 
+#' gender of interest for your co-occurrence analysis if interested.
 #' @param variation Determine what is the variation of interest for 
-#' performing the comorbidity analysis. By default \code{c("", "")}. Change it to the 
-#' value of interest for your comorbidity analysis. For example, \code{c("CHD8", "yes")}
+#' performing the co-occurrence analysis. By default \code{c("", "")}. Change it to the 
+#' values of interest for your co-occurrence analysis. For example, \code{c("CHD8", "yes")}
 #' @param nfactor By default 10. Change it into other number if you consider there is any
-#' categorical variable with more than nfactor values. 
-#' @param scoreCutOff The comorbidity score is a measure based on  the observed comorbidities
+#' categorical variable with more than \code{nfactor} values. 
+#' @param scoreCutOff The co-occurrence score is a measure based on the observed co-occurrence
 #' and the expected ones, based on the occurrence of each disease.
 #' @param fdrCutOff A Fisher exact test for each pair of diseases is performed to assess 
 #' the null hypothesis of independence between the two diseases. The Benjamini-Hochberg 
 #' false discovery rate method (FDR) is applied to correct for multiple testing.
 #' @param oddsRatioCutOff The odds ratio represents the increased chance that someone 
-#' suffering disease X will have the comorbid disorder Y.
+#' suffering disease X will have the disorder Y.
 #' @param relativeRiskCutOff The relative risk refers to the fraction between the number of 
 #' patients diagnosed with both diseases and random expectation based on disease 
 #' prevalence.
 #' @param phiCutOff The Pearsons correlation for binary variables (Phi) measures the 
-#' robustness of the comorbidity association.
+#' robustness of the co-occurrence association.
 #' @param cores By default \code{1}. To run parallel computations on machines 
-#' with multiple cores or CPUs, the cores argument can be changed. 
+#' with multiple CPUs, the cores argument can be changed. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @return An object of class \code{cupcakeResults}
 #' @examples
-#' load(system.file("extdata", "genophenoExData.RData", package="Rcupcake"))
+#' load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
 #' cooccurrenceExample <- co.occurrence( 
-#'               input         = genophenoExData,
+#'               input         = RcupcakeExData,
 #'               pth           = system.file("extdata", package="Rcupcake"),
 #'               aggregate     = TRUE, 
 #'               ageRange      = c(0,16),
@@ -48,7 +49,7 @@
 #'               )
 #' @export co.occurrence
 
-co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gender="ALL", variation=c("", ""), nfactor = 10, scoreCutOff, fdrCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1, verbose = FALSE){
+co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, gender="ALL", variation=c("", ""), nfactor = 10, scoreCutOff, fdrCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1, verbose = FALSE){
     
     if( verbose == TRUE){
         message("Checking the input object")
@@ -67,7 +68,7 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     
     
     if( verbose == TRUE){
-        message( "Staring the comorbidity analysis" )
+        message( "Staring the co-occurrence analysis" )
         message( "Loading the phenotype data file" )
     } 
     
@@ -104,7 +105,7 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
             pcolumn <- which(colnames(data) == as.character(input@phenotypes[i,1]))
             
             if( length( unique( data[,pcolumn])) > nfactor){
-                message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
+                message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the co-occurrence analysis")
             }else{
                 codesSelection <- codes[ codes$phenotype == as.character(input@phenotypes[i,3]),c(2,6)]
                 
@@ -165,7 +166,7 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
             
             if( length( unique( data[,pcolumn])) > nfactor){
                 if( verbose == TRUE){
-                    message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the comorbidity analysis")
+                    message( colnames(data)[pcolumn], " phenotype is considered as a continuous variable. It will not be taken in to account for the co-occurrence analysis")
                 } 
             }else{
                 data[ ,pcolumn] <- paste0( input@phenotypes[i,3], ": " ,data[ ,pcolumn] )
@@ -256,7 +257,7 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = TRUE, gen
     
     if( length( unique( qresult$phenotype)) < 2 ){
         message(paste0("Your patients subset only contains 1 phenotype: ", unique( qresult$phenotype)))
-        message("Comorbidity analysis cannot be performed")
+        message("co-occurrence analysis cannot be performed")
         stop()
     }
     

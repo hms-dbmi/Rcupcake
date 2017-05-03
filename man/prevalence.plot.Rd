@@ -5,23 +5,17 @@
 \title{Plot the phenotype prevalence in a barplot (when there is not any variation) and in a network 
 if a variation is defined}
 \usage{
-prevalence.plot(input, layout = "layout.circle", variation,
-  interactive = FALSE, verbose = FALSE)
+prevalence.plot(input, layout = "layout.circle", variation, verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeResults} object, obtained 
-by applying the \code{comorbidityAnalysis} function}
+by applying the \code{co.occurrence} function}
 
-\item{layout}{By default \code{'layout.fruchterman.reingold'}. It can be set 
+\item{layout}{By default \code{'layout.circle'}. It can be set 
 to any other of the possible igraph layouts.}
 
 \item{variation}{Determine what is the variation value of interest for 
-performing the comorbidity analysis.}
-
-\item{interactive}{Determines if the output network is interactive or not. 
-By default the \code{interactive} argument is set up as \code{FALSE}. The value 
-of the argument can be changed to \code{TRUE}, as a result an interactive 
-network will be obtained.}
+performing the co-occurrence analysis.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
@@ -36,8 +30,8 @@ A barplot or a network
 Given a \code{cupcakeResults} object a barplot or a network is obtained.
 }
 \examples{
-load(system.file("extdata", "cupcakeResultExample.RData", package="Rcupcake"))
+load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
 ntwk <- prevalence.plot( 
-              input            = cupcakeResultExample 
+              input            = cupcakeResults 
               )
 }

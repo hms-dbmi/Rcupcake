@@ -1,10 +1,16 @@
 Package: Rcupcake
 Type: Package
-Title: Rcupcake: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API
+Title: Rcupcake: An R package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API
 Version: 0.99.0
-Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba_gutierrez@hms.harvard.edu", role = c("aut", "cre")))
-Description: Package to integrate, analyze and visualize phenotype and genotype
-    information from electronic health record data.
+Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", role = "aut"),
+  person("Romain", "Guedj", "Romain_Guedj@hms.harvard.edu", role = "aut"), 
+  person("Gabor", "Korodi", "Gabor_Korodi@hms.harvard.edu", role = "aut"), 
+  person("Jason", "Stedman", "Jason_Stedman@hms.harvard.edu", role = "aut"), 
+  person("Laura I.", "Furlong", "laura.furlong@upf.edu", role = "aut"), 
+  person("Chirag J", "Patel", "Chirag_Patel@hms.harvard.edu", role = "aut"), 
+  person("Isaac S.", "Kohane", "Isaac_Kohane@hms.harvard.edu", role = "aut"), 
+  person("Paul", "Avillach", "Paul_Avillach@hms.harvard.edu ", role = "aut")
+  )
 Depends:
     R (>= 3.2.3),
     stringr
@@ -32,5 +38,5 @@ Imports:
 NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
 Maintainer: Alba Gutierrez-Sacristan <alba_gutierrez@hms.harvard.edu>
-biocViews: Software, BiomedicalInformatics, Genetics, DataRepresentation
+biocViews: Software, BiomedicalInformatics, DataRepresentation
 RoxygenNote: 6.0.0

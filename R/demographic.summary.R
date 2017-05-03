@@ -1,16 +1,16 @@
 #' Describes the demographic characteristics (sex, age) of the population under study
 #'
 #' Given an object of class \code{cupcakeData}, and the characters used to 
-#' specify the gender, a graphic containing 3 plots, one of the age distribution, 
-#' another one of the age distribution and the third one with the relation 
-#' between age and gender distribution, is obtained. 
+#' specify the gender, a graphic containing 3 plots, a barplot with age distribution,  
+#' a boxplot representing age distribution by gender and a pie chart representing 
+#' gender distribution is obtained. 
 #'
 #' @param input Object of \code{cupcakeData} class. 
 #' @param maleCode Characters(s) used to determine the male condition of a patient. 
-#' Depending on the database it can be determined, for example, as \code{Male}, .
+#' Depending on the database it can be determined, for example, as \code{Male},
 #' \code{MALE}, \code{M}, with digits as \code{0} or \code{1}. 
 #' @param femaleCode Characters(s) used to determine the female condition of a patient. 
-#' Depending on the database it can be determined, for example, as \code{Female}, .
+#' Depending on the database it can be determined, for example, as \code{Female},
 #' \code{FEMALE}, \code{F}, with digits as \code{0} or \code{1}. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
@@ -20,8 +20,8 @@
 #' a boxplot representing age distribution by gender and a pie chart representing 
 #' gender distribution.
 #' @examples
-#' load(system.file("extdata", "genophenoExData.RData", package="Rcupcake"))
-#' demographic.summary( input = genophenoExData, 
+#' load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
+#' demographic.summary( input = RcupcakeExData, 
 #'                      maleCode   = "male", 
 #'                      femaleCode = "female"
 #'            )

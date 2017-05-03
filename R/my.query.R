@@ -1,10 +1,10 @@
 #' Query analysis to the API
 #'
-#' Given a vector with the fields of interest, and the paths vector generated applying
-#' the getchildren function, it returns a JSON query
+#' Given a vector with the fields of interest, and the vector generated with the paths obtained 
+#' after applying the getchildren function, it returns a JSON query
 #'
 #' @param myfields  A vector with the fields of interest
-#' @param myvector  A vector with the paths of interest, generated applying the getchildren
+#' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cooc.network.R
 \name{cooc.network}
 \alias{cooc.network}
-\title{Plot the comorbidity analysis results in a network}
+\title{Plot the co-occurrence analysis results in a network}
 \usage{
 cooc.network(input, layout = "layout.circle",
   representedVariable = "patientsPhenoAB", variableCutOff = 0,
@@ -10,21 +10,21 @@ cooc.network(input, layout = "layout.circle",
   verbose = FALSE)
 }
 \arguments{
-\item{input}{A \code{genophenoComor} object, obtained 
-by applying the \code{comorbidityAnalysis} function}
+\item{input}{A \code{cupcakeResults} object, obtained 
+by applying the \code{co.occurrence} function}
 
-\item{layout}{By default \code{'layout.fruchterman.reingold'}. It can be set 
+\item{layout}{By default \code{'layout.circle'}. It can be set 
 to any other of the possible igraph layouts.}
 
 \item{representedVariable}{By default \code{"patientsPhenoAB"} variable will be selected. Change
 it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'oddsRatio'}, 
 \code{'phi'}, \code{'relativeRisk'}, \code{'PercentagePhenoAB'}).}
 
-\item{variableCutOff}{By default \code{'0.05'}. The value of the argument can be changed 
+\item{variableCutOff}{By default \code{'0'}. The value of the argument can be changed 
 to any other numeric variable, according to the range of the selected value.}
 
 \item{coocPatients}{by default \code{'0'}.  The value of the argument can be changed
-to any other numeric variable to show in the network only those comorbidities 
+to any other numeric variable to show in the heatmap only those comorbidities 
 suffered by at least \code{coocPatients} of patients.}
 
 \item{nodeProportion}{Determines the node size proportionality. By default it is set to 
@@ -37,16 +37,12 @@ network will be obtained.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
-
-\item{databasePth}{Determines the path where the intermediate RData objects 
-have been created. It is the same path where the three required input files 
-(patientData, diagnosisData, admissionData) are located.}
 }
 \value{
 A network
 }
 \description{
-Given an object of class \code{genophenoComor} obtained from a comorbidity analysis, 
+Given an object of class \code{cupcakeResults} obtained from a co-occurrence analysis, 
 a network is obtained.
 }
 \examples{

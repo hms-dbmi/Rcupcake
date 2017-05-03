@@ -1,4 +1,4 @@
-#' Obtain the raw query from a \code{cupcakeData} and \code{cupcakeResults} object.
+#' Obtain the raw data from a \code{cupcakeData} and \code{cupcakeResults} object.
 #'
 #' @name extract
 #' @rdname extract-methods
@@ -16,13 +16,12 @@ setGeneric ("extract",
 )
 
 
-#' Getter from \code{cupcakeData}.
+#' Get the alteration variables from \code{cupcakeData}.
 #' 
 #' Obtain the alteration variables in a \code{cupcakeData}.
 #'
 #' @name n.variation
-# @rdname n.variation-methods
-#' @aliases n.variation
+#' @rdname n.variation-methods
 #' @param object Object of class \code{cupcakeData}.
 #' @examples
 #' data(qr)
@@ -32,12 +31,12 @@ setGeneric ("n.variation",
             function(object){standardGeneric("n.variation")}
 )
 
-#' Getter from \code{cupcakeData}.
+#' Get the phenotypic variables from \code{cupcakeData}.
 #' 
 #' Obtain the phenotypes in a \code{cupcakeData}.
 #'
 #' @name n.phenotype
-# @rdname n.phenotype-methods
+#' @rdname n.phenotype-methods
 #' @aliases n.phenotype
 #' @param object Object of class \code{cupcakeData}.
 #' @examples

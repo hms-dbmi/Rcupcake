@@ -1,6 +1,6 @@
-#' Query your data and generates a \code{cupcakeData}
+#' Transform a data.frame into a \code{cupcakeData} object
 #'
-#' Given a tabulated file, checks if it contains the data in the 
+#' Given a tabulated file that contains the data in the 
 #' correct format and generates a \code{cupcakeData} object.
 #'
 #' @param input Determines the file with the complete path where the required 
@@ -73,7 +73,8 @@ dataframe2cupcake <- function( input ,verbose = FALSE, warnings= TRUE) {
         if( verbose == TRUE) {
             message("Generating the result object")
         }
-            #with the data we have, we create a comorbidity object
+        
+        #with the data we have, we create a cupcakeData object
    
         result <- new( "cupcakeData", 
                        nVariations  = nrow(variations),

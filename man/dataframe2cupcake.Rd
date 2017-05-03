@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataframe2cupcake.R
 \name{dataframe2cupcake}
 \alias{dataframe2cupcake}
-\title{Query your data and generates a \code{cupcakeData}}
+\title{Transform a data.frame into a \code{cupcakeData} object}
 \usage{
 dataframe2cupcake(input, verbose = FALSE, warnings = TRUE)
 }
@@ -22,7 +22,7 @@ the warnings.}
 An object of class \code{cupcakeData}
 }
 \description{
-Given a tabulated file, checks if it contains the data in the 
+Given a tabulated file that contains the data in the 
 correct format and generates a \code{cupcakeData} object.
 }
 \examples{

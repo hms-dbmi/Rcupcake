@@ -1,17 +1,17 @@
-#' Plot the comorbidity analysis results in a heatmap.
+#' Plot the co-occurrence analysis results in a heatmap.
 #'
-#' Given an object of class \code{cupcakeResults} obtained from a comorbidity analysis, 
+#' Given an object of class \code{cupcakeResults} obtained from a co-occurrence analysis, 
 #' a heatmap is obtained. 
 #'
 #' @param input A \code{cupcakeResults} object, obtained 
-#' by applying the \code{comorbidityAnalysis} function
+#' by applying the \code{co.occurrence} function
 #' @param representedVariable By default \code{"patientsPhenoAB"} variable will be selected. Change
 #' it to any of the other possible variables (\code{'score'},(\code{'fdr'},\code{'oddsRatio'}, 
 #' \code{'phi'}, \code{'relativeRisk'}, \code{'PercentagePhenoAB'}).  
-#' @param variableCutOff By default \code{'0.05'}. The value of the argument can be changed 
+#' @param variableCutOff By default \code{'0'}. The value of the argument can be changed 
 #' to any other numeric variable, according to the range of the selected value.
 #' @param coocPatients by default \code{'0'}.  The value of the argument can be changed
-#' to any other numeric variable to show in the network only those comorbidities 
+#' to any other numeric variable to show in the heatmap only those comorbidities 
 #' suffered by at least \code{coocPatients} of patients.
 #' @param interactive Determines if the output heatmap is interactive or not. 
 #' By default the \code{interactive} argument is set up as \code{FALSE}. The value 
@@ -25,7 +25,7 @@
 #' on-time log from the function.
 #' @return A heatmap
 #' @examples
-#' load(system.file("extdata", "RcupcakeExResult.RData", package="genophenoR"))
+#' load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
 #' htmp <- cooc.heatmap( input        = cupcakeResults, 
 #'               representedVariable  = "patientsPhenoAB", 
 #'               variableCutOff       = 1, 
@@ -36,7 +36,7 @@
 #' 
 
 
-cooc.heatmap <- function( input , representedVariable = "patientsPhenoAB", variableCutOff = 0.05, coocPatients = 0, interactive = FALSE, lowColor = "#cde6ff", highColor = "red", verbose = FALSE ) {
+cooc.heatmap <- function( input , representedVariable = "patientsPhenoAB", variableCutOff = 0, coocPatients = 0, interactive = FALSE, lowColor = "#cde6ff", highColor = "red", verbose = FALSE ) {
 
     
     if( verbose == TRUE){
