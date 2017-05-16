@@ -14,8 +14,7 @@ function}
 
 \item{url}{The url.}
 
-\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
-on-time log from the function.}
+\item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.}
 }
 \value{
 A JSON query.

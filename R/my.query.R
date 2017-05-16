@@ -7,8 +7,7 @@
 #' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
 #' @param url  The url.
-#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
-#' on-time log from the function.
+#' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.
 #' @return A JSON query. 
 #' @examples
 #' nhanesPcbs <- getchildren( 
@@ -67,10 +66,10 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             myField <- list(
                 list(
                     field=list(
-                        pui = unbox(pathFields[[j]]$pui),
-                        dataType = unbox(pathFields[[j]]$dataType$name)
+                        pui = jsonlite::unbox(pathFields[[j]]$pui),
+                        dataType = jsonlite::unbox(pathFields[[j]]$dataType$name)
                     ),
-                    alias=unbox(
+                    alias=jsonlite::unbox(
                         pathFields[[j]]$displayName
                     )
                 )
@@ -91,7 +90,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
     queryWHERE  <- list( field     = mylist,
                          predicate = jsonlite::unbox( "CONTAINS" ),
-                         fields    = list( ENCOUNTER = unbox( "NO" )))
+                         fields    = list( ENCOUNTER = jsonlite::unbox( "NO" )))
 
     querySTRING <- list( select = querySELECT,
                          where  = list( queryWHERE ) )
