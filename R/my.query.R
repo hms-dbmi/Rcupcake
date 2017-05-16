@@ -6,6 +6,7 @@
 #' @param myfields  A vector with the fields of interest
 #' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
+#' @param url  The url.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @return A JSON query. 
@@ -16,11 +17,12 @@
 #'               fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
 #'               )
 #' queryExample <- my.query( myfields = "AGE|PCB153", 
-#'                          myvector = nhanesPcbs
+#'                          myvector  = nhanesPcbs, 
+#'                          url       = "https://nhanes.hms.harvard.edu/"
 #'               )
 #' @export my.query
 
-my.query <- function(myfields, myvector, verbose = FALSE) {
+my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
 
     if( verbose == TRUE){
@@ -28,7 +30,7 @@ my.query <- function(myfields, myvector, verbose = FALSE) {
                 which contains all available paths for the resource")
     }
 
-    pathList <- grep(myfields, vector, value=TRUE)
+    pathList <- grep(myfields, myvector, value=TRUE)
 
 
     if( verbose == TRUE){
@@ -43,7 +45,13 @@ my.query <- function(myfields, myvector, verbose = FALSE) {
             message( pathList[i] )
             message( "Get the fields for this particluar path" )
         }
-
+        
+        IRCT_REST_BASE_URL <- url
+        IRCT_CL_SERVICE_URL <- paste(IRCT_REST_BASE_URL,"rest/v1/",sep="")
+        IRCT_RESOURCE_BASE_URL <- paste(IRCT_CL_SERVICE_URL,"resourceService/",sep="")
+        IRCT_PATH_RESOURCE_URL <- paste(IRCT_RESOURCE_BASE_URL,"path",sep="")
+        
+                
         nurlstr <- paste( IRCT_PATH_RESOURCE_URL, pathList[i], sep = "" )
         nurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("[(]","%28", URLencode(nurlstr)))))
 
@@ -78,11 +86,11 @@ my.query <- function(myfields, myvector, verbose = FALSE) {
 
     queryWHERE <- c()
     # Assuming STRING variable, but not sure
-    mylist      <- list( pui      = unbox( pathList[1] ),
-                         datatype = unbox( "STRING" ) )
+    mylist      <- list( pui      = jsonlite::unbox( pathList[1] ),
+                         datatype = jsonlite::unbox( "STRING" ) )
 
     queryWHERE  <- list( field     = mylist,
-                         predicate = unbox( "CONTAINS" ),
+                         predicate = jsonlite::unbox( "CONTAINS" ),
                          fields    = list( ENCOUNTER = unbox( "NO" )))
 
     querySTRING <- list( select = querySELECT,

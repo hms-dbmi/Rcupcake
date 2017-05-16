@@ -4,13 +4,15 @@
 \alias{my.query}
 \title{Query analysis to the API}
 \usage{
-my.query(myfields, myvector, verbose = FALSE)
+my.query(myfields, myvector, url, verbose = FALSE)
 }
 \arguments{
 \item{myfields}{A vector with the fields of interest}
 
 \item{myvector}{A vector with the paths of interest, generated applying the \code{getchildren}
 function}
+
+\item{url}{The url.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
@@ -29,6 +31,7 @@ nhanesPcbs <- getchildren(
               fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
               )
 queryExample <- my.query( myfields = "AGE|PCB153", 
-                         myvector = nhanesPcbs
+                         myvector  = nhanesPcbs, 
+                         url       = "https://nhanes.hms.harvard.edu/"
               )
 }
