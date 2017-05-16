@@ -3,7 +3,8 @@
 #' Given an url and a JSON object, it generates a \code{data.frame} object with 
 #' the output of the query. 
 #'
-#' @param query A text file containing the JSON query. 
+#' @param query A JSON query, created with my.query function or contained in a
+#' text file. 
 #' @param url  The url.
 #' @param outputPath Path and the file name where the output file will be saved. By default it
 #' will be saved in the working directory with the name queryData.
@@ -31,9 +32,12 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
     IRCT_GET_RESULTS_FORMATS_URL <- paste(IRCT_RESULTS_BASE_URL,"availableFormats",sep="")
     IRCT_GET_RESULTS_URL <- paste(IRCT_RESULTS_BASE_URL,"result",sep="")
     
+    if( class(query) == "json"){
+        body <- query
+    }else{
+        body <- paste(readLines(query), collapse = "")
+    }
     
-    
-    body <- paste(readLines(query), collapse = "")
     result <- httr::content(httr::POST(IRCT_RUN_QUERY_URL, 
                                          body = body))
     if( class(result) != "list" ){

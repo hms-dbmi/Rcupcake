@@ -59,6 +59,8 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         if( verbose == TRUE ){
             message( "Generating {field} object for SELECT portion of the query" )
         }
+        
+        if (length(pathFields)>0) {
 
         for (j in 1:length(pathFields)) {
             message(pathFields[j])
@@ -75,6 +77,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
                 )
             )
             querySELECT <- c( querySELECT, ( myField ) )
+        }
         }
     }
 
