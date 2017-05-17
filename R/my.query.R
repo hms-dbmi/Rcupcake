@@ -63,7 +63,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         if (length(pathFields)>0) {
 
         for (j in 1:length(pathFields)) {
-            message(pathFields[j])
+            #message(pathFields[j])
 
             myField <- list(
                 list(
@@ -78,6 +78,20 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             )
             querySELECT <- c( querySELECT, ( myField ) )
         }
+        } else {
+
+            myField <- list(
+                list(
+                    field=list(
+                        pui = jsonlite::unbox(pathFields[[j]]$pui),
+                        dataType = jsonlite::unbox(pathFields[[j]]$dataType$name)
+                    ),
+                    alias=jsonlite::unbox(
+                        pathFields[[j]]$displayName
+                    )
+                )
+            )
+            querySELECT <- c( querySELECT, ( myField ) )
         }
     }
 
@@ -87,8 +101,13 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
 
     queryWHERE <- c()
+    
+    field <- unlist(strsplit(myfields, "[|]"))[1]
+    whereClause <- grep( field, pathList, value=TRUE)
+    
+    
     # Assuming STRING variable, but not sure
-    mylist      <- list( pui      = jsonlite::unbox( pathList[1] ),
+    mylist      <- list( pui      = jsonlite::unbox( whereClause ),
                          datatype = jsonlite::unbox( "STRING" ) )
 
     queryWHERE  <- list( field     = mylist,

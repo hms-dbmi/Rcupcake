@@ -6,8 +6,8 @@
 \usage{
 co.occurrence(input, pth, ageRange = c(0, 100), aggregate = FALSE,
   gender = "ALL", variation = c("", ""), nfactor = 10, scoreCutOff,
-  fdrCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1,
-  verbose = FALSE)
+  fdrCutOff, fisherCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff,
+  cores = 1, verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeData} object, obtained after applying the my.data function.}

@@ -49,7 +49,7 @@
 #'               )
 #' @export co.occurrence
 
-co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, gender="ALL", variation=c("", ""), nfactor = 10, scoreCutOff, fdrCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1, verbose = FALSE){
+co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, gender="ALL", variation=c("", ""), nfactor = 10, scoreCutOff, fdrCutOff, fisherCutOff, oddsRatioCutOff, relativeRiskCutOff, phiCutOff, cores = 1, verbose = FALSE){
     
     if( verbose == TRUE){
         message("Checking the input object")
@@ -338,7 +338,27 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, ge
         resultad2$score <- round(as.numeric(resultad2$score), 3)
         resultad2$fdr <- round(as.numeric(resultad2$fdr), 3)
         
-        if( nrow( resultad2 ) == 0 ){
+        comb_table_rank <- resultad2
+        comb_table_rank$scoreRank <- rank(-comb_table_rank$score)
+        comb_table_rank$fisherRank <- rank(comb_table_rank$fisher)
+        comb_table_rank$fdrRank <- rank(comb_table_rank$fdr)
+        comb_table_rank$oddsRatioRank <- rank(-comb_table_rank$oddsRatio)
+        comb_table_rank$rrRank <- rank(-comb_table_rank$relativeRisk)
+        comb_table_rank$phiRank <- rank(-comb_table_rank$phi)        
+
+        ## sum the ranking and create the "sumRank"
+        col_num_before <- dim(resultad2)[2]
+        col_num_after <- dim(comb_table_rank)[2]
+        
+        comb_table_rank$sum <- apply(comb_table_rank[, col_num_before:col_num_after], 1, sum)
+        
+        comb_table_rank$sumRank <- rank(comb_table_rank$sum)
+        
+        
+        ## get the sort file and return
+        comb_table_sort <- comb_table_rank[order(comb_table_rank$sumRank), ]
+
+        if( nrow( comb_table_sort ) == 0 ){
             warning("None of the disease pairs has pass the filters") 
         }
         
@@ -348,6 +368,9 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, ge
             variation <- c("NONE")
         }
         
+        
+        
+        
         co.occurrenceResults <- new( "cupcakeResults", 
                                ageMin     = ageRange[ 1 ], 
                                ageMax     = ageRange[ 2 ], 
@@ -356,11 +379,11 @@ co.occurrence <- function ( input, pth, ageRange=c(0,100), aggregate = FALSE, ge
                                patients   = totPatients,
                                tpatients  = length(activePatients),
                                prevalence = (length(activePatients)/totPatients)*100,
-                               ORrange    = paste0( "[", round(min(as.numeric(resultad2$oddsRatio)), digits = 3), " , " , round(max(as.numeric(resultad2$oddsRatio)), digits = 3), "]"  ),
-                               RRrange    = paste0( "[", round(min(as.numeric(resultad2$relativeRisk)), digits = 3), " , ",  round(max(as.numeric(resultad2$relativeRisk)), digits = 3), "]"  ),
-                               PHIrange   = paste0( "[", round(min(as.numeric(resultad2$phi)), digits = 3), " , ",  round(max(as.numeric(resultad2$phi)), digits = 3) , "]" ),
+                               ORrange    = paste0( "[", round(min(as.numeric(comb_table_sort$oddsRatio)), digits = 3), " , " , round(max(as.numeric(resultad2$oddsRatio)), digits = 3), "]"  ),
+                               RRrange    = paste0( "[", round(min(as.numeric(comb_table_sort$relativeRisk)), digits = 3), " , ",  round(max(as.numeric(resultad2$relativeRisk)), digits = 3), "]"  ),
+                               PHIrange   = paste0( "[", round(min(as.numeric(comb_table_sort$phi)), digits = 3), " , ",  round(max(as.numeric(resultad2$phi)), digits = 3) , "]" ),
                                dispairs   = nrow( uniquepairs ),
-                               result     = resultad2 
+                               result     = comb_table_sort[,c(1:16, 24)] 
         )
         return( co.occurrenceResults )
     
