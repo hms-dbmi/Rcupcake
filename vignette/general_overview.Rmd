@@ -326,7 +326,7 @@ Having a general overview about the demographics and the phenotypes included in 
 
 The user can estimate the statistically significant co-occurrences by applying the `co.occurrence` function to the `cupcakeData`object previously generated with the `dataframe2cupcake` function.
 
-### co-occurrence Measurements
+## co-occurrence Measurements
 The `co.occurrence` identifies all the possible phenotype co-occurrence and quantify them.  Five different quantification measures are estimated:   
   - Fisher test
   - co-occurrence score
@@ -334,16 +334,16 @@ The `co.occurrence` identifies all the possible phenotype co-occurrence and quan
   - Phi value (Pearson's correlation for binary variables)  
   - Odds ratio
 
-##### Fisher test
+### Fisher test
 A Fisher exact test for each pair of diseases is performed to assess the null hypothesis of independence between the two diseases. Four groups of patients are defined in order to perform the statistical testing: patients with phenotype A and phenotype B, patients with phenotype A but not phenotype B, patients with phenotype B but not phenotype A and patients without any of the two phenotypes. The Fisher exact test is then applied to estimated the p-value for each pair of diseases. The Benjamini-Hochberg false discovery rate method is applied on the ranked list to correct for multiple testing.
   
-##### co-occurrence score
+### co-occurrence score
 This score is defined in Roque et al. [@roque2011using] as follows:$$comorbidity score =log_2 \left( \cfrac{observed + 1}{expected + 1} \right)$$
 $$expected = \cfrac{n_{A} n_{B}}{N}$$
 
 where _observed_ stands for the number of disease-disease associations (disease A and disease B), and _expected_ is estimated based on the occurrence of each disease (number of patients diagnosed with disease A, _nA_, multiplied by the number of patients diagnosed with the comorbid disorder B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.
     
-#### Relative risk (RR)
+### Relative risk (RR)
 The relative risk (RR) expresses the relationship between the rate of prevalence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. The RR value moves from 0 to infinite.
 
   * RR = 1: The risk is the same for patients exposed to the factor of risk than for those patients that are not exposed. 
@@ -354,12 +354,12 @@ The RR is estimated as the fraction between the number of patients diagnosed wit
 
 where _CAB_ is the number of patients affected by both diseases, _N_ is the total number of patients in the population and _PA_ and _PB_ are the prevalence of diseases A and B.
 
-#### Phi value (Pearsons correlation for binary variables) 
+### Phi value (Pearsons correlation for binary variables) 
 Phi value measures the robustness of the co-occurrence association. It can be expressed mathematically as:$$\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}$$
 
 where _N_ is the total number of patients in the population, _PA_ i and _PB_ are prevalence of phenotypes A and B respectively. _CAB_ is the number of patients that have been diagnosed with both phenotypes A and B, and _PA PB_ is the random expectation based on disease prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.
 
-#### Odds ratio
+### Odds ratio
 The odds ratio represents the increased chance that someone suffering phenotypes A will have the comorbid phenotypes B. It shows the extent to which suffering a phenotypes increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype
 
 ** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to asses phenotype co-occurrence.**
