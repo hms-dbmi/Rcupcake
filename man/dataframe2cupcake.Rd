@@ -4,13 +4,13 @@
 \alias{dataframe2cupcake}
 \title{Transform a data.frame into a \code{cupcakeData} object}
 \usage{
-dataframe2cupcake(input, verbose = FALSE, warnings = TRUE)
+dataframe2cupcake(input, phenotypes, variants, age, gender, verbose = FALSE,
+  warnings = TRUE)
 }
 \arguments{
 \item{input}{Determines the file with the complete path where the required 
-input file is located. This input file must contain three columns: "patient_id" with
-the patient identifier, "Gender" and "Age". Variation columns must start with "M." while
-phenotype ones must start with a "P."}
+input file is located. This input file must contain the "patient_id", two demographic variables, "Gender" and "Age",
+and a list of phenotypes and variations}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
@@ -26,8 +26,12 @@ Given a tabulated file that contains the data in the
 correct format and generates a \code{cupcakeData} object.
 }
 \examples{
-queryExample <- dataframe2cupcake( input = paste0(system.file("extdata", package="Rcupcake"), 
+queryExample <- dataframe2cupcake( input      = paste0(system.file("extdata", package="Rcupcake"), 
                                                 "/queryOutput.txt"),
-                                  verbose     = TRUE)
+                                   age        = "Age",
+                                   gender     = "Gender",
+                                   phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer"
+                                   variants   = "PCB153",
+                                   verbose    = TRUE)
 queryExample
 }

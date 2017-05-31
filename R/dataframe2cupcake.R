@@ -4,23 +4,30 @@
 #' correct format and generates a \code{cupcakeData} object.
 #'
 #' @param input Determines the file with the complete path where the required 
-#' input file is located. This input file must contain three columns: "patient_id" with
-#' the patient identifier, "Gender" and "Age". Variation columns must start with "M." while
-#' phenotype ones must start with a "P."
+#' input file is located. This input file must contain the "patient_id", two demographic variables, "Gender" and "Age",
+#' and a list of phenotypes and variations
+#' @age Vector that contains the age variable
+#' @gender Vector that contains the gender variable
+#' @phenotypes Vector that contains the phenotype variables
+#' @variants Vector that contains the variants names 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
 #' the warnings.
 #' @return An object of class \code{cupcakeData}
 #' @examples
-#' queryExample <- dataframe2cupcake( input = paste0(system.file("extdata", package="Rcupcake"), 
+#' queryExample <- dataframe2cupcake( input      = paste0(system.file("extdata", package="Rcupcake"), 
 #'                                                 "/queryOutput.txt"),
-#'                                   verbose     = TRUE)
+#'                                    age        = "Age",
+#'                                    gender     = "Gender",
+#'                                    phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer"
+#'                                    variants   = "PCB153",
+#'                                    verbose    = TRUE)
 #' queryExample
 #' @export dataframe2cupcake
 
 
-dataframe2cupcake <- function( input ,verbose = FALSE, warnings= TRUE) {
+dataframe2cupcake <- function( input, phenotypes, variants, age, gender, verbose = FALSE, warnings= TRUE) {
    
     if( verbose == TRUE){
         message( "Loading the input datasets" )
@@ -30,6 +37,22 @@ dataframe2cupcake <- function( input ,verbose = FALSE, warnings= TRUE) {
                             header = TRUE, 
                             sep = "\t", 
                             colClasses = "character" )
+    
+    colnames(patients)[grep(age, colnames(patients) )] <- "Age"
+    colnames(patients)[ grep(gender, colnames(patients) )] <- "Gender"
+    
+    variantList <- unlist(strsplit(variants, "[|]"))
+    for( i in 1:length(variantList)){
+        colnames(patients)[grep(variantList[i], colnames(patients) )] <- paste0("M.", variantList[i])
+    }
+    
+    phenotypeList <- unlist(strsplit(phenotypes, "[|]"))
+    
+    
+    for( i in 1:length(phenotypeList)){
+        colnames(patients)[grep(phenotypeList[i], colnames(patients) )] <- paste0("P.", phenotypeList[i])
+    }
+    
     
     if( verbose == TRUE){
         message("Checking the inputData file structure")
