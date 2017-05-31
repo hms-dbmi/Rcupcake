@@ -6,10 +6,10 @@
 #' @param input Determines the file with the complete path where the required 
 #' input file is located. This input file must contain the "patient_id", two demographic variables, "Gender" and "Age",
 #' and a list of phenotypes and variations
-#' @age Vector that contains the age variable
-#' @gender Vector that contains the gender variable
-#' @phenotypes Vector that contains the phenotype variables
-#' @variants Vector that contains the variants names 
+#' @param age Vector that contains the age variable
+#' @param gender Vector that contains the gender variable
+#' @param phenotypes Vector that contains the phenotype variables
+#' @param variants Vector that contains the variants names 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.
 #' @param warnings By default \code{TRUE}. Change it to \code{FALSE} to don't see
@@ -20,7 +20,7 @@
 #'                                                 "/queryOutput.txt"),
 #'                                    age        = "Age",
 #'                                    gender     = "Gender",
-#'                                    phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer"
+#'                                    phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer",
 #'                                    variants   = "PCB153",
 #'                                    verbose    = TRUE)
 #' queryExample
@@ -38,19 +38,22 @@ dataframe2cupcake <- function( input, phenotypes, variants, age, gender, verbose
                             sep = "\t", 
                             colClasses = "character" )
     
-    colnames(patients)[grep(age, colnames(patients) )] <- "Age"
-    colnames(patients)[ grep(gender, colnames(patients) )] <- "Gender"
+    colnames(patients)[ which(colnames(patients) == grep(age, colnames(patients) , value = TRUE ))]    <- "Age"
+    colnames(patients)[ which(colnames(patients) == grep(gender, colnames(patients) , value = TRUE ))] <- "Gender"
     
     variantList <- unlist(strsplit(variants, "[|]"))
-    for( i in 1:length(variantList)){
-        colnames(patients)[grep(variantList[i], colnames(patients) )] <- paste0("M.", variantList[i])
+        for( i in 1:length(variantList)){
+        variantList[i] <- gsub(" ", ".", variantList[i])
+        colnames(patients)[ which(colnames(patients) == grep(variantList[i], colnames(patients) , value = TRUE ))] <- paste0("V.", variantList[i])
     }
     
     phenotypeList <- unlist(strsplit(phenotypes, "[|]"))
     
     
     for( i in 1:length(phenotypeList)){
-        colnames(patients)[grep(phenotypeList[i], colnames(patients) )] <- paste0("P.", phenotypeList[i])
+        phenotypeList[i] <- gsub(" ", ".", phenotypeList[i])
+        colnames(patients)[ which(colnames(patients) == grep(phenotypeList[i], colnames(patients) , value = TRUE ))] <- paste0("P.", phenotypeList[i])
+        
     }
     
     
@@ -89,7 +92,7 @@ dataframe2cupcake <- function( input, phenotypes, variants, age, gender, verbose
         check$variable <- substr( check[,1], 3, nchar(as.character(check[,1])))
         check <- check[! duplicated(check),]
         
-        variations <- check[ check$firstL == "M", ]
+        variations <- check[ check$firstL == "V", ]
         phenotypes <- check[ check$firstL == "P", ]
         
 

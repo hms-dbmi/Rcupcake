@@ -29,11 +29,8 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: 
- # BiocStyle::html_document2:
- # toc_float: true
- pdf_document:
- toc: true
-   
+  BiocStyle::html_document2:
+  toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -217,8 +214,13 @@ In order to transform the data.frame into a `cupcakeData` object, the `dataframe
 
 
 ```{r convertToRcupcakeobject}
-cupcakeExData <- dataframe2cupcake( input = paste0(system.file("extdata", package="Rcupcake"), "/queryOutput.txt"), 
-                                  verbose = TRUE )
+cupcakeExData <- dataframe2cupcake( input      = paste0(system.file("extdata", package="Rcupcake"), 
+                                                "/queryOutput.txt"),
+                                   age        = "Age",
+                                   gender     = "Gender",
+                                   phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer",
+                                   variants   = "PCB153",
+                                   verbose    = TRUE)
 ```
 
 As a result a `genopheno` object class is obtained. 
@@ -265,8 +267,8 @@ head( Rcupcake::extract( zscoreExample ) )
 Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'M.PCB153' variable, can be changed into categorical applying the next code:
 
 ```{r variationTransform}
-cupcakeExData@iresult$M.PCB153 <- ifelse( is.na(cupcakeExData@iresult$M.PCB153), "no", "yes" )
-summary(as.factor(cupcakeExData@iresult$M.PCB153))
+cupcakeExData@iresult$V.PCB153 <- ifelse( is.na(cupcakeExData@iresult$V.PCB153), "no", "yes" )
+summary(as.factor(cupcakeExData@iresult$V.PCB153))
 ```
 
 # Demographic analysis 

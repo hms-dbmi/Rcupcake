@@ -12,6 +12,14 @@ dataframe2cupcake(input, phenotypes, variants, age, gender, verbose = FALSE,
 input file is located. This input file must contain the "patient_id", two demographic variables, "Gender" and "Age",
 and a list of phenotypes and variations}
 
+\item{phenotypes}{Vector that contains the phenotype variables}
+
+\item{variants}{Vector that contains the variants names}
+
+\item{age}{Vector that contains the age variable}
+
+\item{gender}{Vector that contains the gender variable}
+
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
 
@@ -30,7 +38,7 @@ queryExample <- dataframe2cupcake( input      = paste0(system.file("extdata", pa
                                                 "/queryOutput.txt"),
                                    age        = "Age",
                                    gender     = "Gender",
-                                   phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer"
+                                   phenotypes = "Diabetes|Arthritis|LiverCancer|AnyCancer",
                                    variants   = "PCB153",
                                    verbose    = TRUE)
 queryExample

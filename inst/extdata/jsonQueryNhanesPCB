@@ -5,7 +5,7 @@
           "pui": "/nhanes/Demo/laboratory/laboratory/pcbs/PCB153 (ng per g)/",
           "dataType": "STRING"
         },
-        "alias": "M.PCB153"
+        "alias": "V.PCB153"
       },
   {
       "field": {

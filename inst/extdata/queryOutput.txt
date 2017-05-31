@@ -1,4 +1,4 @@
-patient_id	P.Diabetes	P.Arthritis	P.LiverCancer	Gender	P.AnyCancer	Age	M.PCB153
+patient_id	P.Diabetes	P.Arthritis	P.LiverCancer	Gender	P.AnyCancer	Age	V.PCB153
 2	No	No	No	male	No	85	NA
 3				female		0	NA
 4	No	No	No	female	No	49	0.109

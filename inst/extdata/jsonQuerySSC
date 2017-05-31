@@ -54,7 +54,7 @@
     "pui": "/ssc/Demo/SFARI_Simplex_Collection_v15/SFARI_Simplex_Collection_v15/SSC_wigler_mutations/CHD8/yes",
     "dataType": "STRING"
     },
-    "alias": "M.CHD8"
+    "alias": "V.CHD8"
     },
     
     {
@@ -62,7 +62,7 @@
     "pui": "/ssc/Demo/SFARI_Simplex_Collection_v15/SFARI_Simplex_Collection_v15/SSC_wigler_mutations/CHD8/no",
     "dataType": "STRING"
     },
-    "alias": "M.CHD8"
+    "alias": "V.CHD8"
     }
     ],
     
