@@ -1,5 +1,5 @@
 ---
-title: "Rcupcake: An R package for querying and analyzing EHR data through the BD2K PIC-SURE RESTful API"
+title: "Rcupcake: An R package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API"
 author:
 - name: Alba Gutierrez-Sacristan
   affiliation: 
@@ -29,8 +29,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: 
-  BiocStyle::html_document2:
-    toc_float: true
+ # BiocStyle::html_document2:
+ # toc_float: true
+ pdf_document:
+ toc: true
+   
 ---
 
 ```{r setup, include=FALSE}
@@ -64,6 +67,7 @@ In the following sections the specific functions that can be used to address eac
 The package \texttt{Rcupcake} is provided through GitHub. To install \texttt{Rcupcake} the user must type the two following commands in an R session:
 
 ```{r bioC, eval=FALSE}
+library(devtools)
 install_github("hms-dbmi/Rcupcake")
 ```
 
@@ -137,12 +141,12 @@ nvariationExample
   - Number of resultant co-occurrences
 
 ```{r cupcakeResultsObj1, echo=FALSE}
-load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
+load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
 ```
 
 ```{r cupcakeResultsObj2}
-RcupcakeExData
-class( RcupcakeExData )
+cupcakeResults
+class( cupcakeResults )
 ```
 
 The `cupcakeResults` object come with the `extract` function. The `extract` function allows the user to retrieve data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the co-occurrence analysis.
@@ -169,26 +173,25 @@ sessionEx
 
 ## Select the variables of interest
 
-```{r get.children, eval=FALSE}
+```{r get.children}
 nhanesPcbs <- get.children( 
-                 fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/", 
-                 url         = "https://nhanes.hms.harvard.edu/"
+              url         = "https://nhanes.hms.harvard.edu/", 
+              fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
               )
-head( nhanesPcbs )
+nhanesDemog <- get.children( 
+              url         = "https://nhanes.hms.harvard.edu/", 
+              fieldname   = "/nhanes/Demo/demographics/demographics/"
+              )
 
-[1] "/nhanes/Demo/laboratory/laboratory/pcbs/3,3,4,4,5,5-hxcb (fg%2Fg)/"
-[2] "/nhanes/Demo/laboratory/laboratory/pcbs/3,3,4,4,5-pncb (fg%2Fg)/"  
-[3] "/nhanes/Demo/laboratory/laboratory/pcbs/3,4,4,5-tcb (fg%2Fg)/"     
-[4] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB101 (ng%2Fg)/"          
-[5] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB105 (ng%2Fg)/"          
-[6] "/nhanes/Demo/laboratory/laboratory/pcbs/PCB110 (ng%2Fg)/"   
+head( nhanesDemog )              
 ```
 
 ## Build the JSON query
 
 ```{r my.query, eval=FALSE}
-queryExample <- my.query( myfields = "PCB153", 
-                          myvector = nhanesPcbs
+queryExample <- my.query( myfields = "AGE|PCB153", 
+                          myvector = c(nhanesDemog, nhanesPcbs), 
+                          url         = "https://nhanes.hms.harvard.edu/"
                )
 ```
 
@@ -220,15 +223,13 @@ cupcakeExData <- dataframe2cupcake( input = paste0(system.file("extdata", packag
 
 As a result a `genopheno` object class is obtained. 
 ```{r convertToRcupcakeobject2}
-class( RcupcakeExData )
-RcupcakeExData 
-head( Rcupcake::extract( RcupcakeExData ) )
+class( cupcakeExData )
+cupcakeExData 
+head( Rcupcake::extract( cupcakeExData ) )
 ```
 
 # Transform continuous in categorical variables: zscore
-Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `P.Herpes`, which has `yes` or `no` values. Variables like `P.pcb153` are continuous. To add it to the analysis it should be transformed into a categorical. 
-
-If desired, user can apply the `genophenoZscore` function, that given an object of class `genopheno`, it transforms continuous into categorical variable applying Z-score. As a result a new `genopheno` object is generated. 
+Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `P.Herpes`, which has `yes` or `no` values. If desired, user can apply the `z.score` function, that given an object of class `cupcakeData`, it transforms continuous into categorical variable applying Z-score. As a result a new `cupcakeData` object is generated. 
 
 Note that if the number of individuals is lower than 5000 a Saphiro test [@shapiro1965analysis] will be done to test the normal distribution, otherwise a Kolmogorov-Smirnov test [@razali2011power] will be performed. The steps followed in this process are the next:
 
@@ -240,7 +241,7 @@ Note that if the number of individuals is lower than 5000 a Saphiro test [@shapi
   4. Z-score will be estimated for this variable
 
 
-As an input `genophenoZscore` function requires:
+As an input `z.score` function requires:
 
   * input: a `cupcakeData` object, obtained with the `dataframe2cupcake` function. 
   * zscoreCutOff: determines Z-score cut-off to categorize the continuous variable. By default it is set to -2 and 2. 
@@ -248,7 +249,7 @@ As an input `genophenoZscore` function requires:
 
 
 ```{r zscore}
-zscoreExample <- z.score( input        = RcupcakeExData,
+zscoreExample <- z.score( input        = cupcakeExData,
                           zscoreCutOff = c( -2, 2 ), 
                           nfactor      = 10, 
                           verbose      = TRUE )
@@ -257,10 +258,16 @@ zscoreExample <- z.score( input        = RcupcakeExData,
 As a result a new `cupcakeData` object is obtained. Note that the transformation cannot always be done. 
 
 ```{r zscoreExample}
-head( Rcupcake::extract( RcupcakeExData ) )
+head( Rcupcake::extract( cupcakeExData ) )
 head( Rcupcake::extract( zscoreExample ) )
 ```
 
+Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'M.PCB153' variable, can be changed into categorical applying the next code:
+
+```{r variationTransform}
+cupcakeExData@iresult$M.PCB153 <- ifelse( is.na(cupcakeExData@iresult$M.PCB153), "no", "yes" )
+summary(as.factor(cupcakeExData@iresult$M.PCB153))
+```
 
 # Demographic analysis 
 The `Rcupcake` R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the `demographic.summary` function.
@@ -280,7 +287,7 @@ The `demographic.summary` function output includes:
   - A pie chart representing the gender distribution.
 
 ```{r demographicAnalysis, fig.width=8, fig.height=8}
-Rcupcake::demographic.summary ( input       = RcupcakeExData, 
+Rcupcake::demographic.summary ( input       = cupcakeExData, 
                                maleCode    = "male", 
                                femaleCode  ="female", 
                                verbose     = TRUE )
@@ -306,7 +313,7 @@ The `phenotype.summary` function output could include:
   - A table if the showTable argument is TRUE
 
 ```{r phenosumm, fig.width=8, fig.height=8, warning= FALSE}
-phenotype.summary( input      = RcupcakeExData,
+phenotype.summary( input      = cupcakeExData,
                   showTable   = TRUE, 
                   showFigures = FALSE)
 ```
@@ -357,7 +364,7 @@ The odds ratio represents the increased chance that someone suffering phenotypes
 
 The `co.occurrence` function requires 6 arguments:  
 
-  - input: the `genopheno` object
+  - input: the `cupcakeData` object
   - pth: the path where the file with the phenotype values generated previously is located.
   - aggregate: if all the possible phenotypes values want to be considered individually, aggregate must be FALSE. otherwise, the phenotype values should be manually completed by the user (column yes/no) and aggregate must be TRUE. 
   - ageRange: determines what is the age range of interest for performing the analysis.
@@ -367,7 +374,7 @@ The `co.occurrence` function requires 6 arguments:
 
 ```{r phenoCooccurrence}
 cupcakeResults <- co.occurrence( 
-              input         = RcupcakeExData,
+              input         = cupcakeExData,
               pth           = system.file("extdata", package="Rcupcake"), 
               aggregate    = FALSE, 
               ageRange      = c(0,85),
@@ -416,7 +423,7 @@ The `cooc.network` function output is a network. Node size is proportional to th
 ```{r phenoNetwork, fig.width=10, fig.height=10}
 cooc.network ( input               = cupcakeResults,
                representedVariable = "patientsPhenoAB", 
-               variableCutOff      = 10)
+               variableCutOff      = 100)
 ```
 
 
@@ -434,12 +441,22 @@ The `cooc.heatmap` function output is a heatmap. Blue color represents the lower
 ```{r phenoHeatmap, fig.width=10, fig.height=10 }
 cooc.heatmap ( input               = cupcakeResults,
                representedVariable = "patientsPhenoAB", 
-               variableCutOff      = 0)
+               variableCutOff      = 100)
 ```
 
 ## Plotting the prevalence results
 
-```{r phenoPrevalencePlot, fig.width=10, fig.height=10 }
+```{r phenoPrevalenceNetwork, fig.width=10, fig.height=10 }
+prevalence.plot( input   = cupcakeResults,
+                 variation = "PCB153",
+                   verbose = TRUE
+              )
+```
+
+
+If no variation is indicated, the output of the `prevalence.plot` will be a barplot showing the general prevalence of each phenotype in the data set. 
+
+```{r phenoPrevalenceBarplot, fig.width=10, fig.height=10 }
 prevalence.plot( input   = cupcakeResults,
                    verbose = TRUE
               )

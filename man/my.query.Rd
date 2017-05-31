@@ -24,13 +24,19 @@ Given a vector with the fields of interest, and the vector generated with the pa
 after applying the getchildren function, it returns a JSON query
 }
 \examples{
-nhanesPcbs <- getchildren( 
+nhanesPcbs <- get.children( 
               url         = "https://nhanes.hms.harvard.edu/", 
-              apiKey      = "YOURKEY",
               fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
               )
+nhanesDemog <- get.children( 
+              url         = "https://nhanes.hms.harvard.edu/", 
+              fieldname   = "/nhanes/Demo/demographics/demographics/"
+              )
+              
+ 
+              
 queryExample <- my.query( myfields = "AGE|PCB153", 
-                         myvector  = nhanesPcbs, 
+                         myvector  = c(nhanesPcbs, nhanesDemog), 
                          url       = "https://nhanes.hms.harvard.edu/"
               )
 }

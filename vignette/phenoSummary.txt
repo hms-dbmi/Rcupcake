@@ -1,0 +1,13 @@
+phenotype	phenotypeValue	P_AllPatients	confint	yesno
+Diabetes		5.44	[5.2-5.7]	NA
+Diabetes	No	88.71	[88.4-89]	NA
+Diabetes	Yes	5.84	[5.6-6.1]	NA
+Arthritis		51.12	[50.6-51.6]	NA
+Arthritis	No	36.29	[35.8-36.8]	NA
+Arthritis	Yes	12.6	[12.3-12.9]	NA
+LiverCancer		55.4	[54.9-55.9]	NA
+LiverCancer	No	44.57	[44.1-45]	NA
+LiverCancer	Yes	0.04	[0-0.1]	NA
+AnyCancer		51.1	[50.6-51.6]	NA
+AnyCancer	No	44.57	[44.1-45]	NA
+AnyCancer	Yes	4.34	[4.1-4.5]	NA

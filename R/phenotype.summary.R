@@ -42,8 +42,7 @@ phenotype.summary <- function( input, variation = FALSE, nfactor = 10, showTable
     checkClass <- class(input)[1]
     
     if(checkClass != "cupcakeData"){
-        message("Check the input object. Remember that this
-                object must be obtained after applying the queryPheno
+        message("Check the input object. Remember that this dataframe2cupcake
                 function to your input file. The input object class must
                 be:\"cupcakeData\"")
         stop()
