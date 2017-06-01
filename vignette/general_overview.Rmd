@@ -44,9 +44,9 @@ The `Rcupcake` package contains functions to query different databases through t
 
 ## Background
 
-In the era of big data and precision medicine, the number of databases containing clinical and genomic information is increasing in an exponential way. Enables the experts to focus on their research questions rather than in the computation data merging, access and management is one of the biggest challenges nowadays. 
+In the era of big data and precision medicine, the number of databases containing biomedical information is increasing in an exponential way. Enabling the experts to focus on their research questions rather than in the computation data merging, access and management is one of the biggest challenges nowadays. The `Rcupcake` package has been developed with this purpose.
 
-Towards the aim of developing reproducible and scalable analysis, the `Rcupcake` package has been developed. This R package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover it allows to easily reproducible analysis between different databases as well as its integration with other packages available in R to develop bioinformatics analysis workflows. 
+The `Rcupcake` package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover it allows its integration with other packages available in R to develop bioinformatics analysis workflows. 
 
 The tasks that can be performed with `Rcupcake` package are the following:
 
@@ -61,27 +61,23 @@ In the following sections the specific functions that can be used to address eac
 
 ## Installation 
 
-The package \texttt{Rcupcake} is provided through GitHub. To install \texttt{Rcupcake} the user must type the two following commands in an R session:
+The package \texttt{Rcupcake} is provided through GitHub. To install \texttt{Rcupcake} the user must type the following commands in an R session:
 
-```{r bioC, eval=FALSE}
-library(devtools)
-install_github("hms-dbmi/Rcupcake")
+```{r bioC, message=FALSE}
+library( devtools )
+install_github( "hms-dbmi/Rcupcake" )
+library( Rcupcake )
 ```
 
-```{r knirt, echo=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
+```{r knirt, message=FALSE, echo=FALSE}
+library( knitr )
 ```
-
-```{r load_library, message=FALSE, warning=FALSE}
-library(Rcupcake)
-```
-
 
 ## S4 objects 
 
 ### `cupcakeData`
 
-`cupcakeData` object is obtained when `dataframe2cupcake` and `z.score` functions are applied. This object is used as input for `demographicSummary` and `phenotypeSummary`  descriptive functions. The `cupcakeData` object contains the table dataset and shows the main characteristic:
+`cupcakeData` object is obtained when `dataframe2cupcake` and `z.score` functions are applied. This object is used as input for `demographic.summary` and `phenotype.summary`  descriptive functions. The `cupcakeData` object contains the clinical dataset and shows a summary of the folloowing characteristics:
 
   - The number of variations (N. Variations)
   - The number of phenotype variables (N. Phenotypes)
@@ -96,24 +92,16 @@ RcupcakeExData
 class( RcupcakeExData )
 ```
 
-This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `nphenotype`, `nvariation` and `extract`. 
+This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `n.phenotype`, `n.variation` and `extract`. 
 
-The `nphenotype` function returns the phenotypes present in the output of the given query.
+The `n.phenotype` function returns the phenotypes present in the output of the given query.
 ```{r nphenotype}
 nphenotypeExample <- Rcupcake::n.phenotype( RcupcakeExData )
 class( nphenotypeExample )
 nphenotypeExample
 ```
 
-The `nvariation` function returns the variations present in the output of the given query.
-```{r extract}
-extractExample <- Rcupcake::extract( RcupcakeExData )
-class( extractExample )
-kable( head( extractExample ) )
-```
-
-
-The `extract` function returns a formatted `data.frame` with the complete set of information contained in the object, the query results. 
+The `n.variation` function returns the variations present in the output of the given query.
 ```{r nvariation}
 nvariationExample <- Rcupcake::n.variation( RcupcakeExData )
 class( nvariationExample )
@@ -121,14 +109,23 @@ nvariationExample
 ```
 
 
+The `extract` function returns a formatted `data.frame` with the complete set of information contained in the object, the query results. 
+```{r extract}
+extractExample <- Rcupcake::extract( RcupcakeExData )
+class( extractExample )
+kable( head( extractExample ) )
+```
+
+
+
 ### `cupcakeResults`
 
-`cupcakeResults` object is obtained when `cupcakeResultsbidity` function is applied. This object is used as input for `pheno.prevalence`, `cooc.heatmap`and `cooc.network`  functions. The `cupcakeResults` object contains the co-occurrence results as well as the co-occurrence analysis results and a summary of the different measurements:
+`cupcakeResults` object is obtained when `co.ocurrence` function is applied. This object is used as input for `pheno.prevalence`, `cooc.heatmap`and `cooc.network`  functions. The `cupcakeResults` object contains the co-occurrence analysis results and a summary of the different measurements:
 
   - Minimum age of the patients in the dataset (Age Min)
   - Minimum age of the patients in the dataset (Age Max)
-  - Patients gender
-  - variation, if selected
+  - Patients gender (Gender)
+  - variation, if selected (Variation)
   - Number of patients in the age and gender interval in the database
   - Number of patients in the age and gender interval with the variation select
   - The prevalence of the variation in the dataset
@@ -138,7 +135,8 @@ nvariationExample
   - Number of resultant co-occurrences
 
 ```{r cupcakeResultsObj1, echo=FALSE}
-load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
+load(system.file( "extdata", "RcupcakeExResult.RData", 
+                  package="Rcupcake" ))
 ```
 
 ```{r cupcakeResultsObj2}
@@ -146,7 +144,7 @@ cupcakeResults
 class( cupcakeResults )
 ```
 
-The `cupcakeResults` object come with the `extract` function. The `extract` function allows the user to retrieve data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the co-occurrence analysis.
+The `cupcakeResults` object come with the `extract` function. The `extract` function allows the user to retrieve the data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the co-occurrence analysis.
 
 # Retrieve data from the database
 The first step in order to perform any analysis is extracting the data related to the patients of interest. The next steps should be followed:
@@ -157,6 +155,15 @@ The first step in order to perform any analysis is extracting the data related t
   4. Run the query. 
 
 ## Start session 
+The `Rcupcake` R package allows the user to retrieve the data from a database following 4 different steps. The first one consist on starting a session in the database of interest. To do it, the user can apply the `start.session` function.
+
+The `start.session` function establishes a connection to the database of interest. It requires two arguments:
+
+  - _url_: the url of the database of interest.
+  - _apiKey_: the key to successfully access to the data.
+
+
+The `start.session` function output is a message showing if the connection was or not successfully. If everything is correct the output message will be: _'Start Session: success'_, otherwise the next message will appear: _'Start Session: failed. Please revise your url and apiKey'_
 
 
 ```{r startSession, eval=FALSE}
@@ -169,6 +176,17 @@ sessionEx
 
 
 ## Select the variables of interest
+The next step will be retrieving all the paths from the database where our variables of interest are located. This step will allow us to create the JSON query needed to retrieve the data. 
+
+The `Rcupcake` R package allows the user to retrieve the paths from the database applying the `get.children` function.
+
+The `get.children` function retrieves the paths of interet from the databse using as input two different arguments:
+
+  - _url_: the url of the database of interest.
+  - _fieldname_: the parent path where the variables of interest are located.
+
+
+The `get.children` function output is vector of paths. This output will be used as input for the `my.query` function that generates the JSON query. 
 
 ```{r get.children}
 nhanesPcbs <- get.children( 
@@ -184,6 +202,16 @@ head( nhanesDemog )
 ```
 
 ## Build the JSON query
+Once the paths are retrieve, the next step is to create the JSON query for the variables of interest. The `Rcupcake` R package allows the user to generate this query applying the `my.query` function.
+
+The `my.query` function creates the JSON query using as input three different arguments:
+
+  - _url_: the url of the database of interest.
+  - _myfields_: the vector with the variables of interest. 
+  - _myvector_:  the vector with the paths generated applying the `get.children` function
+
+
+The `my.query` function output is the JSON query. This output will be used as input for the `my.query` function that generates the JSON query.
 
 ```{r my.query, eval=FALSE}
 queryExample <- my.query( myfields = "AGE|PCB153", 
@@ -194,8 +222,17 @@ queryExample <- my.query( myfields = "AGE|PCB153",
 
 
 ## Run the query
- 
- 
+The last step consist of retrieving the data. The `Rcupcake` R package allows the user to do it applying the `my.data` function. Given a url and a JSON query, it generates a `data.frame` object with the query output. 
+
+The `my.data` function retrieves the data using as input three different arguments:
+
+  - _url_: the url of the database of interest.
+  - _query_: A JSON query, created applying the `my.query` function or contained in a text file.
+  - _outputPath_:  the path and the file name where the output data will be saved. 
+
+
+The `my.data` function output is the `data.frame` object that is retrieved for the JSON query of interet.
+
 ```{r my.data, eval=FALSE}
 query <- my.data( 
               query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
@@ -207,12 +244,17 @@ query <- my.data(
 Once the data is in a data.frame format, it has to be transformed into a `cupcakeData` class object. Note that to perform a correct analysis, the data frame should contain:
 
   - 3 demographic variables: patient_id, Gender and Age. 
-  - phenotype variables name should start with a "P"
-  - variation variables name, if present, should start with a "M"
+  - phenotype variables name
+  - variation variables name
   
-In order to transform the data.frame into a `cupcakeData` object, the `dataframe2cupcake` function has to be applied. The only input needed is the `input`, that determines the file with the complete path where the required input file is located. 
+In order to transform the data.frame into a `cupcakeData` object, the `dataframe2cupcake` function has to be applied. The arguments neededed as input are the following:
 
-
+  - `input`: that determines the file with the complete path where the required input file is located. 
+  - `phenotypes`: vector that contains the phenotype variables, separated by "|". 
+  - `variants`vector that contains the names of variations, separated by "|". 
+  - `age`: vector that contains the age variable name. 
+  - `gender`: vector that contains the gender variable name.
+  
 ```{r convertToRcupcakeobject}
 cupcakeExData <- dataframe2cupcake( input      = paste0(system.file("extdata", package="Rcupcake"), 
                                                 "/queryOutput.txt"),
@@ -223,7 +265,7 @@ cupcakeExData <- dataframe2cupcake( input      = paste0(system.file("extdata", p
                                    verbose    = TRUE)
 ```
 
-As a result a `genopheno` object class is obtained. 
+As a result a `cupcakeData` object class is obtained. 
 ```{r convertToRcupcakeobject2}
 class( cupcakeExData )
 cupcakeExData 
@@ -231,7 +273,7 @@ head( Rcupcake::extract( cupcakeExData ) )
 ```
 
 # Transform continuous in categorical variables: zscore
-Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `P.Herpes`, which has `yes` or `no` values. If desired, user can apply the `z.score` function, that given an object of class `cupcakeData`, it transforms continuous into categorical variable applying Z-score. As a result a new `cupcakeData` object is generated. 
+Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `Diabetes`, which has `yes` or `no` values. If desired, user can apply the `z.score` function for continuous variables. Given an object of class `cupcakeData`, the `z.score` function transforms continuous into categorical variable applying Z-score. As a result a new `cupcakeData` object is generated. 
 
 Note that if the number of individuals is lower than 5000 a Saphiro test [@shapiro1965analysis] will be done to test the normal distribution, otherwise a Kolmogorov-Smirnov test [@razali2011power] will be performed. The steps followed in this process are the next:
 
@@ -264,7 +306,7 @@ head( Rcupcake::extract( cupcakeExData ) )
 head( Rcupcake::extract( zscoreExample ) )
 ```
 
-Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'M.PCB153' variable, can be changed into categorical applying the next code:
+Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'PCB153' variable, can be changed into categorical applying the next code:
 
 ```{r variationTransform}
 cupcakeExData@iresult$V.PCB153 <- ifelse( is.na(cupcakeExData@iresult$V.PCB153), "no", "yes" )
@@ -277,7 +319,7 @@ The `Rcupcake` R package allows the user to analyze and characterize the populat
 The function `demographic.summary` describes the demographic characteristics (sex, age) of the population under study.
 The `demographic.summary` function requires three arguments:
 
-  - _input_: the genopheno object.
+  - _input_: the `cupcakeData` object.
   - _maleCode_: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
   - _femaleCode_: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
 
@@ -297,11 +339,11 @@ Rcupcake::demographic.summary ( input       = cupcakeExData,
 
 
 # Phenotype analysis
-The `Rcupcake` R package includes the `phenotype.summary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected variation if genotype information available. otherwise a general summary of the different phenotype values is displayed.     
+The `Rcupcake` R package includes the `phenotype.summary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected variation if genotype information available. Otherwise a general summary of the different phenotype values is displayed.     
 
 The `phenotype.summary` function requires as input the next arguments: 
 
-  - input: the `genopheno` object.
+  - input: the `cupcakeData` object.
   - variation: the variation of interest
   - nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
   - showTable: the table is displayed before the barplot. 
@@ -341,26 +383,25 @@ A Fisher exact test for each pair of diseases is performed to assess the null hy
 This score is defined in Roque et al. [@roque2011using] as follows:$$comorbidity score =log_2 \left( \cfrac{observed + 1}{expected + 1} \right)$$
 $$expected = \cfrac{n_{A} n_{B}}{N}$$
 
-where _observed_ stands for the number of disease-disease associations (disease A and disease B), and _expected_ is estimated based on the occurrence of each disease (number of patients diagnosed with disease A, _nA_, multiplied by the number of patients diagnosed with the comorbid disorder B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.
+where _observed_ stands for the number of phenotype-phenotype associations (phenotype A and phenotype B), and _expected_ is estimated based on the occurrence of each phenotpye (number of patients diagnosed with phenotype A, _nA_, multiplied by the number of patients diagnosed with the co-occurrent phenotype B, _nB_ , and divided by the total number of patients, _N_). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.
     
 ### Relative risk (RR)
-The relative risk (RR) expresses the relationship between the rate of prevalence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. The RR value moves from 0 to infinite.
-
+The relative risk (RR) expresses the relationship between the rate of prevalence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. 
   * RR = 1: The risk is the same for patients exposed to the factor of risk than for those patients that are not exposed. 
   * RR > 1: The patients exposed to the factor of risk are more likely to suffer the disease. It is a risk factor.
   * RR < 1: The patients exposed to the factor of risk are less likely to suffer the disease. It is a protection factor.
 
-The RR is estimated as the fraction between the number of patients diagnosed with both diseases and random expectation based on disease prevalence [@hidalgo2009dynamic]. The RR of observing a pair of diseases A and B affecting the same patient is given by: $$RR_{AB} = \cfrac{C_{AB} N}{P_A P_B}$$
+The RR is estimated as the fraction between the number of patients diagnosed with both phenotypes and random expectation based on phenotype prevalence [@hidalgo2009dynamic]. The RR of observing a pair of phenotypes A and B affecting the same patient is given by: $$RR_{AB} = \cfrac{C_{AB} N}{P_A P_B}$$
 
-where _CAB_ is the number of patients affected by both diseases, _N_ is the total number of patients in the population and _PA_ and _PB_ are the prevalence of diseases A and B.
+where _CAB_ is the number of patients affected by both phenotypes, _N_ is the total number of patients in the population and _PA_ and _PB_ are the prevalence of diseases A and B.
 
 ### Phi value (Pearsons correlation for binary variables) 
 Phi value measures the robustness of the co-occurrence association. It can be expressed mathematically as:$$\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}$$
 
-where _N_ is the total number of patients in the population, _PA_ i and _PB_ are prevalence of phenotypes A and B respectively. _CAB_ is the number of patients that have been diagnosed with both phenotypes A and B, and _PA PB_ is the random expectation based on disease prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.
+where _N_ is the total number of patients in the population, _PA_ i and _PB_ are prevalence of phenotypes A and B respectively. _CAB_ is the number of patients that have been diagnosed with both phenotypes A and B, and _PA PB_ is the random expectation based on phenotype prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.
 
 ### Odds ratio
-The odds ratio represents the increased chance that someone suffering phenotypes A will have the comorbid phenotypes B. It shows the extent to which suffering a phenotypes increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype
+The odds ratio represents the increased chance that someone suffering phenotypes A will have the co-occurrent phenotypes B. It shows the extent to which suffering a phenotypes increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype
 
 ** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to asses phenotype co-occurrence.**
 
@@ -380,7 +421,7 @@ cupcakeResults <- co.occurrence(
               pth           = system.file("extdata", package="Rcupcake"), 
               aggregate    = FALSE, 
               ageRange      = c(0,85),
-              gender        = "ALL", 
+              gender        = "ALL"
               )
 ```
 
@@ -400,7 +441,7 @@ The function `pheno.prevalence`  displays in a data frame:
     * Confidence interval
 
 
-```{r genophenoPrevalence}
+```{r cupcakeDataPrevalence}
 prevalence <- pheno.prevalence( input = cupcakeResults )
 
 kable( prevalence, row.names = FALSE)
@@ -411,7 +452,7 @@ kable( prevalence, row.names = FALSE)
 `Rcupcake` offers several options to visualize the results from the phenotype co-occurrence analysis, in networks and heatmaps.
 
 ### Network
-By applying the `cooc.network` function. A network showing the phenotypes co-occurrences is obtained. By default `Rcupcake` package shows a network with `layout.fruchterman.reingold` layout where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+By applying the `cooc.network` function a network showing the phenotypes co-occurrences is obtained. By default `Rcupcake` package shows a network with `layout.fruchterman.reingold` layout where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
 The `cooc.network` function requires 3 arguments as input:  
 
@@ -430,7 +471,7 @@ cooc.network ( input               = cupcakeResults,
 
 
 ### Heatmap
-By applying the `cooc.heatmap` function, a heatmap is displayed. This function is homologous to the `genophenoNetwork` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+By applying the `cooc.heatmap` function, a heatmap is displayed. This function is homologous to the `coo.network` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
 The `cooc.heatmap` function requires 3 arguments:  
 
