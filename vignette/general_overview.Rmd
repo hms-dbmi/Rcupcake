@@ -38,6 +38,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
+BD2K RESTful API is a programmatic interface that provides access to different data sources, making easier data accessibility, analysis reproducibility and scalability.The `Rcupcake` package contains functions to query different databases through the BD2K RESTful API in order to analyse demographic and phenotype variables and compute co-occurrence. according to patient age, gender and variation status if data available. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
+
 
 The `Rcupcake` package contains functions to query different databases through the BD2K RESTful API, a programmatic interface that provides access to different data sources, making easier data accessibility, analysis reproducibility and scalability. The `Rcupcake` package includes analysis functions to study demographic population, phenotype descriptive analysis, prevalence and co-occurrence, according to patient age, gender and variation status if data available. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table \@ref(tab:viz-opt)).
 
@@ -50,11 +52,11 @@ The `Rcupcake` package allows to make queries to different databases through the
 
 The tasks that can be performed with `Rcupcake` package are the following:
 
-  1. Query through the BD2K PIC-SURE API RESTful API
-  2. Demographic descriptive analysis based on age and gender
-  3. Phenotype descriptive analysis taking into account continuous and categorical variables. 
-  4. Phenotype prevalence and co-occurrence analysis according to age, gender and gene variation status if available. 
-  5. Extract those patients that have been diagnosed with a determined pair of phenotypes. 
+  1. Query through the BD2K PIC-SURE API RESTful API in order to retrieve the data.
+  2. Demographic descriptive analyses based on age and gender
+  3. Phenotype descriptive analyses taking into account continuous and categorical variables. 
+  4. Phenotype prevalence and co-occurrence analyses according to age, gender and any variation variable if available. 
+  5. Extraction of patients with a defined pair of phenotypes. 
 
   
 In the following sections the specific functions that can be used to address each of these tasks are presented.
@@ -77,11 +79,12 @@ library( knitr )
 
 ### `cupcakeData`
 
-`cupcakeData` object is obtained when `dataframe2cupcake` and `z.score` functions are applied. This object is used as input for `demographic.summary` and `phenotype.summary`  descriptive functions. The `cupcakeData` object contains the clinical dataset and shows a summary of the folloowing characteristics:
+The `cupcakeData` object contains the clinical dataset retrieve by the initial query and shows a summary of the folloowing characteristics:
 
   - The number of variations (N. Variations)
   - The number of phenotype variables (N. Phenotypes)
   - The number of patients (N. Patients)
+
 
 ```{r cupcakeDataObj1, echo=FALSE}
 load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
@@ -92,16 +95,16 @@ RcupcakeExData
 class( RcupcakeExData )
 ```
 
-This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `n.phenotype`, `n.variation` and `extract`. 
+`cupcakeData` object is the output of `dataframe2cupcake` and `z.score` functions. Used as input for `demographic.summary` and `phenotype.summary`  descriptive functions . This object comes with a series of functions to allow users to interact with the information retrieved. These functions are `n.phenotype`, `n.variation` and `extract`. 
 
-The `n.phenotype` function returns the phenotypes present in the output of the given query.
+The `n.phenotype` function returns the phenotype variables present in the dataset included in the object.
 ```{r nphenotype}
 nphenotypeExample <- Rcupcake::n.phenotype( RcupcakeExData )
 class( nphenotypeExample )
 nphenotypeExample
 ```
 
-The `n.variation` function returns the variations present in the output of the given query.
+The `n.variation` function returns the variation variables present in the dataset included in the object.
 ```{r nvariation}
 nvariationExample <- Rcupcake::n.variation( RcupcakeExData )
 class( nvariationExample )
@@ -109,7 +112,7 @@ nvariationExample
 ```
 
 
-The `extract` function returns a formatted `data.frame` with the complete set of information contained in the object, the query results. 
+The `extract` function returns a formatted `data.frame` with the complete set of information contained in the object. 
 ```{r extract}
 extractExample <- Rcupcake::extract( RcupcakeExData )
 class( extractExample )
@@ -120,7 +123,7 @@ kable( head( extractExample ) )
 
 ### `cupcakeResults`
 
-`cupcakeResults` object is obtained when `co.ocurrence` function is applied. This object is used as input for `pheno.prevalence`, `cooc.heatmap`and `cooc.network`  functions. The `cupcakeResults` object contains the co-occurrence analysis results and a summary of the different measurements:
+The `cupcakeResults` object contains the co-occurrence analysis results and a summary of the different measurements:
 
   - Minimum age of the patients in the dataset (Age Min)
   - Minimum age of the patients in the dataset (Age Max)
@@ -144,10 +147,12 @@ cupcakeResults
 class( cupcakeResults )
 ```
 
+`cupcakeResults` object is the output of the `co.ocurrence` function and it is used as input for `pheno.prevalence`, `cooc.heatmap`and `cooc.network`  functions. 
+
 The `cupcakeResults` object come with the `extract` function. The `extract` function allows the user to retrieve the data stored in the object. The `extract` function returns a formatted `data.frame` with the complete set of results obtained from the co-occurrence analysis.
 
-# Retrieve data from the database
-The first step in order to perform any analysis is extracting the data related to the patients of interest. The next steps should be followed:
+# Retrieve data from the database through the BD2K RESTful API 
+The first step in order to perform any analysis is extracting the data related to the patients of interest in the databse  stores in the BD2K RESTful API. The `Rcupcake` R package allows the user to retrieve the data from a database following 4 different steps. T
    
   1. Start session
   2. Select the variables of interest. 
@@ -155,7 +160,7 @@ The first step in order to perform any analysis is extracting the data related t
   4. Run the query. 
 
 ## Start session 
-The `Rcupcake` R package allows the user to retrieve the data from a database following 4 different steps. The first one consist on starting a session in the database of interest. To do it, the user can apply the `start.session` function.
+The first step consists on starting a session in the database of interest. To do it, the user can apply the `start.session` function.
 
 The `start.session` function establishes a connection to the database of interest. It requires two arguments:
 
@@ -176,7 +181,7 @@ sessionEx
 
 
 ## Select the variables of interest
-The next step will be retrieving all the paths from the database where our variables of interest are located. This step will allow us to create the JSON query needed to retrieve the data. 
+The second step will be retrieving all the paths from the database where our variables of interest are located. This step will allow us to create the JSON query needed to retrieve the data. 
 
 The `Rcupcake` R package allows the user to retrieve the paths from the database applying the `get.children` function.
 
@@ -186,7 +191,7 @@ The `get.children` function retrieves the paths of interet from the databse usin
   - _fieldname_: the parent path where the variables of interest are located.
 
 
-The `get.children` function output is vector of paths. This output will be used as input for the `my.query` function that generates the JSON query. 
+The `get.children` function output is a vector of paths. This output will be used as input for the `my.query` function that generates the JSON query. 
 
 ```{r get.children}
 nhanesPcbs <- get.children( 
@@ -202,7 +207,7 @@ head( nhanesDemog )
 ```
 
 ## Build the JSON query
-Once the paths are retrieve, the next step is to create the JSON query for the variables of interest. The `Rcupcake` R package allows the user to generate this query applying the `my.query` function.
+Once the paths are retrieve, the third step is to create the JSON query for the variables of interest. The `Rcupcake` R package allows the user to generate this query applying the `my.query` function.
 
 The `my.query` function creates the JSON query using as input three different arguments:
 
@@ -222,7 +227,7 @@ queryExample <- my.query( myfields = "AGE|PCB153",
 
 
 ## Run the query
-The last step consist of retrieving the data. The `Rcupcake` R package allows the user to do it applying the `my.data` function. Given a url and a JSON query, it generates a `data.frame` object with the query output. 
+The last step consists of retrieving the data. The `Rcupcake` R package allows the user to do it applying the `my.data` function. Given a url and a JSON query, it generates a `data.frame` object with the query output. 
 
 The `my.data` function retrieves the data using as input three different arguments:
 
@@ -247,9 +252,9 @@ Once the data is in a data.frame format, it has to be transformed into a `cupcak
   - phenotype variables name
   - variation variables name
   
-In order to transform the data.frame into a `cupcakeData` object, the `dataframe2cupcake` function has to be applied. The arguments neededed as input are the following:
+In order to transform the data.frame into a `cupcakeData` object, the `dataframe2cupcake` function has to be applied. The arguments neededed as input are:
 
-  - `input`: that determines the file with the complete path where the required input file is located. 
+  - `input`: that determines the file with the complete path where the required input data.frame is located. 
   - `phenotypes`: vector that contains the phenotype variables, separated by "|". 
   - `variants`vector that contains the names of variations, separated by "|". 
   - `age`: vector that contains the age variable name. 
@@ -273,14 +278,13 @@ head( Rcupcake::extract( cupcakeExData ) )
 ```
 
 # Transform continuous in categorical variables: zscore
-Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `Diabetes`, which has `yes` or `no` values. If desired, user can apply the `z.score` function for continuous variables. Given an object of class `cupcakeData`, the `z.score` function transforms continuous into categorical variable applying Z-score. As a result a new `cupcakeData` object is generated. 
+Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, `Diabetes`, which has `yes` or `no` values. If desired, user can apply the `z.score` function for continuous variables. Given an object of class `cupcakeData`, the `z.score` function screens all the phenotype variables and transforms continuous into categorical variable applying Z-score. As a result a new `cupcakeData` object is generated. 
 
-Note that if the number of individuals is lower than 5000 a Saphiro test [@shapiro1965analysis] will be done to test the normal distribution, otherwise a Kolmogorov-Smirnov test [@razali2011power] will be performed. The steps followed in this process are the next:
+Note that if the number of individuals is lower than 5000 a Saphiro test [@shapiro1965analysis] will be done to test the normal distribution, otherwise a Kolmogorov-Smirnov test [@razali2011power] will be performed. The steps followed in this process are for each variable:
 
-  1. Checking is the variable follows a normal distribution
+  1. Checking if the variable follows a normal distribution
   2. If the variable does not follow a normal distribution the Z-score will not be estimated.
-  3. If the variable follows a normal distribution (p-value of the shapiro or Kolmogorov-Smirnov test is lower than 0.05) then:
-        3.1. it is checked if there is correlation between the age and the variable. When correlation is observed, it is fitted a linear model. 
+  3. If the variable follows a normal distribution (p-value of the shapiro or Kolmogorov-Smirnov test is lower than 0.05) then a correlation between the age and the variable y tested. When this correlation exists, a linear model is created. 
         
   4. Z-score will be estimated for this variable
 
@@ -306,7 +310,7 @@ head( Rcupcake::extract( cupcakeExData ) )
 head( Rcupcake::extract( zscoreExample ) )
 ```
 
-Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'PCB153' variable, can be changed into categorical applying the next code:
+Note that the `z.score` function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, 'PCB153' variable, can be changed into categorical applying the code:
 
 ```{r variationTransform}
 cupcakeExData@iresult$V.PCB153 <- ifelse( is.na(cupcakeExData@iresult$V.PCB153), "no", "yes" )
@@ -316,12 +320,12 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))
 # Demographic analysis 
 The `Rcupcake` R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the `demographic.summary` function.
 
-The function `demographic.summary` describes the demographic characteristics (sex, age) of the population under study.
+The function `demographic.summary` describes the demographic characteristics (sex, age) of the study population.
 The `demographic.summary` function requires three arguments:
 
   - _input_: the `cupcakeData` object.
-  - _maleCode_: the symbol which denotes males in the table (e.g., 0, M, Male...etc)
-  - _femaleCode_: the symbol which denotes females in the table (e.g., 1, F, Female...etc)
+  - _maleCode_: the value which denotes males in the table (e.g., 0, M, Male...etc)
+  - _femaleCode_: the value which denotes females in the table (e.g., 1, F, Female...etc)
 
 
 The `demographic.summary` function output includes:
@@ -339,18 +343,18 @@ Rcupcake::demographic.summary ( input       = cupcakeExData,
 
 
 # Phenotype analysis
-The `Rcupcake` R package includes the `phenotype.summary` function that describes the phenotypic characteristics for the whole study population, according to the status regarding one selected variation if genotype information available. Otherwise a general summary of the different phenotype values is displayed.     
+The `Rcupcake` R package includes the `phenotype.summary` function that describes the phenotypic characteristics for the whole study population by variation status.     
 
-The `phenotype.summary` function requires as input the next arguments: 
+The `phenotype.summary` function requires as input: 
 
   - input: the `cupcakeData` object.
-  - variation: the variation of interest
+  - variation: the variation of interest (optional)
   - nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
   - showTable: the table is displayed before the barplot. 
   - showFigures: results are visualized in barplot or boxplot, depending on the kind of variable. 
   - path: define the path where the output file generated will be saved. 
 
-The `phenotype.summary` function output could include:   
+The `phenotype.summary` function output includes:   
   
   - A barplot for each categorical phenotype variable
   - A boxplot for each continuous phenotype variable
@@ -363,10 +367,8 @@ phenotype.summary( input      = cupcakeExData,
 ```
 
 
-# Phenotypes co-occurrence and prevalence using 
-Having a general overview about the demographics and the phenotypes included in our data, the next step is to perform the phenotype co-occurrence analysis.
-
-The user can estimate the statistically significant co-occurrences by applying the `co.occurrence` function to the `cupcakeData`object previously generated with the `dataframe2cupcake` function.
+# Phenotypes co-occurrence 
+The user can estimate the statistically significant co-occurrences by applying the `co.occurrence` function to the `cupcakeData` object previously generated with the `dataframe2cupcake` function. This function will return a new object (`cupcakeResults`) includin the co-occurrence measurements. Different functions can be applyed to this object in order to show phenotype prevalence, co-occurrence and phenotype plotting. 
 
 ## co-occurrence Measurements
 The `co.occurrence` identifies all the possible phenotype co-occurrence and quantify them.  Five different quantification measures are estimated:   
@@ -432,27 +434,13 @@ class( cupcakeResults )
 cupcakeResults
 ```
 
-## Prevalence
-
-The function `pheno.prevalence`  displays in a data frame:
-    * Phenotype
-    * Number of patients (N_patients)
-    * Prevalence
-    * Confidence interval
-
-
-```{r cupcakeDataPrevalence}
-prevalence <- pheno.prevalence( input = cupcakeResults )
-
-kable( prevalence, row.names = FALSE)
-```
 
 ## Plotting the co-occurrence results
 
 `Rcupcake` offers several options to visualize the results from the phenotype co-occurrence analysis, in networks and heatmaps.
 
 ### Network
-By applying the `cooc.network` function a network showing the phenotypes co-occurrences is obtained. By default `Rcupcake` package shows a network with `layout.fruchterman.reingold` layout where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+The `cooc.network` function returns a network showing the phenotypes co-occurrences. By default `Rcupcake` package shows a network with `layout.fruchterman.reingold` layout, where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
 The `cooc.network` function requires 3 arguments as input:  
 
@@ -471,7 +459,7 @@ cooc.network ( input               = cupcakeResults,
 
 
 ### Heatmap
-By applying the `cooc.heatmap` function, a heatmap is displayed. This function is homologous to the `coo.network` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
+The `cooc.heatmap` function returns a heatmap. This function is homologous to the `coo.network` one.  The heatmap represents the selected value that by default will be `patientsPhenoAB`. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes. 
 
 The `cooc.heatmap` function requires 3 arguments:  
 
