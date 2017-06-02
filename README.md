@@ -13,3 +13,7 @@ This repository is used for `Rcupcake` package.
  * __Version__: 1.0.1
  * __Authors__: Alba Gutierrez-Sacristan (HMS)
  * __Maintainer__: Alba Gutierrez-Sacristan (HMS)
+ 
+## Documentation
+
+ * [General Overview](http://htmlpreview.github.com/?https://github.com/hms-dbmi/Rcupcake/master/vignette/general_overview.html)
