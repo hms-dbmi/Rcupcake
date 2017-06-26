@@ -11,13 +11,15 @@ Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", rol
   person("Isaac S.", "Kohane", "Isaac_Kohane@hms.harvard.edu", role = "aut"), 
   person("Paul", "Avillach", "Paul_Avillach@hms.harvard.edu ", role = "aut")
   )
+Description: Package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API
 Depends:
     R (>= 3.2.3),
     stringr
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
-    parallel
+    parallel,
+    testthat
 Imports:
     stringr,
     igraph,

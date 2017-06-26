@@ -13,8 +13,6 @@ get.children(fieldname, url, verbose = FALSE)
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}
-
-\item{apiKey}{The key to access to the data.}
 }
 \value{
 A vector with all the fields that are under the path that has been given as input.

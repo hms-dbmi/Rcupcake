@@ -13,6 +13,6 @@ n.variation(object)
 Obtain the alteration variables in a \code{cupcakeData}.
 }
 \examples{
-data(qr)
-n.variation(qr)
+#Being qr an cupcakeData object
+#n.variation(qr)
 }

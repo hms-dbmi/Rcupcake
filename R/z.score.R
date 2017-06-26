@@ -16,8 +16,8 @@
 #' @return A \code{cupcakeData} class object with the continuous variable transformed into a categorical
 #' variable, if possible. 
 #' @examples
-#' load(system.file("extdata", "cupcakeDataExample.RData", package="Rcupcake"))
-#' z.score( input      = cupcakeDataExample,
+#' load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
+#' z.score( input      = RcupcakeExData,
 #'          verbose    = FALSE 
 #'         )
 #' @export z.score

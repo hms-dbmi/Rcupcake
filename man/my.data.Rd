@@ -28,8 +28,8 @@ the output of the query.
 }
 \examples{
 
-query <- my.data( 
-              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
-              url    = "https://nhanes.hms.harvard.edu/"
-              )
+#query <- my.data( 
+#              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
+#              url    = "https://nhanes.hms.harvard.edu/"
+#              )
 }

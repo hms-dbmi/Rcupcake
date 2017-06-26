@@ -8,7 +8,7 @@
 #' @examples
 #' \dontrun{
 #' #Being x an cupcakeResults
-#' qr <- extract(x) 
+#' #qr <- extract(x) 
 #' }
 #' @export
 setGeneric ("extract",
@@ -24,8 +24,8 @@ setGeneric ("extract",
 #' @rdname n.variation-methods
 #' @param object Object of class \code{cupcakeData}.
 #' @examples
-#' data(qr)
-#' n.variation(qr)
+#' #Being qr an cupcakeData object
+#' #n.variation(qr)
 #' @export
 setGeneric ("n.variation",
             function(object){standardGeneric("n.variation")}
@@ -40,8 +40,8 @@ setGeneric ("n.variation",
 #' @aliases n.phenotype
 #' @param object Object of class \code{cupcakeData}.
 #' @examples
-#' data(qr)
-#' n.phenotype(qr)
+#' #Being qr an cupcakeData object
+#' #n.phenotype(qr)
 #' @export
 setGeneric ("n.phenotype",
             function(object){standardGeneric("n.phenotype")}

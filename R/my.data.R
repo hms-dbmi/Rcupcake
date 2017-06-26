@@ -13,10 +13,10 @@
 #' @return An object of class \code{data.frame} with the query output. 
 #' @examples
 #' 
-#' query <- my.data( 
-#'               query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
-#'               url    = "https://nhanes.hms.harvard.edu/"
-#'               )
+#' #query <- my.data( 
+#' #              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
+#' #              url    = "https://nhanes.hms.harvard.edu/"
+#' #              )
 #' @export my.data
 
 my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(getwd(), "/queryData.txt") , verbose = FALSE ){

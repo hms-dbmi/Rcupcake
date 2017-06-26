@@ -49,13 +49,13 @@ Given an object of type \code{cupcakeData} and two phenotypes of
 interest, the patients having both phenotypes are selected.
 }
 \examples{
-load(system.file("extdata", "RcupcakeDataExData.RData", package="Rcupcake"))
+load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
 ex1 <- patient.selection( 
               input         = RcupcakeExData,
               pth           = system.file("extdata", package="Rcupcake"),
               phenotypeA    = c("Arthritis", "Yes"),
               phenotypeB    = c("Diabetes", "Yes"),
-              aggregate     = TRUE, 
+              aggregate     = FALSE, 
               ageRange      = c(0,100),
               gender        = "male", 
               )

@@ -13,6 +13,6 @@ n.phenotype(object)
 Obtain the phenotypes in a \code{cupcakeData}.
 }
 \examples{
-data(qr)
-n.phenotype(qr)
+#Being qr an cupcakeData object
+#n.phenotype(qr)
 }

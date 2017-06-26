@@ -43,7 +43,7 @@
 #' cooccurrenceExample <- co.occurrence( 
 #'               input         = RcupcakeExData,
 #'               pth           = system.file("extdata", package="Rcupcake"),
-#'               aggregate     = TRUE, 
+#'               aggregate     = FALSE, 
 #'               ageRange      = c(0,16),
 #'               gender        = "male", 
 #'               )

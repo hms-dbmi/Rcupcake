@@ -23,20 +23,3 @@ A JSON query.
 Given a vector with the fields of interest, and the vector generated with the paths obtained 
 after applying the getchildren function, it returns a JSON query
 }
-\examples{
-nhanesPcbs <- get.children( 
-              url         = "https://nhanes.hms.harvard.edu/", 
-              fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
-              )
-nhanesDemog <- get.children( 
-              url         = "https://nhanes.hms.harvard.edu/", 
-              fieldname   = "/nhanes/Demo/demographics/demographics/"
-              )
-              
- 
-              
-queryExample <- my.query( myfields = "AGE|PCB153", 
-                         myvector  = c(nhanesPcbs, nhanesDemog), 
-                         url       = "https://nhanes.hms.harvard.edu/"
-              )
-}

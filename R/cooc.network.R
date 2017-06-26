@@ -27,7 +27,7 @@
 #' @return A network
 #' @examples
 #' load(system.file("extdata", "RcupcakeExResult.RData", package="Rcupcake"))
-#' cooc.network <- network( 
+#' netwrk <- cooc.network( 
 #'               input               = cupcakeResults,
 #'               representedVariable = "patientsPhenoAB",
 #'               variableCutOff      = 1.5,

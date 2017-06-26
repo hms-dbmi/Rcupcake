@@ -29,8 +29,8 @@ of individuals is lower than 5000 a Saphiro test is done to test the normal dist
 a Kolmogorov-Smirnov test is performed.
 }
 \examples{
-load(system.file("extdata", "cupcakeDataExample.RData", package="Rcupcake"))
-z.score( input      = cupcakeDataExample,
+load(system.file("extdata", "RcupcakeExData.RData", package="Rcupcake"))
+z.score( input      = RcupcakeExData,
          verbose    = FALSE 
         )
 }

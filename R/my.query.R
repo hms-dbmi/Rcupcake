@@ -10,21 +10,19 @@
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.
 #' @return A JSON query. 
 #' @examples
-#' nhanesPcbs <- get.children( 
-#'               url         = "https://nhanes.hms.harvard.edu/", 
-#'               fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
-#'               )
-#' nhanesDemog <- get.children( 
-#'               url         = "https://nhanes.hms.harvard.edu/", 
-#'               fieldname   = "/nhanes/Demo/demographics/demographics/"
-#'               )
-#'               
-#'  
-#'               
-#' queryExample <- my.query( myfields = "AGE|PCB153", 
-#'                          myvector  = c(nhanesPcbs, nhanesDemog), 
-#'                          url       = "https://nhanes.hms.harvard.edu/"
-#'               )
+# # nhanesPcbs <- get.children(
+# #              url         = "https://nhanes.hms.harvard.edu/",
+# #              fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
+# #              )
+# # nhanesDemog <- get.children(
+# #              url         = "https://nhanes.hms.harvard.edu/",
+# #              fieldname   = "/nhanes/Demo/demographics/demographics/"
+# #             )
+#  
+# # queryExample <- my.query( myfields = "AGE|PCB153",
+# #                         myvector  = c(nhanesPcbs, nhanesDemog),
+# #                         url       = "https://nhanes.hms.harvard.edu/"
+# #              )
 #' @export my.query
 
 my.query <- function(myfields, myvector, url, verbose = FALSE) {

@@ -3,7 +3,6 @@
 #' Given a url, a key and a path it returns all the children paths under the given one.
 #'
 #' @param url  The url.
-#' @param apiKey The key to access to the data. 
 #' @param fieldname  The path in which the urser is interested.
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an
 #' on-time log from the function.

@@ -19,6 +19,6 @@ Obtain the raw data from a \code{cupcakeData} and \code{cupcakeResults} object.
 \examples{
 \dontrun{
 #Being x an cupcakeResults
-qr <- extract(x) 
+#qr <- extract(x) 
 }
 }
