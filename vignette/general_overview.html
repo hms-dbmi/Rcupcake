@@ -10,6 +10,7 @@
 
 
 
+<meta name="date" content="2017-06-26" />
 
 <title>Rcupcake: An R package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API</title>
 
@@ -115,7 +116,7 @@ $(document).ready(function () {
 <p class="author-name">Alba Gutierrez-Sacristan<span class="affil-mark">1*</span>, Romain Guedj<span class="affil-mark">1</span>, Gabor Korodi<span class="affil-mark">1</span>, Jason Stedman<span class="affil-mark">1</span>, Laura I. Furlong<span class="affil-mark">2</span>, Chirag J. Patel<span class="affil-mark">1</span>, Isaac S. Kohane<span class="affil-mark">1</span> and Paul Avillach<span class="affil-mark">1</span></p>
 <p class="author-affiliation"><span class="affil-mark">1</span>Department of Biomedical Informatics, Harvard Medical School<br><span class="affil-mark">2</span>Research Programme on Biomedical Informatics (GRIB)</p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:alba_gutierrez@hms.harvard.edu">alba_gutierrez@hms.harvard.edu</a></p>
-<h4 class="date"><em>1 June 2017</em></h4>
+<h4 class="date"><em>26 June 2017</em></h4>
 <h4 class="package">Package: <span style="font-weight: normal">Rcupcake 0.99.0</span></h4>
 
 </div>
@@ -132,7 +133,7 @@ $(document).ready(function () {
 </ul></li>
 </ul></li>
 <li><a href="#retrieve-data-from-the-database-through-the-bd2k-restful-api"><span class="toc-section-number">2</span> Retrieve data from the database through the BD2K RESTful API</a><ul>
-<li><a href="#start-session"><span class="toc-section-number">2.1</span> Start session</a></li>
+<li><a href="#starting-session"><span class="toc-section-number">2.1</span> Starting session</a></li>
 <li><a href="#select-the-variables-of-interest"><span class="toc-section-number">2.2</span> Select the variables of interest</a></li>
 <li><a href="#build-the-json-query"><span class="toc-section-number">2.3</span> Build the JSON query</a></li>
 <li><a href="#run-the-query"><span class="toc-section-number">2.4</span> Run the query</a></li>
@@ -166,8 +167,8 @@ $(document).ready(function () {
 <p>The <code>Rcupcake</code> package contains functions to query different databases through the BD2K RESTful API, a programmatic interface that provides access to different data sources, making easier data accessibility, analysis reproducibility and scalability. The <code>Rcupcake</code> package includes analysis functions to study demographic population, phenotype descriptive analysis, prevalence and co-occurrence, according to patient age, gender and variation status if data available. A special focus is made on visualization of the results, providing a variety of representation formats such as networks, heatmaps and barplots (Table <a href="#tab:viz-opt">1</a>).</p>
 <div id="background" class="section level2">
 <h2><span class="header-section-number">1.1</span> Background</h2>
-<p>In the era of big data and precision medicine, the number of databases containing biomedical information is increasing in an exponential way. Enabling the experts to focus on their research questions rather than in the computation data merging, access and management is one of the biggest challenges nowadays. The <code>Rcupcake</code> package has been developed with this purpose.</p>
-<p>The <code>Rcupcake</code> package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover it allows its integration with other packages available in R to develop bioinformatics analysis workflows.</p>
+<p>In the era of big data and precision medicine, the number of databases containing biomedical information is increasing in an exponential way. Enabling experts to focus on their research questions rather than in the computation data merging, access and management is one of the biggest challenges nowadays. The <code>Rcupcake</code> package has been developed for this purpose.</p>
+<p>The <code>Rcupcake</code> package allows to make queries to different databases through the PIC-SURE API, simplifying the data connection and analysis. Moreover, it allows its integration with other packages available in R to develop bioinformatics analysis workflows.</p>
 <p>The tasks that can be performed with <code>Rcupcake</code> package are the following:</p>
 <ol style="list-style-type: decimal">
 <li>Query through the BD2K PIC-SURE API RESTful API in order to retrieve the data.</li>
@@ -184,28 +185,30 @@ $(document).ready(function () {
 <pre class="r"><code>library( devtools )
 install_github( &quot;hms-dbmi/Rcupcake&quot; )
 library( Rcupcake )</code></pre>
-<pre><code>## Warning: package 'stringr' was built under R version 3.3.3</code></pre>
 </div>
 <div id="s4-objects" class="section level2">
 <h2><span class="header-section-number">1.3</span> S4 objects</h2>
 <div id="cupcakedata" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> <code>cupcakeData</code></h3>
-<p>The <code>cupcakeData</code> object contains the clinical dataset retrieve by the initial query and shows a summary of the folloowing characteristics:</p>
+<p>The <code>cupcakeData</code> object contains the clinical dataset retrieve by the initial query and shows a summary of the following characteristics:</p>
 <ul>
 <li>The number of variations (N. Variations)</li>
 <li>The number of phenotype variables (N. Phenotypes)</li>
 <li>The number of patients (N. Patients)</li>
 </ul>
 <pre class="r"><code>RcupcakeExData</code></pre>
+<pre><code>## Loading required package: Rcupcake</code></pre>
+<pre><code>## Loading required package: stringr</code></pre>
+<pre><code>## Warning: package 'stringr' was built under R version 3.3.3</code></pre>
 <pre><code>## Object of class 'cupcakeData'
-##  . N. Variations:    1 
-##  . N. Phenotypes:   4 
-##  . N. Patients:     41474</code></pre>
+##  . Number of Variations:    1 
+##  . Number of Phenotypes:    4 
+##  . Number of Patients:      41474</code></pre>
 <pre class="r"><code>class( RcupcakeExData )</code></pre>
 <pre><code>## [1] &quot;cupcakeData&quot;
 ## attr(,&quot;package&quot;)
 ## [1] &quot;Rcupcake&quot;</code></pre>
-<p><code>cupcakeData</code> object is the output of <code>dataframe2cupcake</code> and <code>z.score</code> functions. Used as input for <code>demographic.summary</code> and <code>phenotype.summary</code> descriptive functions . This object comes with a series of functions to allow users to interact with the information retrieved. These functions are <code>n.phenotype</code>, <code>n.variation</code> and <code>extract</code>.</p>
+<p><code>cupcakeData</code> object is the output of <code>dataframe2cupcake</code> and <code>z.score</code> functions. It is used as input for <code>demographic.summary</code> and <code>phenotype.summary</code> descriptive functions . This object comes with a series of functions to allow users to interact with the information retrieved. These functions are <code>n.phenotype</code>, <code>n.variation</code> and <code>extract</code>.</p>
 <p>The <code>n.phenotype</code> function returns the phenotype variables present in the dataset included in the object.</p>
 <pre class="r"><code>nphenotypeExample &lt;- Rcupcake::n.phenotype( RcupcakeExData )
 class( nphenotypeExample )</code></pre>
@@ -304,10 +307,10 @@ class( extractExample )</code></pre>
 <h3><span class="header-section-number">1.3.2</span> <code>cupcakeResults</code></h3>
 <p>The <code>cupcakeResults</code> object contains the co-occurrence analysis results and a summary of the different measurements:</p>
 <ul>
-<li>Minimum age of the patients in the dataset (Age Min)</li>
-<li>Minimum age of the patients in the dataset (Age Max)</li>
+<li>The minimum age of the patients in the dataset (Age Min)</li>
+<li>The maximum age of the patients in the dataset (Age Max)</li>
 <li>Patients gender (Gender)</li>
-<li>variation, if selected (Variation)</li>
+<li>variation, if it is selected (Variation)</li>
 <li>Number of patients in the age and gender interval in the database</li>
 <li>Number of patients in the age and gender interval with the variation select</li>
 <li>The prevalence of the variation in the dataset</li>
@@ -323,7 +326,7 @@ class( extractExample )</code></pre>
 ##  . Gender  : ALL 
 ##  . Variation : ALL 
 ##  . Patients in the age and gender interval: 41474 
-##  . Patients with vairation selected: 41474 
+##  . Patients with variation selected: 41474 
 ##  . Prevalence: 100 
 ##  . Odds ratio range: [0 , Inf] 
 ##  . Relative risk range: [0.002 , 23.067] 
@@ -333,22 +336,22 @@ class( extractExample )</code></pre>
 <pre><code>## [1] &quot;cupcakeResults&quot;
 ## attr(,&quot;package&quot;)
 ## [1] &quot;Rcupcake&quot;</code></pre>
-<p><code>cupcakeResults</code> object is the output of the <code>co.ocurrence</code> function and it is used as input for <code>pheno.prevalence</code>, <code>cooc.heatmap</code>and <code>cooc.network</code> functions.</p>
+<p><code>cupcakeResults</code> object is the output of the <code>co.occurrence</code> function and it is used as input for <code>pheno.prevalence</code>, <code>cooc.heatmap</code>and <code>cooc.network</code> functions.</p>
 <p>The <code>cupcakeResults</code> object come with the <code>extract</code> function. The <code>extract</code> function allows the user to retrieve the data stored in the object. The <code>extract</code> function returns a formatted <code>data.frame</code> with the complete set of results obtained from the co-occurrence analysis.</p>
 </div>
 </div>
 </div>
 <div id="retrieve-data-from-the-database-through-the-bd2k-restful-api" class="section level1">
 <h1><span class="header-section-number">2</span> Retrieve data from the database through the BD2K RESTful API</h1>
-<p>The first step in order to perform any analysis is extracting the data related to the patients of interest in the databse stores in the BD2K RESTful API. The <code>Rcupcake</code> R package allows the user to retrieve the data from a database following 4 different steps. T</p>
+<p>The first step in order to perform any analysis is extracting the data related to the patients of interest in the databse stores in the BD2K RESTful API. The <code>Rcupcake</code> R package allows the user to retrieve the data from a database following 4 different steps.</p>
 <ol style="list-style-type: decimal">
 <li>Start session</li>
 <li>Select the variables of interest.</li>
 <li>Build the JSON query</li>
 <li>Run the query.</li>
 </ol>
-<div id="start-session" class="section level2">
-<h2><span class="header-section-number">2.1</span> Start session</h2>
+<div id="starting-session" class="section level2">
+<h2><span class="header-section-number">2.1</span> Starting session</h2>
 <p>The first step consists on starting a session in the database of interest. To do it, the user can apply the <code>start.session</code> function.</p>
 <p>The <code>start.session</code> function establishes a connection to the database of interest. It requires two arguments:</p>
 <ul>
@@ -364,9 +367,9 @@ sessionEx</code></pre>
 </div>
 <div id="select-the-variables-of-interest" class="section level2">
 <h2><span class="header-section-number">2.2</span> Select the variables of interest</h2>
-<p>The second step will be retrieving all the paths from the database where our variables of interest are located. This step will allow us to create the JSON query needed to retrieve the data.</p>
+<p>The second step will be retrie all the paths from the database where our variables of interest are located. This step will allow us to create the JSON query to retrieve the data.</p>
 <p>The <code>Rcupcake</code> R package allows the user to retrieve the paths from the database applying the <code>get.children</code> function.</p>
-<p>The <code>get.children</code> function retrieves the paths of interet from the databse using as input two different arguments:</p>
+<p>The <code>get.children</code> function retrieves the paths of interest from the database using as input two different arguments:</p>
 <ul>
 <li><em>url</em>: the url of the database of interest.</li>
 <li><em>fieldname</em>: the parent path where the variables of interest are located.</li>
@@ -386,7 +389,7 @@ head( nhanesDemog )              </code></pre>
 </div>
 <div id="build-the-json-query" class="section level2">
 <h2><span class="header-section-number">2.3</span> Build the JSON query</h2>
-<p>Once the paths are retrieve, the third step is to create the JSON query for the variables of interest. The <code>Rcupcake</code> R package allows the user to generate this query applying the <code>my.query</code> function.</p>
+<p>Once the paths are retrieved, the third step is to create the JSON query for the variables of interest. The <code>Rcupcake</code> R package allows the user to generate this query applying the <code>my.query</code> function.</p>
 <p>The <code>my.query</code> function creates the JSON query using as input three different arguments:</p>
 <ul>
 <li><em>url</em>: the url of the database of interest.</li>
@@ -408,7 +411,7 @@ head( nhanesDemog )              </code></pre>
 <li><em>query</em>: A JSON query, created applying the <code>my.query</code> function or contained in a text file.</li>
 <li><em>outputPath</em>: the path and the file name where the output data will be saved.</li>
 </ul>
-<p>The <code>my.data</code> function output is the <code>data.frame</code> object that is retrieved for the JSON query of interet.</p>
+<p>The <code>my.data</code> function output is the <code>data.frame</code> object that is retrieved for the JSON query of interest.</p>
 <pre class="r"><code>query &lt;- my.data( 
               query  = system.file(&quot;extdata&quot;, &quot;jsonQueryNhanes&quot;, package=&quot;Rcupcake&quot;), 
               url    = &quot;https://nhanes.hms.harvard.edu/&quot;
@@ -423,11 +426,11 @@ head( nhanesDemog )              </code></pre>
 <li>phenotype variables name</li>
 <li>variation variables name</li>
 </ul>
-<p>In order to transform the data.frame into a <code>cupcakeData</code> object, the <code>dataframe2cupcake</code> function has to be applied. The arguments neededed as input are:</p>
+<p>In order to transform the data.frame into a <code>cupcakeData</code> object, the <code>dataframe2cupcake</code> function has to be applied. The arguments needed as input are:</p>
 <ul>
 <li><code>input</code>: that determines the file with the complete path where the required input data.frame is located.</li>
-<li><code>phenotypes</code>: vector that contains the phenotype variables, separated by “|”.</li>
-<li><code>variants</code>vector that contains the names of variations, separated by “|”.</li>
+<li><code>phenotypes</code>: vector that contains phenotype variables, separated by “|”.</li>
+<li><code>variants</code>: vector that contains the names of variations, separated by “|”.</li>
 <li><code>age</code>: vector that contains the age variable name.</li>
 <li><code>gender</code>: vector that contains the gender variable name.</li>
 </ul>
@@ -451,9 +454,9 @@ head( nhanesDemog )              </code></pre>
 ## [1] &quot;Rcupcake&quot;</code></pre>
 <pre class="r"><code>cupcakeExData </code></pre>
 <pre><code>## Object of class 'cupcakeData'
-##  . N. Variations:    1 
-##  . N. Phenotypes:   4 
-##  . N. Patients:     41474</code></pre>
+##  . Number of Variations:    1 
+##  . Number of Phenotypes:    4 
+##  . Number of Patients:      41474</code></pre>
 <pre class="r"><code>head( Rcupcake::extract( cupcakeExData ) )</code></pre>
 <pre><code>##   patient_id P.Diabetes P.Arthritis P.LiverCancer Gender P.AnyCancer Age
 ## 1          2         No          No            No   male          No  85
@@ -472,12 +475,12 @@ head( nhanesDemog )              </code></pre>
 </div>
 <div id="transform-continuous-in-categorical-variables-zscore" class="section level1">
 <h1><span class="header-section-number">4</span> Transform continuous in categorical variables: zscore</h1>
-<p>Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, <code>Diabetes</code>, which has <code>yes</code> or <code>no</code> values. If desired, user can apply the <code>z.score</code> function for continuous variables. Given an object of class <code>cupcakeData</code>, the <code>z.score</code> function screens all the phenotype variables and transforms continuous into categorical variable applying Z-score. As a result a new <code>cupcakeData</code> object is generated.</p>
+<p>Phenotype variables can be continuous or categorical. Co-occurrence analysis will be only applied to those variables that are classified as categorical, like for example, <code>Diabetes</code>, which has <code>yes</code> or <code>no</code> values. If desired, the user can apply the <code>z.score</code> function for continuous variables. Given an object of class <code>cupcakeData</code>, the <code>z.score</code> function screens all the phenotype variables and transforms continuous into categorical variable applying Z-score. As a result a new <code>cupcakeData</code> object is generated.</p>
 <p>Note that if the number of individuals is lower than 5000 a Saphiro test <span class="citation">[1]</span> will be done to test the normal distribution, otherwise a Kolmogorov-Smirnov test <span class="citation">[2]</span> will be performed. The steps followed in this process are for each variable:</p>
 <ol style="list-style-type: decimal">
 <li>Checking if the variable follows a normal distribution</li>
 <li>If the variable does not follow a normal distribution the Z-score will not be estimated.</li>
-<li><p>If the variable follows a normal distribution (p-value of the shapiro or Kolmogorov-Smirnov test is lower than 0.05) then a correlation between the age and the variable y tested. When this correlation exists, a linear model is created.</p></li>
+<li><p>If the variable follows a normal distribution (p-value of shapiro or Kolmogorov-Smirnov test is lower than 0.05), then a correlation between the age and the variable y tested. When this correlation exists, a linear model is created.</p></li>
 <li><p>Z-score will be estimated for this variable</p></li>
 </ol>
 <p>As an input <code>z.score</code> function requires:</p>
@@ -530,7 +533,7 @@ head( nhanesDemog )              </code></pre>
 ## 4     &lt;NA&gt;
 ## 5     &lt;NA&gt;
 ## 6     &lt;NA&gt;</code></pre>
-<p>Note that the <code>z.score</code> function transform the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, ‘PCB153’ variable, can be changed into categorical applying the code:</p>
+<p>Note that the <code>z.score</code> function transforms the continuous phenotypes in categorical. In order to transform the variation, if necessary, the user should do it manually. For example, ‘PCB153’ variable, can be changed into categorical applying the code:</p>
 <pre class="r"><code>cupcakeExData@iresult$V.PCB153 &lt;- ifelse( is.na(cupcakeExData@iresult$V.PCB153), &quot;no&quot;, &quot;yes&quot; )
 summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 <pre><code>##    no   yes 
@@ -538,7 +541,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 </div>
 <div id="demographic-analysis" class="section level1">
 <h1><span class="header-section-number">5</span> Demographic analysis</h1>
-<p>The <code>Rcupcake</code> R package allows the user to analyze and characterize the population under study. To have a general idea about the population main characteristics, the user can apply the <code>demographic.summary</code> function.</p>
+<p>The <code>Rcupcake</code> R package allows the user to analyze and characterize the population under study. To have a general idea of the population main characteristics, the user can apply the <code>demographic.summary</code> function.</p>
 <p>The function <code>demographic.summary</code> describes the demographic characteristics (sex, age) of the study population. The <code>demographic.summary</code> function requires three arguments:</p>
 <ul>
 <li><em>input</em>: the <code>cupcakeData</code> object.</li>
@@ -600,7 +603,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 </div>
 <div id="phenotypes-co-occurrence" class="section level1">
 <h1><span class="header-section-number">7</span> Phenotypes co-occurrence</h1>
-<p>The user can estimate the statistically significant co-occurrences by applying the <code>co.occurrence</code> function to the <code>cupcakeData</code> object previously generated with the <code>dataframe2cupcake</code> function. This function will return a new object (<code>cupcakeResults</code>) includin the co-occurrence measurements. Different functions can be applyed to this object in order to show phenotype prevalence, co-occurrence and phenotype plotting.</p>
+<p>The user can estimate the statistically significant co-occurrences by applying the <code>co.occurrence</code> function to the <code>cupcakeData</code> object previously generated with the <code>dataframe2cupcake</code> function. This function will return a new object (<code>cupcakeResults</code>) including co-occurrence measurements. Different functions can be applied to this object in order to show the phenotype prevalence, co-occurrence and phenotype plotting.</p>
 <div id="co-occurrence-measurements" class="section level2">
 <h2><span class="header-section-number">7.1</span> co-occurrence Measurements</h2>
 <p>The <code>co.occurrence</code> identifies all the possible phenotype co-occurrence and quantify them. Five different quantification measures are estimated:<br />
@@ -608,35 +611,35 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 - Odds ratio</p>
 <div id="fisher-test" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> Fisher test</h3>
-<p>A Fisher exact test for each pair of diseases is performed to assess the null hypothesis of independence between the two diseases. Four groups of patients are defined in order to perform the statistical testing: patients with phenotype A and phenotype B, patients with phenotype A but not phenotype B, patients with phenotype B but not phenotype A and patients without any of the two phenotypes. The Fisher exact test is then applied to estimated the p-value for each pair of diseases. The Benjamini-Hochberg false discovery rate method is applied on the ranked list to correct for multiple testing.</p>
+<p>A Fisher exact test for each pair of diseases is performed to assess the null hypothesis of independence between two diseases. Four groups of patients are defined in order to perform the statistical testing: patients with phenotype A and phenotype B, patients with phenotype A but not phenotype B, patients with phenotype B but not phenotype A and patients without any of the two phenotypes. The Fisher exact test is then applied to estimated the p-value for each pair of diseases. The Benjamini-Hochberg false discovery rate method is applied on the ranked list to correct for multiple testing.</p>
 </div>
 <div id="co-occurrence-score" class="section level3">
 <h3><span class="header-section-number">7.1.2</span> co-occurrence score</h3>
 <p>This score is defined in Roque et al. <span class="citation">[3]</span> as follows:<span class="math display">\[comorbidity score =log_2 \left( \cfrac{observed + 1}{expected + 1} \right)\]</span> <span class="math display">\[expected = \cfrac{n_{A} n_{B}}{N}\]</span></p>
-<p>where <em>observed</em> stands for the number of phenotype-phenotype associations (phenotype A and phenotype B), and <em>expected</em> is estimated based on the occurrence of each phenotpye (number of patients diagnosed with phenotype A, <em>nA</em>, multiplied by the number of patients diagnosed with the co-occurrent phenotype B, <em>nB</em> , and divided by the total number of patients, <em>N</em>). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.</p>
+<p>where <em>observed</em> stands for the number of phenotype-phenotype associations (phenotype A and phenotype B), and <em>expected</em> is estimated based on the occurrence of each phenotype (the number of patients diagnosed with phenotype A, <em>nA</em>, multiplied by the number of patients diagnosed with the co-occurrent phenotype B, <em>nB</em> , and divided by the total number of patients, <em>N</em>). Since logarithm is applied, a co-occurrence score of 1.0 means that the observed co-occurrences are higher than two fold (approximately) than expected.</p>
 </div>
 <div id="relative-risk-rr" class="section level3">
 <h3><span class="header-section-number">7.1.3</span> Relative risk (RR)</h3>
-<p>The relative risk (RR) expresses the relationship between the rate of prevalence of a phenotype among the patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. * RR = 1: The risk is the same for patients exposed to the factor of risk than for those patients that are not exposed. * RR &gt; 1: The patients exposed to the factor of risk are more likely to suffer the disease. It is a risk factor. * RR &lt; 1: The patients exposed to the factor of risk are less likely to suffer the disease. It is a protection factor.</p>
-<p>The RR is estimated as the fraction between the number of patients diagnosed with both phenotypes and random expectation based on phenotype prevalence <span class="citation">[4]</span>. The RR of observing a pair of phenotypes A and B affecting the same patient is given by: <span class="math display">\[RR_{AB} = \cfrac{C_{AB} N}{P_A P_B}\]</span></p>
+<p>The relative risk (RR) expresses the relationship between the rate of the prevalence of a phenotype among patients exposed and those patients that are not exposed to a certain risk factor. Here the risk factor is other phenotype. * RR = 1: The risk is the same for patients exposed to the factor of risk than for those patients that are not exposed. * RR &gt; 1: The patients exposed to the factor of risk are more likely to suffer the disease. It is a risk factor. * RR &lt; 1: The patients exposed to the factor of risk are less likely to suffer the disease. It is a protection factor.</p>
+<p>The RR is estimated as the fraction between the number of patients diagnosed with both phenotypes and random expectation based on the phenotype prevalence <span class="citation">[4]</span>. The RR of observing a pair of phenotypes A and B affecting the same patient is given by: <span class="math display">\[RR_{AB} = \cfrac{C_{AB} N}{P_A P_B}\]</span></p>
 <p>where <em>CAB</em> is the number of patients affected by both phenotypes, <em>N</em> is the total number of patients in the population and <em>PA</em> and <em>PB</em> are the prevalence of diseases A and B.</p>
 </div>
 <div id="phi-value-pearsons-correlation-for-binary-variables" class="section level3">
 <h3><span class="header-section-number">7.1.4</span> Phi value (Pearsons correlation for binary variables)</h3>
 <p>Phi value measures the robustness of the co-occurrence association. It can be expressed mathematically as:<span class="math display">\[\phi_{AB} = \cfrac{C_{AB} N - P_{A} P_{B}}{\sqrt{P_{A} P_{B}(N - P_{A})(N - P_{A})}}\]</span></p>
-<p>where <em>N</em> is the total number of patients in the population, <em>PA</em> i and <em>PB</em> are prevalence of phenotypes A and B respectively. <em>CAB</em> is the number of patients that have been diagnosed with both phenotypes A and B, and <em>PA PB</em> is the random expectation based on phenotype prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between the two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.</p>
+<p>where <em>N</em> is the total number of patients in the population, <em>PA</em> i and <em>PB</em> are the prevalence of phenotypes A and B respectively. <em>CAB</em> is the number of patients that have been diagnosed with both phenotypes A and B, and <em>PA PB</em> is the random expectation based on phenotype prevalence. The Pearson correlation coefficient, can take a range of values from +1 to -1. A value of 0 indicates that there is no correlation between two diseases; a value greater than 0 indicates a positive correlation between the two diseases and a value less than 0 indicates a negative correlation.</p>
 </div>
 <div id="odds-ratio" class="section level3">
 <h3><span class="header-section-number">7.1.5</span> Odds ratio</h3>
-<p>The odds ratio represents the increased chance that someone suffering phenotypes A will have the co-occurrent phenotypes B. It shows the extent to which suffering a phenotypes increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype</p>
-<p>** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to asses phenotype co-occurrence.**</p>
+<p>The odds ratio represents the increased chance that someone suffering phenotypes A will have the co-occurrent phenotypes B. It shows the extent to which suffering a phenotype increases the risk of developing another phenotype. The odds ratio is derived from a comparison of rates of the phenotypes among individuals who do and do not exhibit the factor of interest. A statistically significant odds ratio (significantly different from 1.00 at the .05 level) indicates an appreciable risk associated with a particular factor. For example, an odds ratio of 2.00 indicates a doubled risk of the appearance of the phenotype</p>
+<p>** These measures allow the user to quantify the co-occurrence of phenotype pairs compared with the random expectation. The user can select the measure and the cut-off value in order to assess phenotype co-occurrence.**</p>
 <p>The <code>co.occurrence</code> function requires 6 arguments:</p>
 <ul>
 <li>input: the <code>cupcakeData</code> object</li>
 <li>pth: the path where the file with the phenotype values generated previously is located.</li>
-<li>aggregate: if all the possible phenotypes values want to be considered individually, aggregate must be FALSE. otherwise, the phenotype values should be manually completed by the user (column yes/no) and aggregate must be TRUE.</li>
+<li>aggregate: if all the possible phenotype values want to be considered individually, aggregate must be FALSE. otherwise, the phenotype values should be manually completed by the user (column yes/no) and aggregate must be TRUE.</li>
 <li>ageRange: determines what is the age range of interest for performing the analysis.</li>
-<li>gender: determine what is the gender of interest for performing the co-occurrence analysis.</li>
+<li>gender: determine what is the gender of interest to perform the co-occurrence analysis.</li>
 <li>variation: determine the variation of interest and the value of this variation.</li>
 </ul>
 <pre class="r"><code>cupcakeResults &lt;- co.occurrence( 
@@ -658,7 +661,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 ##  . Gender  : ALL 
 ##  . Variation : ALL 
 ##  . Patients in the age and gender interval: 41474 
-##  . Patients with vairation selected: 41474 
+##  . Patients with variation selected: 41474 
 ##  . Prevalence: 100 
 ##  . Odds ratio range: [0 , Inf] 
 ##  . Relative risk range: [0.002 , 23.067] 
@@ -671,7 +674,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 <p><code>Rcupcake</code> offers several options to visualize the results from the phenotype co-occurrence analysis, in networks and heatmaps.</p>
 <div id="network" class="section level3">
 <h3><span class="header-section-number">7.2.1</span> Network</h3>
-<p>The <code>cooc.network</code> function returns a network showing the phenotypes co-occurrences. By default <code>Rcupcake</code> package shows a network with <code>layout.fruchterman.reingold</code> layout, where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes.</p>
+<p>The <code>cooc.network</code> function returns a network showing phenotype co-occurrences. By default <code>Rcupcake</code> package shows a network with the <code>layout.fruchterman.reingold</code> layout, where the phenotypes are joined according to the number of patients that have both phenotypes ( selectValue = patientsPhenoAB). The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes.</p>
 <p>The <code>cooc.network</code> function requires 3 arguments as input:</p>
 <ul>
 <li>input: the <code>cupcakeResults</code> object</li>
@@ -686,14 +689,14 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 </div>
 <div id="heatmap" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Heatmap</h3>
-<p>The <code>cooc.heatmap</code> function returns a heatmap. This function is homologous to the <code>coo.network</code> one. The heatmap represents the selected value that by default will be <code>patientsPhenoAB</code>. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes.</p>
+<p>The <code>cooc.heatmap</code> function returns a heatmap. This function is homologous to <code>coo.network</code> one. The heatmap represents the selected value that by default will be <code>patientsPhenoAB</code>. The user can change this value to the different co-occurrence measures - fisher, oddsRatio, relativeRisk, phi, expect, score, fdr, PercentagePhenoAB- that are estimated for each pair of phenotypes.</p>
 <p>The <code>cooc.heatmap</code> function requires 3 arguments:</p>
 <ul>
 <li>input: the <code>cupcakeResults</code> object</li>
 <li>representedVariable: the co-occurrence measurement</li>
 <li>variableCutOff: the numeral value of the cutOff</li>
 </ul>
-<p>The <code>cooc.heatmap</code> function output is a heatmap. Blue color represents the lower values, red color represents the upper values. The co-occurrence measurement value is showed in each cell.</p>
+<p>The <code>cooc.heatmap</code> function output is a heatmap. Blue color represents the lower values, the red color represents the upper values. The co-occurrence measurement value is showed in each cell.</p>
 <pre class="r"><code>cooc.heatmap ( input               = cupcakeResults,
                representedVariable = &quot;patientsPhenoAB&quot;, 
                variableCutOff      = 100)</code></pre>
