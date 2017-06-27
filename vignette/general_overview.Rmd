@@ -554,6 +554,7 @@ prevalence.plot( input   = cupcakeResults,
 |                 | `phenotype.summary`     | A data.frame with the prevalence of each phenotype according to the value it takes, is retrieved. A figure showing the results can be also obtained. |
 |                 | `extract`             | It generates a data.frame containing the raw data from a query |
 |                 | `z.score`     | It transforms continuous into categorical variable applying Z-score |
+|                 | `comparison2b2`   | It performs a statistical analysis test to check the relation between two given variables present in the cupcakeData object |
 |                 | `co.occurrence`| It generates a cupcakeResults object              |
 |                 | `patient.selection`| It retrieves a list of patients suffering two phenotypes of interest |
 |                 | `n.variation`           | It retrieves the variations of your data |
