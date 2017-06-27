@@ -6,7 +6,7 @@
 \usage{
 cooc.heatmap(input, representedVariable = "patientsPhenoAB",
   variableCutOff = 0, coocPatients = 0, interactive = FALSE,
-  lowColor = "#cde6ff", highColor = "red", verbose = FALSE)
+  lowColor = "#cde6ff", highColor = "yellow", verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeResults} object, obtained 
@@ -32,7 +32,7 @@ heatmap will be obtained.}
 By default it is set to \code{"#cde6ff"}.}
 
 \item{highColor}{Determines the heatmap color for the highest value.
-By default it is set to \code{"red"}.}
+By default it is set to \code{"yellow"}.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an
 on-time log from the function.}

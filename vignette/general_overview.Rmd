@@ -193,7 +193,7 @@ The `get.children` function retrieves the paths of interest from the database us
 
 The `get.children` function output is a vector of paths. This output will be used as input for the `my.query` function that generates the JSON query. 
 
-```{r get.children}
+```{r get.children, eval=FALSE}
 nhanesPcbs <- get.children( 
               url         = "https://nhanes.hms.harvard.edu/", 
               fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
@@ -202,8 +202,6 @@ nhanesDemog <- get.children(
               url         = "https://nhanes.hms.harvard.edu/", 
               fieldname   = "/nhanes/Demo/demographics/demographics/"
               )
-
-head( nhanesDemog )              
 ```
 
 ## Build the JSON query
@@ -404,7 +402,7 @@ comparison2b2(
 comparison2b2( 
     input     = RcupcakeExData, 
     variable1 = "Age",
-    variable2 = "M.PCB153"
+    variable2 = "V.PCB153"
 )
 ```
 
@@ -518,7 +516,7 @@ The `cooc.heatmap` function requires 3 arguments:
   - representedVariable: the co-occurrence measurement 
   - variableCutOff: the numeral value of the cutOff
 
-The `cooc.heatmap` function output is a heatmap. Blue color represents the lower values,  the red color represents the upper values. The co-occurrence measurement value is showed in each cell. 
+The `cooc.heatmap` function output is a heatmap. Blue color represents the lower values,  the yellow color represents the upper values. The co-occurrence measurement value is showed in each cell. 
 
 ```{r phenoHeatmap, fig.width=10, fig.height=10 }
 cooc.heatmap ( input               = cupcakeResults,
