@@ -92,6 +92,8 @@ comparison2b2 <- function ( input, variable1, variable2, nfactor = 10, verbose =
         message("Fisher test will be performed")
         
         contingencyTable <-  table( selection )
+        print( addmargins( contingencyTable ) )
+        print( prop.table( contingencyTable ) )
         output <- fisher.test( contingencyTable )
         
 
@@ -108,6 +110,10 @@ comparison2b2 <- function ( input, variable1, variable2, nfactor = 10, verbose =
                     options <- unique( selection[, variable2])
                     dataA <- as.numeric( selection[ selection[, variable2] == options[1], variable1] )
                     dataB <- as.numeric( selection[ selection[, variable2] == options[2], variable1] )
+                    
+                    message( paste0( variable2, "(", options[1],")-> ", variable1 ,": mean ", round(mean( dataA ), 2), "; standar deviation: ", round(sd( dataA ), 2)))
+                    message( paste0( variable2, "(", options[2],")-> ", variable1 ,": mean ", round(mean( dataB ), 2), "; standar deviation: ", round(sd( dataB ), 2)))
+                    
                     output <- t.test(dataA,dataB, 
                                      var.equal = TRUE, 
                                      paired    = FALSE)
@@ -116,6 +122,12 @@ comparison2b2 <- function ( input, variable1, variable2, nfactor = 10, verbose =
                     options <- unique( selection[, variable1])
                     dataA <- as.numeric( selection[ selection[, variable1] == options[1], variable2] )
                     dataB <- as.numeric( selection[ selection[, variable1] == options[2], variable2] )
+                    
+                    
+                    message( paste0( variable1, "(", options[1],")-> ", variable2 ,": mean ", round(mean( dataA ), 2), "; standar deviation: ", round(sd( dataA ), 2)))
+                    message( paste0( variable1, "(", options[2],")-> ", variable2 ,": mean ", round(mean( dataB ), 2), "; standar deviation: ", round(sd( dataB ), 2)))
+                    
+                    
                     output <- t.test(dataA,dataB, 
                                      var.equal = TRUE, 
                                      paired    = FALSE)
