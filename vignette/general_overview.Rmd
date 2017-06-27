@@ -367,6 +367,57 @@ phenotype.summary( input      = cupcakeExData,
 ```
 
 
+# Phenotype comparison 2 by 2
+The user can compare each pair of variables in the input data by applying the `comparison2b2` function to the `cupcakeData` object previously generated with the `dataframe2cupcake` function. According to the type of variable - binary or continuous - different statistical tests.    
+
+
+| Variable1 | Variable2 | Statistical test|
+| ----------|-----------|-----------------|
+| Binary    | Binary    | Fisher test     |
+| Binary    | Continuous| T-test          |
+| Continuous| Continuous| Pearson test    |
+: (\#tab:statistics-opt) Statistical test performed according to the variables applying the `comparison2b2` function
+
+
+The `comparison2b2` function requires as input: 
+
+  - input: the `cupcakeData` object.
+  - variable1: The name of the first variable that has to be the same that the colname of the variable in the input data.frame.
+  - variable2: The name of the second variable that has to be the same that the colname of the variable in the input data.frame.
+  - nfactor: determines the maximum number of values that a variable could have to be defined as categorical. By default it is 10. 
+
+The `comparison2b2` function output shows the p-value of the statistical test performed and according to the variable type, some extra information is provided, - contingency table in the case of the fisher test and the mean and standard deviation in the case of the T-test. Three examples are provided. 
+
+## Binary variables comparison
+
+```{r comparison2b2Fisher, warning= FALSE}
+comparison2b2( 
+    input     = RcupcakeExData, 
+    variable1 = "Gender",
+    variable2 = "P.Diabetes"
+)
+```
+
+## Continuous variables comparison
+
+```{r comparison2b2Pearson, warning= FALSE}
+comparison2b2( 
+    input     = RcupcakeExData, 
+    variable1 = "Age",
+    variable2 = "M.PCB153"
+)
+```
+
+
+## Binary vs continuous variables comparison
+```{r comparison2b2Ttest, warning= FALSE}
+comparison2b2( 
+    input     = RcupcakeExData, 
+    variable1 = "Gender",
+    variable2 = "Age"
+)
+```
+
 # Phenotypes co-occurrence 
 The user can estimate the statistically significant co-occurrences by applying the `co.occurrence` function to the `cupcakeData` object previously generated with the `dataframe2cupcake` function. This function will return a new object (`cupcakeResults`) including co-occurrence measurements. Different functions can be applied to this object in order to show the phenotype prevalence, co-occurrence and phenotype plotting. 
 

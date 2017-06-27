@@ -92,8 +92,14 @@ comparison2b2 <- function ( input, variable1, variable2, nfactor = 10, verbose =
         message("Fisher test will be performed")
         
         contingencyTable <-  table( selection )
+        
+        message("\n Contingency table:")
         print( addmargins( contingencyTable ) )
-        print( prop.table( contingencyTable ) )
+        
+        message("\n Proportion by row:")
+        print( rowSums(prop.table(contingencyTable ) ) )
+        
+        
         output <- fisher.test( contingencyTable )
         
 
