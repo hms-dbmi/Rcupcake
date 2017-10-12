@@ -62,11 +62,16 @@ The tasks that can be performed with `Rcupcake` package are the following:
 In the following sections the specific functions that can be used to address each of these tasks are presented.
 
 ## Installation 
+`Rcupcake` is provided through GitHub. In order to install it, `devtools` package - available in CRAN (https://cran.r-project.org/) - is required. To install `devtools` the user must type the following commands in an R session:
 
-The package \texttt{Rcupcake} is provided through GitHub. To install \texttt{Rcupcake} the user must type the following commands in an R session:
+```{r devtls, message=FALSE, eval=FALSE}
+install.packages("devtools")
+library(devtools)
+```
+
+Once `devtools` package has been installed the user can install `Rcupcake` typing the following commands in an R session:
 
 ```{r bioC, message=FALSE, eval=FALSE}
-library( devtools )
 install_github( "hms-dbmi/Rcupcake" )
 library( Rcupcake )
 ```

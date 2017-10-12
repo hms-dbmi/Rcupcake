@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2017-06-27" />
 
 <title>Rcupcake: An R package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API</title>
 
@@ -65,7 +64,7 @@ h6 {
 }
 </style>
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Amax%2Dwidth%3A%201054px%3B%0Amargin%3A%200px%20auto%3B%0A%7D%0Abody%2C%20td%20%7B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Afont%2Dsize%3A%2010pt%3B%0A%7D%0A%0Adiv%23TOC%20ul%20%7B%0Apadding%3A%200px%200px%200px%2045px%3B%0Alist%2Dstyle%3A%20none%3B%0Abackground%2Dimage%3A%20none%3B%0Abackground%2Drepeat%3A%20none%3B%0Abackground%2Dposition%3A%200%3B%0Afont%2Dsize%3A%2010pt%3B%0Afont%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%3E%20li%20%7B%0Apadding%3A%205px%200px%200px%200px%3B%0A%7D%0Adiv%23TOC%20ul%20ul%20%7B%0Afont%2Dsize%3A%2011pt%3B%0A%7D%0Adiv%23TOC%2Etocify%20ul%20%7B%0Apadding%3A%200px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Adiv%23TOC%2Etocify%20li%20%7B%0Apadding%3A%205px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Ap%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Atext%2Dalign%3A%20justify%3B%0A%7D%0Aol%2C%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2085px%3B%0Alist%2Dstyle%3A%20square%3B%0A%7D%0Ali%20p%20%7B%0Apadding%3A%200px%3B%0A%7D%0Apre%20%7B%0Amargin%3A%200em%20150px%200%2E5em%200em%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0Aborder%3A%200px%20none%3B%0Abackground%2Dcolor%3A%20%23f0f0f0%3B%0Awhite%2Dspace%3A%20pre%3B%0Aoverflow%2Dx%3A%20auto%3B%0A%7D%0Ali%20pre%20%7B%0Amargin%3A%200em%200px%200%2E5em%20%2D65px%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0A%7D%0Apre%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0Adisplay%3A%20block%3B%0Apadding%3A%2010px%2010px%2010px%200px%3B%0Aoverflow%2Dx%3A%20inherit%3B%0A%7D%0A%0Apre%20code%5Bclass%5D%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Apre%5Bclass%5D%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0Att%2C%20code%2C%20pre%20%7B%0Afont%2Dfamily%3A%20%27DejaVu%20Sans%20Mono%27%2C%20%27Droid%20Sans%20Mono%27%2C%20%27Lucida%20Console%27%2C%20Consolas%2C%20Monaco%2C%20monospace%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Amargin%3A%201%2E2em%20150px%200%2E6em%200em%3B%0A%7D%0Ah1%2Etitle%20%7B%0Acolor%3A%20%2387b13f%3B%0Aline%2Dheight%3A%201%2E1em%3B%0Amargin%2Dtop%3A%2025px%3B%0Aborder%2Dbottom%3A%200px%3B%0A%7D%0Ah1%20%7B%0Aline%2Dheight%3A%201%2E4em%3B%0Aborder%2Dbottom%3A%201px%20%231a81c2%20solid%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%20%7B%0Acolor%3A%20%231a81c2%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2018%2E0pt%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Aspan%2Eheader%2Dsection%2Dnumber%20%7B%0Afloat%3A%20left%3B%0Awidth%3A%2065px%3B%0A%7D%0Ap%2Eauthor%2Dname%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0Asup%20%7B%0Atop%3A%200em%3B%0A%7D%0A%0Acode%20%7B%20background%2Dcolor%3A%20%23f0f0f0%3B%0Acolor%3A%20%23404040%3B%0Afont%2Dsize%3A%2092%25%3B%0A%7D%0A%0A%2Efigure%20%7B%20margin%3A%200em%200px%200%2E5em%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Apadding%3A%200px%20150px%3B%0A%7D%0Ap%20%3E%20img%20%7B%0Apadding%2Dleft%3A%2085px%3B%0Apadding%2Dright%3A%200px%3B%0A%7D%0Aimg%2Esmallfigure%20%7B%0Apadding%2Dright%3A%20300px%3B%0A%7D%0Aimg%2Ewidefigure%20%7B%0Apadding%3A%200px%2065px%3B%0A%7D%0Ap%2Ecaption%2C%20caption%20%7B%0Afont%2Dsize%3A%208pt%3B%0Apadding%2Dleft%3A%20150px%3B%0Apadding%2Dright%3A%2065px%3B%0A%7D%0Aspan%2Ecaption%2Dtitle%20%7B%0Acolor%3A%20%231a81c2%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aspan%2Ecaption%2Dlabel%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0A%2Esidenote%20%7B%0Afloat%3A%20right%3B%0Aclear%3A%20right%3B%0Amargin%2Dright%3A%20%2D150px%3B%0Awidth%3A%20130px%3B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%201rem%3B%0Afont%2Dsize%3A%208pt%3B%0Aline%2Dheight%3A%201%2E3%3B%0Avertical%2Dalign%3A%20baseline%3B%0Aposition%3A%20relative%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0A%2Esidenote%2Dnumber%2C%20%2Eaffil%2Dmark%20%7B%0Aposition%3A%20relative%3B%0Avertical%2Dalign%3A%20super%3B%0Afont%2Dsize%3A%207%2E5pt%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dstyle%3A%20normal%3B%0Aline%2Dheight%3A%20normal%3B%0A%7D%0Ainput%2Emargin%2Dtoggle%20%7B%20display%3A%20none%3B%20%7D%0Alabel%2Esidenote%2Dnumber%20%7B%20display%3A%20inline%3B%20%7D%0Alabel%2Emargin%2Dtoggle%3Anot%28%2Esidenote%2Dnumber%29%20%7B%20display%3A%20none%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23E07020%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23404040%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%232020F0%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23E07020%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23FF0000%3B%20%7D%20%0Acode%20%3E%20span%2Eidentifier%20%7B%20color%3A%20%23404040%3B%20%7D%0Acode%20%3E%20span%2Enumber%20%7B%20color%3A%20%23D02070%3B%20%7D%0Acode%20%3E%20span%2Estring%20%7B%20color%3A%20%2340A040%3B%20%7D%0Acode%20%3E%20span%2Ecomment%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%0Acode%20%3E%20span%2Ekeyword%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eliteral%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eoperator%20%7B%20color%3A%20%23000000%3B%7D%0Acode%20%3E%20span%2Eparen%20%7B%20color%3A%20%23000000%3B%7D%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,body%20%7B%0Amargin%3A%200px%20auto%3B%0Amax%2Dwidth%3A%201134px%3B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Afont%2Dsize%3A%2010pt%3B%0A%7D%0A%0Adiv%23TOC%20ul%20%7B%0Apadding%3A%200px%200px%200px%2045px%3B%0Alist%2Dstyle%3A%20none%3B%0Abackground%2Dimage%3A%20none%3B%0Abackground%2Drepeat%3A%20none%3B%0Abackground%2Dposition%3A%200%3B%0Afont%2Dsize%3A%2010pt%3B%0Afont%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Adiv%23TOC%20%3E%20ul%20%3E%20li%20%7B%0Apadding%3A%205px%200px%200px%200px%3B%0A%7D%0Adiv%23TOC%20ul%20ul%20%7B%0Afont%2Dsize%3A%2011pt%3B%0A%7D%0Adiv%23TOC%2Etocify%20ul%20%7B%0Apadding%3A%200px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Adiv%23TOC%2Etocify%20li%20%7B%0Apadding%3A%205px%3B%0Afont%2Dsize%3A%20inherit%3B%0Afont%2Dfamily%3A%20inherit%3B%0A%7D%0Ap%2C%20dl%20%7B%0Apadding%3A%200px%20150px%200px%2065px%3B%0Atext%2Dalign%3A%20justify%3B%0A%7D%0A%0Ap%2C%20img%2C%20table%20%7B%0Amargin%2Dtop%3A%2010px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%0Aol%2C%20ul%20%7B%0Apadding%3A%200px%20150px%200px%20100px%3B%0Alist%2Dstyle%3A%20square%3B%0A%7D%0Ali%20ol%2C%20li%20ul%20%7B%0Apadding%3A%200px%200px%200px%2035px%3B%0A%7D%0Ali%20p%20%7B%0Apadding%3A%200%3B%0A%7D%0Apre%20%7B%0Amargin%3A%200em%20150px%200%2E5em%200em%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0Aborder%3A%200px%20none%3B%0Abackground%2Dcolor%3A%20%23f0f0f0%3B%0Awhite%2Dspace%3A%20pre%3B%0Aoverflow%2Dx%3A%20auto%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0Ali%20pre%20%7B%0Amargin%3A%200em%200px%200%2E5em%20%2D65px%3B%0Apadding%3A%200px%200px%200px%2065px%3B%0A%7D%0Apre%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0Adisplay%3A%20block%3B%0Apadding%3A%2010px%2010px%2010px%200px%3B%0Aoverflow%2Dx%3A%20inherit%3B%0Afont%2Dsize%3A%20100%25%3B%0A%7D%0A%0Apre%20code%5Bclass%5D%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Apre%5Bclass%5D%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0Att%2C%20code%2C%20pre%20%7B%0Afont%2Dfamily%3A%20%27DejaVu%20Sans%20Mono%27%2C%20%27Droid%20Sans%20Mono%27%2C%20%27Lucida%20Console%27%2C%20Consolas%2C%20Monaco%2C%20monospace%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Amargin%3A%201%2E2em%20150px%200%2E6em%200em%3B%0A%0Apadding%2Dleft%3A%2065px%3B%0Atext%2Dindent%3A%20%2D65px%3B%0A%7D%0Ah1%2Etitle%20%7B%0Acolor%3A%20%2387b13f%3B%0Aline%2Dheight%3A%201%2E1em%3B%0Amargin%2Dtop%3A%2025px%3B%0Aborder%2Dbottom%3A%200px%3B%0A%7D%0Ah1%20%7B%0Aline%2Dheight%3A%201%2E4em%3B%0Aborder%2Dbottom%3A%201px%20%231a81c2%20solid%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%20%7B%0Acolor%3A%20%231a81c2%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2018%2E0pt%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0A%7D%0Ah3%2C%20h4%20%7B%0Afont%2Dsize%3A%2012pt%3B%0A%7D%0Aspan%2Eheader%2Dsection%2Dnumber%20%7B%0Afloat%3A%20left%3B%0Awidth%3A%2065px%3B%0A%7D%0A%0Ap%2Eauthor%2Dname%20%7B%0Afont%2Dsize%3A%2014%2E5pt%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0Asup%20%7B%0Atop%3A%200em%3B%0A%7D%0A%2Edate%20%7B%0Atext%2Dindent%3A%200px%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Eabstract%2C%20%2Epackage%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Acode%20%7B%20background%2Dcolor%3A%20%23f0f0f0%3B%0Acolor%3A%20%23404040%3B%0Afont%2Dsize%3A%2090%25%3B%0A%7D%0A%0A%2Efigure%20%7B%20margin%3A%200em%200px%200%2E5em%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Apadding%3A%200px%20150px%200px%20130px%3B%0A%7D%0Ap%20%3E%20img%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%200px%3B%0A%7D%0Aimg%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20195px%3B%0Apadding%2Dright%3A%20280px%3B%0A%7D%0Ap%20%3E%20img%2Esmallfigure%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%20130px%3B%0A%7D%0Aimg%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%2065px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%20%3E%20img%2Ewidefigure%20%7B%0Apadding%2Dleft%3A%200px%3B%0Apadding%2Dright%3A%200px%3B%0Amargin%2Dright%3A%20%2D65px%3B%0A%7D%0Ap%2Ecaption%2C%20caption%20%7B%0Acolor%3A%20inherit%3B%0Afont%2Dsize%3A%208pt%3B%0A%7D%0Ap%2Ecaption%20%7B%0Apadding%2Dleft%3A%20130px%3B%0Apadding%2Dright%3A%2085px%3B%0Amargin%2Dbottom%3A%2020px%3B%0A%7D%0Acaption%20%7B%0Apadding%3A%200px%3B%0Amargin%2Dbottom%3A%2010px%3B%0Amin%2Dwidth%3A%20583%3B%0A%7D%0Aspan%2Ecaption%2Dtitle%20%7B%0Acolor%3A%20%231a81c2%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aspan%2Ecaption%2Dlabel%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%0Atable%20%7B%0Amargin%2Dleft%3A%20130px%3B%0Amargin%2Dright%3A%2085px%3B%0A%7D%0A%2Etable%20%7B%0Amax%2Dwidth%3A%20518px%3B%0A%7D%0A%0Add%20%7B%0Amargin%2Dleft%3A%2065px%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%0A%2Ecode%2Dfolding%2Dbtn%20%7B%0Aposition%3A%20relative%3B%0Amargin%2Dtop%3A%20%2D26px%3B%0Atop%3A%2026px%3B%0A%7D%0A%2Ecol%2Dmd%2D12%20%7B%0Amin%2Dheight%3A%200px%3B%0A%7D%0A%0A%2Esidenote%20%7B%0Afloat%3A%20right%3B%0Aclear%3A%20right%3B%0Amargin%2Dright%3A%20%2D150px%3B%0Awidth%3A%20130px%3B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%201rem%3B%0Afont%2Dsize%3A%208pt%3B%0Aline%2Dheight%3A%201%2E3%3B%0Avertical%2Dalign%3A%20baseline%3B%0Aposition%3A%20relative%3B%0Atext%2Dalign%3A%20left%3B%0A%7D%0A%2Esidenote%2Dnumber%2C%20%2Eaffil%2Dmark%20%7B%0Aposition%3A%20relative%3B%0Avertical%2Dalign%3A%20super%3B%0Afont%2Dsize%3A%207%2E5pt%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dstyle%3A%20normal%3B%0Aline%2Dheight%3A%20normal%3B%0A%7D%0Ainput%2Emargin%2Dtoggle%20%7B%20display%3A%20none%3B%20%7D%0Alabel%2Esidenote%2Dnumber%20%7B%20display%3A%20inline%3B%20%7D%0Alabel%2Emargin%2Dtoggle%3Anot%28%2Esidenote%2Dnumber%29%20%7B%20display%3A%20none%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23E07020%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23404040%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23D02070%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%2340A040%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%232020F0%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23E07020%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23FF0000%3B%20%7D%20%0Acode%20%3E%20span%2Eidentifier%20%7B%20color%3A%20%23404040%3B%20%7D%0Acode%20%3E%20span%2Enumber%20%7B%20color%3A%20%23D02070%3B%20%7D%0Acode%20%3E%20span%2Estring%20%7B%20color%3A%20%2340A040%3B%20%7D%0Acode%20%3E%20span%2Ecomment%20%7B%20color%3A%20%23808080%3B%20font%2Dstyle%3A%20italic%3B%20%7D%0Acode%20%3E%20span%2Ekeyword%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eliteral%20%7B%20color%3A%20%232020F0%3B%20%7D%0Acode%20%3E%20span%2Eoperator%20%7B%20color%3A%20%23000000%3B%7D%0Acode%20%3E%20span%2Eparen%20%7B%20color%3A%20%23000000%3B%7D%0A%0A%2Ejs%2Dplotly%2Dplot%20%2Eplotly%20%7B%0Apadding%2Dleft%3A%2065px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -73,7 +72,7 @@ h6 {
 
 <style type="text/css">
 .main-container {
-  max-width: 768px;
+  max-width: 828px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -116,8 +115,9 @@ $(document).ready(function () {
 <p class="author-name">Alba Gutierrez-Sacristan<span class="affil-mark">1*</span>, Romain Guedj<span class="affil-mark">1</span>, Gabor Korodi<span class="affil-mark">1</span>, Jason Stedman<span class="affil-mark">1</span>, Laura I. Furlong<span class="affil-mark">2</span>, Chirag J. Patel<span class="affil-mark">1</span>, Isaac S. Kohane<span class="affil-mark">1</span> and Paul Avillach<span class="affil-mark">1</span></p>
 <p class="author-affiliation"><span class="affil-mark">1</span>Department of Biomedical Informatics, Harvard Medical School<br><span class="affil-mark">2</span>Research Programme on Biomedical Informatics (GRIB)</p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:alba_gutierrez@hms.harvard.edu">alba_gutierrez@hms.harvard.edu</a></p>
-<h4 class="date"><em>27 June 2017</em></h4>
-<h4 class="package">Package: <span style="font-weight: normal">Rcupcake 0.99.0</span></h4>
+<h4 class="date"><em>12 octubre 2017</em></h4>
+<h4 class="package">Package</h4>
+<p>Rcupcake 0.99.0</p>
 
 </div>
 
@@ -186,10 +186,13 @@ $(document).ready(function () {
 </div>
 <div id="installation" class="section level2">
 <h2><span class="header-section-number">1.2</span> Installation</h2>
-<p>The package  is provided through GitHub. To install  the user must type the following commands in an R session:</p>
-<pre class="r"><code>library( devtools )
-install_github( &quot;hms-dbmi/Rcupcake&quot; )
+<p><code>Rcupcake</code> is provided through GitHub. In order to install it, <code>devtools</code> package - available in CRAN (<a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>) - is required. To install <code>devtools</code> the user must type the following commands in an R session:</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+library(devtools)</code></pre>
+<p>Once <code>devtools</code> package has been installed the user can install <code>Rcupcake</code> typing the following commands in an R session:</p>
+<pre class="r"><code>install_github( &quot;hms-dbmi/Rcupcake&quot; )
 library( Rcupcake )</code></pre>
+<pre><code>## Warning: package 'knitr' was built under R version 3.2.5</code></pre>
 </div>
 <div id="s4-objects" class="section level2">
 <h2><span class="header-section-number">1.3</span> S4 objects</h2>
@@ -204,7 +207,7 @@ library( Rcupcake )</code></pre>
 <pre class="r"><code>RcupcakeExData</code></pre>
 <pre><code>## Loading required package: Rcupcake</code></pre>
 <pre><code>## Loading required package: stringr</code></pre>
-<pre><code>## Warning: package 'stringr' was built under R version 3.3.3</code></pre>
+<pre><code>## Warning: package 'stringr' was built under R version 3.2.5</code></pre>
 <pre><code>## Object of class 'cupcakeData'
 ##  . Number of Variations:    1 
 ##  . Number of Phenotypes:    4 
@@ -607,7 +610,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 <h1><span class="header-section-number">7</span> Phenotype comparison 2 by 2</h1>
 <p>The user can compare each pair of variables in the input data by applying the <code>comparison2b2</code> function to the <code>cupcakeData</code> object previously generated with the <code>dataframe2cupcake</code> function. According to the type of variable - binary or continuous - different statistical tests.</p>
 <table>
-<caption><span id="tab:statistics-opt"><span class="caption-label">Table 1: </span></span><span class="caption-title">Statistical test performed according to the variables applying the <code>comparison2b2</code> function</caption></span>
+<caption><span id="tab:statistics-opt">Table 1: </span><span class="caption-title">Statistical test performed according to the variables applying the <code>comparison2b2</code> function</caption></span><br>
 <thead>
 <tr class="header">
 <th>Variable1</th>
@@ -843,7 +846,7 @@ summary(as.factor(cupcakeExData@iresult$V.PCB153))</code></pre>
 <div id="summary-of-rcupcake-functions-available" class="section level1">
 <h1><span class="header-section-number">9</span> Summary of <code>Rcupcake</code> functions available</h1>
 <table>
-<caption><span id="tab:viz-opt"><span class="caption-label">Table 2: </span></span><span class="caption-title">Functions in <code>Rcupcake</code> R package</caption></span>
+<caption><span id="tab:viz-opt">Table 2: </span><span class="caption-title">Functions in <code>Rcupcake</code> R package</caption></span><br>
 <colgroup>
 <col width="18%"></col>
 <col width="25%"></col>
@@ -981,12 +984,6 @@ $(document).ready(function () {
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
-    TeX: {
-      TagSide: "right",
-      equationNumbers: {
-        autoNumber: "AMS"
-      }
-    },
     "HTML-CSS": {
       styles: {
         ".MathJax_Display": {
