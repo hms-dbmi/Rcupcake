@@ -53,7 +53,7 @@ start.session <- function( url, apiKey){
         ))
     startSession
     
-    if( startSession[[1]] == "success"){
+    if( startSession[[1]] == "success" | startSession[[1]] == "ok"){
         return( "Start Session: success" )
     }else{
         return( "Start Session: failed. Please revise your url and apiKey" )
