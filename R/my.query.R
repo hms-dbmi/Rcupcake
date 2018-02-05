@@ -94,7 +94,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         } else {
             
             pathSegs <- unlist(strsplit(pathList[[i]],"/"))
-            leafnurlstr <- str_c( pathSegs[1:length(pathSegs)-1] , collapse = "/" )
+            leafnurlstr <- stringr::str_c( pathSegs[1:length(pathSegs)-1] , collapse = "/" )
             # message("leafnurlstr")
             # message(leafnurlstr)
             leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("[(]","%28", URLencode(leafnurlstr)))))
