@@ -20,7 +20,7 @@ Suggests:
     parallel,
     testthat
 Imports:
-    stringr,
+    stringr (>= 1.0.0),
     igraph,
     ggplot2,
     plotrix,
