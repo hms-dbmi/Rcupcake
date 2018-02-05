@@ -34,7 +34,8 @@ Imports:
     d3heatmap,
     gtools,
     shiny, 
-    httr, 
+    httr,
+    xml2,
     jsonlite
 NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
