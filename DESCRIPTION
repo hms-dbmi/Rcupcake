@@ -13,8 +13,7 @@ Authors@R: c(person("Alba", "Gutierrez-Sacristan", "alba.gutierrez@upf.edu", rol
   )
 Description: Package for querying and analyzing biomedical data through the BD2K PIC-SURE RESTful API
 Depends:
-    R (>= 3.2.3),
-    stringr
+    R (>= 3.2.3)
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
