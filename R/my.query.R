@@ -34,6 +34,12 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
     }
 
     # Filter fields by values in vector using grep
+    print("Main clause")
+    
+    if( substr( myfields, nchar(myfields), nchar(myfields)) == "|" ){
+        myfields <- substr( myfields, 1, nchar(myfields)-1)
+    }
+    
     pathList <- grep(myfields, myvector, value=TRUE)
 
 
