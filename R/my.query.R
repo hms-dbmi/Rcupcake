@@ -40,6 +40,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         myfields <- substr( myfields, 1, nchar(myfields)-1)
     }
     
+    myfields <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", myfields)
     pathList <- grep(myfields, myvector, value=TRUE)
 
 
@@ -66,7 +67,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         
         # format URL for current path entry to retrieve fields       
         nurlstr <- paste( IRCT_PATH_RESOURCE_URL, pathList[i], sep = "" )
-        nurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("[(]","%28", URLencode(nurlstr)))))
+        nurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("\\*","%2A",  gsub("[(]","%28", URLencode(nurlstr))))))
 
         # httr::content(httr::GET(nurl))
         
@@ -103,14 +104,14 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             leafnurlstr <- stringr::str_c( pathSegs[1:length(pathSegs)-1] , collapse = "/" )
             # message("leafnurlstr")
             # message(leafnurlstr)
-            leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("[(]","%28", URLencode(leafnurlstr)))))
+            leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("\\*","%2A", gsub("[(]","%28", URLencode(leafnurlstr))))))
             # message("leafnurl")
             # message(leafnurl)
             leafPathUrl <- paste0(IRCT_PATH_RESOURCE_URL, leafnurl, "/")
             # message(leafPathUrl)
             leafPathFields <- httr::content(httr::GET(leafPathUrl))
             
-            leafPath <- grep(pathList[[i]], leafPathFields, value=TRUE)
+            leafPath <- grep(pathList[[i]], leafPathFields, fixed = TRUE, value=TRUE)
             # message("leafPath")
             # message(leafPath)
 
@@ -148,8 +149,10 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
 
     queryWHERE <- c()
-    
+    print("Where ****************")
     field <- unlist(strsplit(myfields, "[|]"))[1]
+    field <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", field)
+    
     whereClause <- grep( field, pathList, value=TRUE)
     
     
