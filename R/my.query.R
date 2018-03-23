@@ -34,8 +34,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
     }
 
     # Filter fields by values in vector using grep
-    print("Main clause")
-    
+
     if( substr( myfields, nchar(myfields), nchar(myfields)) == "|" ){
         myfields <- substr( myfields, 1, nchar(myfields)-1)
     }
@@ -149,7 +148,6 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
 
     queryWHERE <- c()
-    print("Where ****************")
     field <- unlist(strsplit(myfields, "[|]"))[1]
     field <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", field)
     
