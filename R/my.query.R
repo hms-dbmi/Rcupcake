@@ -103,7 +103,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             leafnurlstr <- stringr::str_c( pathSegs[1:length(pathSegs)-1] , collapse = "/" )
             # message("leafnurlstr")
             # message(leafnurlstr)
-            leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("\\*","%2A", gsub("\\^","%5E", gsub("[(]","%28", URLencode(leafnurlstr)))))))
+            leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("\\*","%2A", gsub(" ","%20", gsub("\\^","%5E", gsub("[(]","%28", URLencode(leafnurlstr))))))))
             # message("leafnurl")
             # message(leafnurl)
             leafPathUrl <- paste0(IRCT_PATH_RESOURCE_URL, leafnurl, "/")
