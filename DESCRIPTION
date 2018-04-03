@@ -41,4 +41,4 @@ NeedsCompilation: no
 Author: Alba Gutierrez-Sacristan [aut],
 Maintainer: Alba Gutierrez-Sacristan <alba_gutierrez@hms.harvard.edu>
 biocViews: Software, BiomedicalInformatics, DataRepresentation
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1

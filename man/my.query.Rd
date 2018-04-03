@@ -23,3 +23,6 @@ A JSON query.
 Given a vector with the fields of interest, and the vector generated with the paths obtained 
 after applying the getchildren function, it returns a JSON query
 }
+\examples{
+queryExample <- my.query( myfields = "AGE|PCB153",
+}

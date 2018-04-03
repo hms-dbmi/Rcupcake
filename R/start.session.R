@@ -53,6 +53,10 @@ start.session <- function( url, apiKey){
         ))
     startSession
     
+    
+    cache.creation()
+    
+    
     if( names(startSession)[1] == "node"){
         return( "Start Session: failed. Please revise your url and apiKey. Check that your apiKey has not expired.")
     }else if( names(startSession)[1] == "status"){
