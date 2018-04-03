@@ -28,12 +28,12 @@ search.path <- function(fieldname, url, verbose = FALSE){
         result = NULL
         
         toSearch = get.children.updated("", url, verbose = verbose)
-        print( toSearch )
+        # print( toSearch )
         
         while( length(toSearch) > 0 ){
             current  = toSearch[1]
             toSearch = toSearch[-1]
-            print(paste("searching", current))
+            # print(paste("searching", current))
             children <- get.children.updated(current, url, verbose = verbose )
             
             results <- sapply(c(current, children), function(e){
