@@ -71,12 +71,10 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
     ## in order for the cache to be populated correctly, we get the children for every subpath
     ## ie for "/ab/cd/ef/" we list "/ab" , then "ab/cd", and finally "ab/cd/ef"
     ## with "unlist(tail(...., n=1))" we return only the last element, corresponding to the path asked by the user
-    return( unlist(tail(lapply(1:length(splitFieldName), function(n){
-        if(n<2 || splitFieldName[n-1] != "Demo"){
-            lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
-        }
-    }), n=1)))
-
-    
+    v <- unlist(tail(lapply(1:length(splitFieldName), function(n){
+        lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
+    }), n=1))
+    names(v) <- c()  # remove the names for readability
+    return(v)
 }
 
