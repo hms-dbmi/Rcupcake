@@ -26,15 +26,16 @@ search.path <- function(fieldname, url, verbose = FALSE){
         
         goal = splitPath(path)
         result = NULL
-        
         toSearch = get.children.updated("", url, verbose = verbose)
         # print( toSearch )
         
         while( length(toSearch) > 0 ){
             current  = toSearch[1]
             toSearch = toSearch[-1]
-            # print(paste("searching", current))
-            children <- get.children.updated(current, url, verbose = verbose )
+            
+            if(verbose) print(paste("listing the children of", current))
+            
+            children <- get.children.updated(current, url, verbose = verbose )            
             
             results <- sapply(c(current, children), function(e){
                 if(goal == tail( splitPath(e), n=1)){

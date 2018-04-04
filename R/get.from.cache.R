@@ -1,5 +1,9 @@
 ## retrieve a path (string) from the cache
 get.from.cache <- function(awesomeTree, s){
+    if(s %in% c("", "/")){
+        return(sapply(names(awesomeTree), function(e)concatPath(c("/", e))))
+    }
+    
     ## recursive traversal, takes as parameter a subtree of the cache
     ## and a vector v representing the path split on "/"
     go <- function(subTree, v){
@@ -21,8 +25,15 @@ get.from.cache <- function(awesomeTree, s){
         }
     }
     ## we do [-1] because splitpath "/ab/cd/ef" == c("", "ab", "cd", "ef") (because of the leading slash)
-    ans = go(awesomeTree, splitPath(s)[-1])
+    splitPathv = splitPath(s)[-1]
+    
+    ans = go(awesomeTree, splitPathv)
     if( ! is.null(ans) ){
+        if(tail(splitPathv, n=1) == "Demo"){
+            
+            ans <- sapply(ans, function(e)concatPath(c(e,e)))
+        }
+        
         ## since <ans> contains only the names of the nodes,
         ## we apply concatPath to each one of them in order to return the absolute path
         return( sapply(ans, function(r){concatPath(c(s, r))}))

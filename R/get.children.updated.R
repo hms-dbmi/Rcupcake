@@ -16,11 +16,20 @@
 
 
 get.children.updated <- function( fieldname, url, verbose = FALSE ) {
+    # this triggers the search.path function if needed (= if the path asked for is not absolute)
+    if(! (fieldname %in% c("","/"))){
+        resources <- sapply(get.children.updated("", url=url, verbose = verbose), function(r)concatPath(c("/", r)))
+        if(! any( startsWith(concatPath(c("/",fieldname)), resources) )){ # we check if the provided path starts with any of the DB resources
+            if(verbose) print(paste("not an absolute path; searching", fieldname))
+            fieldname <- search.path(fieldname, url=url, verbose = verbose)
+            if(verbose) print(paste("resolved to", fieldname))
+        }
+    }
     ## this inner function lists only the specified path given as argument
     lsPath <- function(path){
         if(verbose) print(list(lspath=path))
         ## try to fetch the children from the cache
-        fromcache <- get.from.cache(cache, path )
+        fromcache <- get.from.cache(cache, path)
         ## if it succeeds we should get back a character vector
         if(class(fromcache) == "character"){
             ## print("using cached data")
@@ -36,7 +45,7 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
             
             if(verbose) print(path)
             
-            if(path == ""){
+            if(path %in% c("","/")){
                 if(verbose) print("listing resources")
                 r <- httr::GET(IRCT_RESOURCE_RESOURCE_URL)
                 newchildren <-  httr::content(r)
@@ -71,12 +80,10 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
     ## in order for the cache to be populated correctly, we get the children for every subpath
     ## ie for "/ab/cd/ef/" we list "/ab" , then "ab/cd", and finally "ab/cd/ef"
     ## with "unlist(tail(...., n=1))" we return only the last element, corresponding to the path asked by the user
-    return( unlist(tail(lapply(1:length(splitFieldName), function(n){
-        if(n<2 || splitFieldName[n-1] != "Demo"){
-            lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
-        }
-    }), n=1)))
-
-    
+    v <- unlist(tail(lapply(1:length(splitFieldName), function(n){
+        lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
+    }), n=1))
+    names(v) <- c()  # remove the names for readability
+    return(v)
 }
 
