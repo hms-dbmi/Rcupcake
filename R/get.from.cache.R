@@ -1,5 +1,9 @@
 ## retrieve a path (string) from the cache
 get.from.cache <- function(awesomeTree, s){
+    if(s %in% c("", "/")){
+        return(sapply(names(awesomeTree), function(e)concatPath(c("/", e))))
+    }
+    
     ## recursive traversal, takes as parameter a subtree of the cache
     ## and a vector v representing the path split on "/"
     go <- function(subTree, v){
