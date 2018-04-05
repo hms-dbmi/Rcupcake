@@ -27,7 +27,9 @@ add.to.cache <- function(awesomeTree, mybranches){
     
     ## return (go(awesomeTree, splitPath(v)))
     for(path in mybranches){
-        awesomeTree <- go(awesomeTree, splitPath(path)[-1])
+        path.vector <- Filter(function(e){ nchar(e)>0 }, splitPath(path))
+        
+        awesomeTree <- go(awesomeTree, path.vector)
     }
     return(awesomeTree)
 }

@@ -18,19 +18,21 @@
 
 
 search.path <- function(fieldname, url, verbose = FALSE){
-    
+    ## print(paste("$$ search path", fieldname))
     if(verbose == TRUE){
         print("Be patient, your request is being processed.")
     }
     result <- sapply(fieldname, function(path){
         
         goal = splitPath(path)
+        print(paste("Searchpath GOAL is ", goal))
         result = NULL
         toSearch = get.children.updated("", url, verbose = verbose)
         # print( toSearch )
         
         while( length(toSearch) > 0 ){
             current  = toSearch[1]
+            ## print(paste("$$ search path: current = ", current))
             toSearch = toSearch[-1]
             
             if(verbose) print(paste("listing the children of", current))
