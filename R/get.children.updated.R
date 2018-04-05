@@ -16,17 +16,20 @@
 
 
 get.children.updated <- function( fieldname, url, verbose = FALSE ) {
+    ## print(paste("@@ get children",fieldname))
     # this triggers the search.path function if needed (= if the path asked for is not absolute)
     if(! (fieldname %in% c("","/"))){
         resources <- sapply(get.children.updated("", url=url, verbose = verbose), function(r)concatPath(c("/", r)))
-        if(! any( startsWith(concatPath(c("/",fieldname)), resources) )){ # we check if the provided path starts with any of the DB resources
-            if(verbose) print(paste("not an absolute path; searching", fieldname))
+        
+        if(   ! any(startsWith(concatPath(c("/",fieldname)), resources))){ # we check if the provided path starts with any of the DB resources
+            ## print(paste("@@ get children: activating search path",fieldname, paste(resources, collapse=";")))
             fieldname <- search.path(fieldname, url=url, verbose = verbose)
-            if(verbose) print(paste("resolved to", fieldname))
         }
     }
+    
     ## this inner function lists only the specified path given as argument
     lsPath <- function(path){
+        ## print(paste("@@ get children: lsPath",path))
         if(verbose) print(list(lspath=path))
         ## try to fetch the children from the cache
         fromcache <- get.from.cache(cache, path)
@@ -71,6 +74,7 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
             }
             
             ## add the newly discovered children to the cache
+            ## print(paste("## add to cache", children))
             cache <<- add.to.cache( cache, children)
             return( children )
         }
