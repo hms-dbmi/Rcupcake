@@ -30,6 +30,25 @@ path = "/ab/cd/efg/hij"
 
 ## path.vector.bis <- Filter(. %>% nchar %>% `>`(0) , splitPath(path))
 
+escape.colors = list(
+    title = "34;4",
+    info  = "32",
+    warn  = "33",
+    error = "31"
+)
+
+print.color = function(color) {
+    function(str){
+        cat(paste0("\033[", escape.colors[color], "m", str,"\033[0m\n"))
+    }
+}
+
+print.title = print.color("title")
+print.info = print.color("info")
+print.warn = print.color("warn")
+print.error = print.color("error")
+
+
 sink.reset <- function(){
     for(i in seq_len(sink.number())){
         sink(NULL)
@@ -41,7 +60,7 @@ test <- function(domainsToTest){
     
     sapply(names(domainsToTest), function(url){
         domain <- domainsToTest[[url]]
-        cat(paste("-------- ", url ," --------\n"))
+        print.title(paste("──────── ", url ," ────────"))
 
         key <- readChar(domain$apiKey, file.info(domain$apiKey)$size)
         cat(paste(start.session(url, key),"\n"))
@@ -60,9 +79,11 @@ test <- function(domainsToTest){
             })
             sink.reset()
             ok = identical(t$result, r)
-            cat( paste0(if(ok) "OK" else "FAILED"), "\n")
             
-            if(!ok){
+            if(ok){
+                print.info("ok")
+            }else{
+                print.error("failed")
                 cat("### Test failed ###\nExpected:\n")
                 print(t$result)
                 cat("Got:\n")
@@ -72,13 +93,16 @@ test <- function(domainsToTest){
 
         })
 
-        cat("-------------------------------------\n\n")
+        print.title("────────────────────────────────")
 
     })
     cat("finished testing.\n")
 }
 
-f <- function(f, ...) function(url, verbose) f(..., url=url, verbose=verbose)
+f <- function(f, ...) {
+    cache = list()
+    function(url, verbose) f(..., url=url, verbose=verbose)
+}
 
 tests <- list(
     "https://nhanes.hms.harvard.edu/" = list(
@@ -86,7 +110,7 @@ tests <- list(
         tests = list(
             "Listing the resources" = list(
                 request = f(get.children.updated, ""),
-                result =  c("i2b2-nhanes", "nhanes")
+                result =  c("/i2b2-nhanes", "/nhanes")
             ),
             "Searching for demographics" = list(
                 request = f(search.path, "demographics"),
@@ -99,11 +123,15 @@ tests <- list(
         tests = list(
             "Listing the resources" = list(
                 request = f(get.children.updated, ""),
-                result =  c("PMSDN-dev")
+                result =  c("/PMSDN-dev")
             ),
             "Searching for demographics" = list(
                 request = f(search.path, "Demographics"),
                 result = "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/"
+            ),
+            "Searching for '/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE'" = list(
+                request = f(search.path, "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE"),
+                result = "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE"
             )
         )
     )
