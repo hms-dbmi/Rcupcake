@@ -23,8 +23,11 @@ search.path <- function(fieldname, url, verbose = FALSE){
         print("Be patient, your request is being processed.")
     }
     result <- sapply(fieldname, function(path){
+        ## split the path, remove empty elements
+        path.vector = Filter(function(e)nchar(e)>0, splitPath(path))
+        ## our goal is the first node of this path
+        goal = path.vector[1]
         
-        goal = splitPath(path)
         print(paste("Searchpath GOAL is ", goal))
         result = NULL
         toSearch = get.children.updated("", url, verbose = verbose)
@@ -54,8 +57,13 @@ search.path <- function(fieldname, url, verbose = FALSE){
             
             toSearch <- c(toSearch, children)
         }
-        # print(list(result=result))
-        return(result)
+        ## the return value is the concatenation of result (= the path to the first node of the <path> argument)
+        ## and the rest of the path (without it's first node because it is already in result)
+        ## eg search.path "ghi/jkl/mno" will search for "ghi", and find "abc/def/ghi"
+        ##    and at the end, we want the return to be "abc/def/ghi/jkl/mno"
+        ## TODO: add a check to verify that the full path really exists
+        ##       (= check if the user did no spelling mistake)
+        return(concatPath(c(result, path.vector[-1])))
     }, USE.NAMES = FALSE)
     
     names( result ) <- c()

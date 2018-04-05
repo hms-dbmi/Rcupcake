@@ -85,7 +85,8 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
     ## ie for "/ab/cd/ef/" we list "/ab" , then "ab/cd", and finally "ab/cd/ef"
     ## with "unlist(tail(...., n=1))" we return only the last element, corresponding to the path asked by the user
     v <- unlist(tail(lapply(1:length(splitFieldName), function(n){
-        lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
+        paths <- lsPath( paste( splitFieldName[1:n], collapse = "/" ) )
+        sapply(paths, function(e)concatPath(c("/", e)))
     }), n=1))
     names(v) <- c()  # remove the names for readability
     return(v)
