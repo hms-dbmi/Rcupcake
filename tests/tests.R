@@ -13,8 +13,6 @@
 #'         )
 #'     )
 #'
-#' @export test
-#' @export sampletest
 
 
 ## helper functions for colored output in the console:
@@ -107,7 +105,7 @@ f <- function(f, ...) function(url, verbose){
 
 tests <- list(
     "https://nhanes.hms.harvard.edu/" = list(
-        apiKey = "./nhanes.apikey",
+        apiKey = "/Users/alba/Desktop/kkk",
         tests = list(
             "Listing the resources" = list(
                 request = f(get.children.updated, ""),
@@ -117,6 +115,7 @@ tests <- list(
                 request = f(search.path, "demographics"),
                 result = "/i2b2-nhanes/Demo/demographics/demographics/"
             )
+            
         )
     )
 )
