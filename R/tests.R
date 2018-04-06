@@ -1,34 +1,18 @@
-
-## structure for each test:
-## list(
-##     url = "",
-##     apiKey = "/path/to/key/file", ## a file containing the apiKey
-##     tests = [{
-##         title = ""
-##         request = function(){...}, ## this shall be a function that performs some request and return a result
-##         result = Object  ## this is the expected output of the function, it will be compared to the actual output
-##     }]
-## )
-
-
-
-## library(tidyverse)
-
-path = "/ab/cd/efg/hij"
-
-## path.vector <- splitPath( concatPath(c("/", path)) )[-1]
-
-## path.vector.bis <- path %>%
-##     c("/", .)  %>%
-##     concatPath %>%
-##     splitPath  %>%
-##     `[`(-1)
+##' structure for the tests object:
+##' 
+##'  list(
+##'     "https://domain/url/" = list(
+##'         apiKey = "./path/to/file/containing/apiKey",
+##'         tests = list(
+##'             "Title of the test" = list(
+##'                 request = function(url, verbose){ .... return(result)},
+##'                 result =  an R object corresponding to the expected result of the request
+##'             )
+##'         )
+##'     )
 
 
-
-## path.vector <- Filter(function(e){ nchar(e)>0 }, splitPath(path))
-
-## path.vector.bis <- Filter(. %>% nchar %>% `>`(0) , splitPath(path))
+## helper functions for colored output in the console:
 
 escape.colors = list(
     title = "34;4",
@@ -48,6 +32,9 @@ print.info = print.color("info")
 print.warn = print.color("warn")
 print.error = print.color("error")
 
+## end of helper functions for colored output
+
+## helper for resetting sinks
 
 sink.reset <- function(){
     for(i in seq_len(sink.number())){
@@ -57,29 +44,37 @@ sink.reset <- function(){
 
 ## performs all the tests specified as argument
 test <- function(domainsToTest){
-    
+    ## for each domain to test:
     sapply(names(domainsToTest), function(url){
         domain <- domainsToTest[[url]]
         print.title(paste("──────── ", url ," ────────"))
 
+        ## read the apiKey from the specified filepath
         key <- readChar(domain$apiKey, file.info(domain$apiKey)$size)
+        ## start the session
         cat(paste(start.session(url, key),"\n"))
 
+        ## for each test to be performed for that url:
         sapply(names(domain$tests), function(title){
             t <- domain$tests[[title]]
 
             cat(paste0("Testing ", title, "..."))
-            
+
             tryCatch({
+                ## suppress any of it's output (we just want the result)
                 sink("/dev/null")
+                ## get the request's result
                 r <- t$request( url = url , verbose = T)
             }, error = function(e){
-                sink.reset()
-                print(e)
+                r <- e   ## if there is an error, assign it to the result of the test
             })
+            ## disable the "output suppressing"
             sink.reset()
+
+            ## check if the test yielded the same result as what was expected
             ok = identical(t$result, r)
-            
+
+            ## log the result
             if(ok){
                 print.info("ok")
             }else{
@@ -89,8 +84,6 @@ test <- function(domainsToTest){
                 cat("Got:\n")
                 print(r)
             }
-                
-
         })
 
         print.title("────────────────────────────────")
@@ -99,10 +92,13 @@ test <- function(domainsToTest){
     cat("finished testing.\n")
 }
 
-f <- function(f, ...) {
+## helper function to automatically add url and verbose as parameter to a function,
+## and to clear the cache so that the tests always start with a clean cache
+f <- function(f, ...) function(url, verbose){
     cache = list()
-    function(url, verbose) f(..., url=url, verbose=verbose)
+    f(..., url=url, verbose=verbose)
 }
+
 
 tests <- list(
     "https://nhanes.hms.harvard.edu/" = list(
@@ -115,23 +111,6 @@ tests <- list(
             "Searching for demographics" = list(
                 request = f(search.path, "demographics"),
                 result = "/i2b2-nhanes/Demo/demographics/demographics/"
-            )
-        )
-    ),
-    "https://pmsdn-dev.hms.harvard.edu/" = list(
-        apiKey = "./pmsdn.apikey",
-        tests = list(
-            "Listing the resources" = list(
-                request = f(get.children.updated, ""),
-                result =  c("/PMSDN-dev")
-            ),
-            "Searching for demographics" = list(
-                request = f(search.path, "Demographics"),
-                result = "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/"
-            ),
-            "Searching for '/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE'" = list(
-                request = f(search.path, "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE"),
-                result = "/PMSDN-dev/Demo/01 PMS Registry (Patient Reported Outcomes)/01 PMS Registry (Patient Reported Outcomes)/Demographics/AGE"
             )
         )
     )
