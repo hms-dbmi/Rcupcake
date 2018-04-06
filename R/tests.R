@@ -1,15 +1,20 @@
-##' structure for the tests object:
-##' 
-##'  list(
-##'     "https://domain/url/" = list(
-##'         apiKey = "./path/to/file/containing/apiKey",
-##'         tests = list(
-##'             "Title of the test" = list(
-##'                 request = function(url, verbose){ .... return(result)},
-##'                 result =  an R object corresponding to the expected result of the request
-##'             )
-##'         )
-##'     )
+#' automated testing script
+#'
+#' structure for the tests object:
+#' 
+#'  list(
+#'     "https://domain/url/" = list(
+#'         apiKey = "./path/to/file/containing/apiKey",
+#'         tests = list(
+#'             "Title of the test" = list(
+#'                 request = function(url, verbose){ .... return(result)},
+#'                 result =  an R object corresponding to the expected result of the request
+#'             )
+#'         )
+#'     )
+#'
+#' @export test
+#' @export sampletest
 
 
 ## helper functions for colored output in the console:
@@ -115,3 +120,6 @@ tests <- list(
         )
     )
 )
+
+
+sampleTest <- function() test(tests)
