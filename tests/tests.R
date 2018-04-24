@@ -14,14 +14,13 @@
 #'     )
 #'
 
-
 ## helper functions for colored output in the console:
 
 escape.colors = list(
     title = "34;4",
     info  = "32",
     warn  = "33",
-    error = "35;1"  # "31"
+    error = "35;1" # "31"
 )
 
 print.color = function(color) {
@@ -50,7 +49,7 @@ test <- function(domainsToTest, verbose = F){
     ## for each domain to test:
     sapply(names(domainsToTest), function(url){
         domain <- domainsToTest[[url]]
-        print.title(paste("──────── ", url ," ────────"))
+        print.title(paste("──────────────── ", url ," ────────────────"))
 
         setToken(NULL)
         setApiKey(NULL)
@@ -59,6 +58,7 @@ test <- function(domainsToTest, verbose = F){
             cat("Api Key authentication\n")
             end.session(url, verbose = FALSE)
             # setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
+            
             start.session(url = url, apiKey = domain$apiKey)
         }
         if(!is.null(domain$token)){
@@ -75,7 +75,7 @@ test <- function(domainsToTest, verbose = F){
         sapply(names(domain$tests), function(title){
             t <- domain$tests[[title]]
 
-            cat(paste0("Testing ", title, "..."))
+            cat(paste0("\nTesting '", title, "'..."))
 
             tryCatch({
                 ## suppress any of it's output (we just want the result)
@@ -97,9 +97,9 @@ test <- function(domainsToTest, verbose = F){
             }else{
                 print.error("failed")
                 print.error("### Test failed ###")
-                print("Expected:\n")
+                print.warn("Expected:")
                 print(t$result)
-                cat("Got:\n")
+                print.warn("Got:")
                 print(r)
             }
         })

@@ -17,7 +17,7 @@ setApiKey <- function(k){
     apiKey <<- k
 }
 
-send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = TRUE){
+send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = FALSE){
 
     # authentication
     if(!(exists("token")) || is.null(token)){
@@ -25,7 +25,7 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
             print("session does not exist")
             if(exists("apiKey") && !is.null(apiKey)){
                 if(verbose) cat("starting session with apiKey...\n")
-                session <<- startSession()   
+                session <<- startSession()
             }else{
                 cat("No authentication method is set.\nPlease set the Token or apiKey with setToken() or setApiKey() function.\n")
                 return()
