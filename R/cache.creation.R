@@ -1,4 +1,7 @@
-cache.creation <- function( ){
+#' reset the cache
+#' @export cache.creation
+
+cache.creation <- function(){
     cache <<- list()
-    return( cache )
+    return(cache)
 }

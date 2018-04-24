@@ -54,11 +54,12 @@ test <- function(domainsToTest){
 
         if(!is.null(domain$apiKey)){
             cat("Api Key authentication\n")
-            setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
+            # setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
+            setApiKey(apiKey)
         }
         if(!is.null(domain$token)){
             cat("token authentication\n")
-            setToken(readChar(domain$token, file.info(domain$token)$size))
+            setToken(domain$token)
         }
         
         ## read the apiKey from the specified filepath
@@ -107,21 +108,25 @@ test <- function(domainsToTest){
 ## helper function to automatically add url and verbose as parameter to a function,
 ## and to clear the cache so that the tests always start with a clean cache
 f <- function(f, ...) function(url, verbose){
-    cache <<- list()
+    cache.creation()
     f(..., url=url, verbose=verbose)
 }
 
 
 tests <- list(
     "https://pmsdn-dev.hms.harvard.edu/" = list(
-        token = "/home/mika/Downloads/Rcupcake/tests/pmsdntoken",
+        token = "<insert token here>",
         tests = list(
             "Listing the resources" = list(
-                request = f(get.children.updated, ""),
+                request = function(url, verbose){
+                    get.children.updated("", url = url, verbose = verbose)
+                },
                 result =  c("/PMSDN-dev")
             ),
             "Searching for Demographics" = list(
-                request = f(search.path, "Demographics"),
+                request = function(...){
+                    search.path("Demographics", ...)
+                },
                 result = "//Demo/demographics/demographics/"
             )
             
