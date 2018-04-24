@@ -5,6 +5,6 @@
 end.session <- function(url, verbose = F){
     send.request(url, "/rest/v1/securityService/endSession")
         
-    rm("session", inherits = TRUE)
+    session <<- NULL
     if(verbose) cat(paste0("session to ", url, " ended.\n"))
 }

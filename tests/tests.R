@@ -52,11 +52,14 @@ test <- function(domainsToTest, verbose = F){
         domain <- domainsToTest[[url]]
         print.title(paste("──────── ", url ," ────────"))
 
+        setToken(NULL)
+        setApiKey(NULL)
+        
         if(!is.null(domain$apiKey)){
             cat("Api Key authentication\n")
             end.session(url, verbose = FALSE)
             # setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
-            setApiKey(domain$apiKey)
+            start.session(url = url, apiKey = domain$apiKey)
         }
         if(!is.null(domain$token)){
             cat("token authentication\n")

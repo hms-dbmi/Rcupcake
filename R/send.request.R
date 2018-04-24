@@ -20,10 +20,10 @@ setApiKey <- function(k){
 send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = TRUE){
 
     # authentication
-    if(!(exists("token"))){
-        if(!exists("session")){
+    if(!(exists("token")) || is.null(token)){
+        if(!exists("session") || is.null(session)){
             print("session does not exist")
-            if(exists("apiKey")){
+            if(exists("apiKey") && !is.null(apiKey)){
                 if(verbose) cat("starting session with apiKey...\n")
                 session <<- startSession()   
             }else{
