@@ -21,7 +21,7 @@ escape.colors = list(
     title = "34;4",
     info  = "32",
     warn  = "33",
-    error = "31"
+    error = "35;1"  # "31"
 )
 
 print.color = function(color) {
@@ -52,11 +52,14 @@ test <- function(domainsToTest, verbose = F){
         domain <- domainsToTest[[url]]
         print.title(paste("──────── ", url ," ────────"))
 
+        setToken(NULL)
+        setApiKey(NULL)
+        
         if(!is.null(domain$apiKey)){
             cat("Api Key authentication\n")
             end.session(url, verbose = FALSE)
             # setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
-            setApiKey(domain$apiKey)
+            start.session(url = url, apiKey = domain$apiKey)
         }
         if(!is.null(domain$token)){
             cat("token authentication\n")
@@ -93,14 +96,15 @@ test <- function(domainsToTest, verbose = F){
                 print.info("ok")
             }else{
                 print.error("failed")
-                cat("### Test failed ###\nExpected:\n")
+                print.error("### Test failed ###")
+                print("Expected:\n")
                 print(t$result)
                 cat("Got:\n")
                 print(r)
             }
         })
 
-        print.title("────────────────────────────────")
+        print.title("────────────────────────────────────────────────────────────────")
 
     })
     cat("finished testing.\n")
