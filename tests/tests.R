@@ -46,7 +46,7 @@ sink.reset <- function(){
 }
 
 ## performs all the tests specified as argument
-test <- function(domainsToTest){
+test <- function(domainsToTest, verbose = F){
     ## for each domain to test:
     sapply(names(domainsToTest), function(url){
         domain <- domainsToTest[[url]]
@@ -54,8 +54,9 @@ test <- function(domainsToTest){
 
         if(!is.null(domain$apiKey)){
             cat("Api Key authentication\n")
+            end.session(url, verbose = FALSE)
             # setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
-            setApiKey(apiKey)
+            setApiKey(domain$apiKey)
         }
         if(!is.null(domain$token)){
             cat("token authentication\n")
@@ -75,7 +76,7 @@ test <- function(domainsToTest){
 
             tryCatch({
                 ## suppress any of it's output (we just want the result)
-                sink("/dev/null")
+                if(!verbose) sink("/dev/null")
                 ## get the request's result
                 r <- t$request( url = url , verbose = T)
             }, error = function(e){
@@ -105,34 +106,34 @@ test <- function(domainsToTest){
     cat("finished testing.\n")
 }
 
-## helper function to automatically add url and verbose as parameter to a function,
-## and to clear the cache so that the tests always start with a clean cache
-f <- function(f, ...) function(url, verbose){
-    cache.creation()
-    f(..., url=url, verbose=verbose)
-}
+## ## helper function to automatically add url and verbose as parameter to a function,
+## ## and to clear the cache so that the tests always start with a clean cache
+## f <- function(f, ...) function(url, verbose){
+##     cache.creation()
+##     f(..., url=url, verbose=verbose)
+## }
 
 
-tests <- list(
-    "https://pmsdn-dev.hms.harvard.edu/" = list(
-        token = "<insert token here>",
-        tests = list(
-            "Listing the resources" = list(
-                request = function(url, verbose){
-                    get.children.updated("", url = url, verbose = verbose)
-                },
-                result =  c("/PMSDN-dev")
-            ),
-            "Searching for Demographics" = list(
-                request = function(...){
-                    search.path("Demographics", ...)
-                },
-                result = "//Demo/demographics/demographics/"
-            )
+## tests <- list(
+##     "https://pmsdn-dev.hms.harvard.edu/" = list(
+##         token = "<insert token here>",
+##         tests = list(
+##             "Listing the resources" = list(
+##                 request = function(url, verbose){
+##                     get.children.updated("", url = url, verbose = verbose)
+##                 },
+##                 result =  c("/PMSDN-dev")
+##             ),
+##             "Searching for Demographics" = list(
+##                 request = function(...){
+##                     search.path("Demographics", ...)
+##                 },
+##                 result = "//Demo/demographics/demographics/"
+##             )
             
-        )
-    )
-)
+##         )
+##     )
+## )
 
 
-sampleTest <- function() test(tests)
+## sampleTest <- function() test(tests)
