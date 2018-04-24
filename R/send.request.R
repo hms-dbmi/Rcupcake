@@ -21,14 +21,15 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
 
     # authentication
     if(!(exists("token"))){
-        if(exists("apiKey")){
-            if(!exists("session")){
+        if(!exists("session")){
+            print("session does not exist")
+            if(exists("apiKey")){
                 if(verbose) cat("starting session with apiKey...\n")
                 session <<- startSession()   
+            }else{
+                cat("No authentication method is set.\nPlease set the Token or apiKey with setToken() or setApiKey() function.\n")
+                return()
             }
-        }else{
-            cat("No authentication method is set.\nPlease set the Token or apiKey with setToken() or setApiKey() function.\n")
-            return()
         }
     }
     
@@ -43,7 +44,7 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
     method.function = if(is.null(body)) httr::GET else httr::POST
 
     
-    if(is.null(token)){
+    if(!exists("token")){
         r <- method.function(fullUrl, body = body)
     }else{
         # print(list(url = fullUrl, body = body, method = method.function))

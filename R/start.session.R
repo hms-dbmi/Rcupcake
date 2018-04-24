@@ -51,8 +51,8 @@ start.session <- function( url, apiKey){
                 Key
             )
         ))
-    startSession
     
+    session <<- startSession
     
     cache.creation()
     
