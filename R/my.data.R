@@ -21,8 +21,8 @@
 
 my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(getwd(), "/queryData.txt") , verbose = FALSE ){
     
-    IRCT_REST_BASE_URL <- url
-    IRCT_CL_SERVICE_URL <- paste(IRCT_REST_BASE_URL,"rest/v1/",sep="")
+    # IRCT_REST_BASE_URL <- url
+    IRCT_CL_SERVICE_URL <- "rest/v1/"
     
     IRCT_QUERY_BASE_URL <- paste(IRCT_CL_SERVICE_URL,"queryService/",sep="")
     IRCT_RESULTS_BASE_URL <- paste(IRCT_CL_SERVICE_URL,"resultService/",sep="")
@@ -37,9 +37,12 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
     }else{
         body <- paste(readLines(query), collapse = "")
     }
-    
-    result <- httr::content(httr::POST(IRCT_RUN_QUERY_URL, 
-                                         body = body))
+
+    result <- send.request(url = url,
+                           path = IRCT_RUN_QUERY_URL,
+                           body = body)
+    ## result <- httr::content(httr::POST(IRCT_RUN_QUERY_URL, 
+    ##                                      body = body))
     if( class(result) != "list" ){
         message("Please revise the connection to the url of interest")
         stop()
@@ -49,36 +52,51 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
         message("Please, revise your query object. Query cannot be run.")
         stop()
     }
-    if (verbose == TRUE) {
+    if (verbose) {
         message("Your request is being processed")
     }
     
-    status <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_STATUS_URL, 
-                                            result$resultId, sep = "/")))$status
-    
+    status = "RUNNING"
     while ( status == "RUNNING" ) {
+        ## status <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_STATUS_URL, 
+        ##                                         result$resultId, sep = "/")))$status
+        status <- send.request(url = url,
+                               path = paste(IRCT_GET_RESULTS_STATUS_URL, 
+                                            result$resultId, sep = "/"))$status
+        
         Sys.sleep(3)
-        status <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_STATUS_URL, 
-                                                result$resultId, sep = "/")))$status
-
     }
     
-    response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_FORMATS_URL, 
-                                              result$resultId, sep = "/")))
+    ## response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_FORMATS_URL, 
+    ##                                           result$resultId, sep = "/")))
+    
+    response <- send.request(
+        url = url,
+        path = paste(IRCT_GET_RESULTS_FORMATS_URL, 
+                     result$resultId, sep = "/"))
+
+    print(paste("response formats: ", response))
     
     if( ! responseFormat %in% response ){
         message( "Sorry, the ", responseFormat ," format is not available for this query.")
     }
     
-    response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_URL, 
-                                              result$resultId, responseFormat, sep = "/")), as = "text")
+    ## response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_URL, 
+    ##                                           result$resultId, responseFormat, sep = "/")), as = "text")
+
+    response <- send.request(url = url,
+                             path = paste(IRCT_GET_RESULTS_URL, 
+                                          result$resultId, responseFormat, sep = "/"), as = "text")
+    if(verbose) cat("response obtained\n")
     results <- read.csv(text = response)
+    if(verbose) cat("response parsed\n")
     
     if (nrow(results) == 0) {
         message("There are not results for your query")
         stop()
     }
     colnames(results)[1] <- "patient_id"
+    
     write.table(results, file = outputPath, 
                 col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
     return(results)

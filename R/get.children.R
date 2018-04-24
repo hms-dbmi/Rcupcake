@@ -20,24 +20,25 @@ get.children <- function( fieldname, url, verbose = FALSE) {
     
     children <- c( )
     
-    IRCT_REST_BASE_URL <- url
-    IRCT_CL_SERVICE_URL <- paste(IRCT_REST_BASE_URL,"rest/v1/",sep="")
+    IRCT_CL_SERVICE_URL <- "rest/v1/"
     IRCT_RESOURCE_BASE_URL <- paste(IRCT_CL_SERVICE_URL,"resourceService/",sep="")
     IRCT_PATH_RESOURCE_URL <- paste(IRCT_RESOURCE_BASE_URL,"path",sep="")
     
-      fieldname <- gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", fieldname)))))
-    
-    nexturl <- paste( IRCT_PATH_RESOURCE_URL, fieldname, sep = "" )
-    newchildren <-  httr::content(httr::GET(nexturl))
+    # fieldname <- gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", fieldname)))))
+    # nexturl <- paste( IRCT_PATH_RESOURCE_URL, fieldname, sep = "" )
+    newchildren <- httr::content(send.request(
+                             url = url,
+                             path = concatPath(c(IRCT_PATH_RESOURCE_URL, fieldname)), verbose = verbose))
     
     if (length(newchildren) > 0) {
         for (i in 1:length(newchildren)) {
             res = tryCatch({
                 newchild <- newchildren[[i]]$pui
                 children <- c(children, newchild)
-                getchildren(children, 
-                            gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", URLencode(newchild))))))
-                )
+                ## getchildren(children, 
+                ##             gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", URLencode(newchild))))))
+                getchildren(children, newchild)
+                
             }, error = function(errorCondition) {
                 if( verbose == TRUE){
                     message("ERROR: There is something wrong with the children")

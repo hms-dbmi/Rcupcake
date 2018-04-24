@@ -40,8 +40,7 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
             return(fromcache)
         }else{
             
-            IRCT_REST_BASE_URL <- url
-            IRCT_CL_SERVICE_URL <-        concatPath(c(IRCT_REST_BASE_URL,"rest/v1/"))
+            IRCT_CL_SERVICE_URL <-        "rest/v1/"
             IRCT_RESOURCE_BASE_URL <-     concatPath(c(IRCT_CL_SERVICE_URL,"resourceService/"))
             IRCT_PATH_RESOURCE_URL <-     concatPath(c(IRCT_RESOURCE_BASE_URL,"path"))
             IRCT_RESOURCE_RESOURCE_URL <- concatPath(c(IRCT_RESOURCE_BASE_URL,"resources"))
@@ -50,9 +49,13 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
             
             if(path %in% c("","/")){
                 if(verbose) print("listing resources")
-                r <- httr::GET(IRCT_RESOURCE_RESOURCE_URL)
-                newchildren <-  httr::content(r)
-                if(verbose) print(httr::http_status(r))
+                newchildren <- send.request(
+                    url = url,
+                    path = IRCT_RESOURCE_RESOURCE_URL,
+                    verbose = verbose
+                )
+                # r <- httr::GET(IRCT_RESOURCE_RESOURCE_URL)
+                # if(verbose) print(httr::http_status(r))
                 
                 children <- sapply(newchildren, function(e){e$name})
             }else{
@@ -65,9 +68,9 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
                                         ## gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", path)))))))
                 if(verbose) print(nexturl)
                 ## perform the request
-                r <- httr::GET(nexturl)
-                if(verbose) print(httr::http_status(r))
-                children <- httr::content(r)
+                # r <- httr::GET(nexturl)
+                children <- send.request( url = url, path = nexturl )
+                # if(verbose) print(httr::http_status(r))
                 ## keep only the puis (= the absolute path)
                 children <- sapply(children, function(c) c$pui )
                 if(verbose) print(children)

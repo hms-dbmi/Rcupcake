@@ -52,10 +52,19 @@ test <- function(domainsToTest){
         domain <- domainsToTest[[url]]
         print.title(paste("──────── ", url ," ────────"))
 
+        if(!is.null(domain$apiKey)){
+            cat("Api Key authentication\n")
+            setApiKey(readChar(domain$apiKey, file.info(domain$apiKey)$size))
+        }
+        if(!is.null(domain$token)){
+            cat("token authentication\n")
+            setToken(readChar(domain$token, file.info(domain$token)$size))
+        }
+        
         ## read the apiKey from the specified filepath
-        key <- readChar(domain$apiKey, file.info(domain$apiKey)$size)
+        ## key <- readChar(domain$apiKey, file.info(domain$apiKey)$size)
         ## start the session
-        cat(paste(start.session(url, key),"\n"))
+        ## cat(paste(start.session(url, key),"\n"))
 
         ## for each test to be performed for that url:
         sapply(names(domain$tests), function(title){
@@ -69,7 +78,7 @@ test <- function(domainsToTest){
                 ## get the request's result
                 r <- t$request( url = url , verbose = T)
             }, error = function(e){
-                r <- e   ## if there is an error, assign it to the result of the test
+                r <<- e   ## if there is an error, assign it to the result of the test
             })
             ## disable the "output suppressing"
             sink.reset()
@@ -98,22 +107,22 @@ test <- function(domainsToTest){
 ## helper function to automatically add url and verbose as parameter to a function,
 ## and to clear the cache so that the tests always start with a clean cache
 f <- function(f, ...) function(url, verbose){
-    cache = list()
+    cache <<- list()
     f(..., url=url, verbose=verbose)
 }
 
 
 tests <- list(
-    "https://nhanes.hms.harvard.edu/" = list(
-        apiKey = "/Users/alba/Desktop/kkk",
+    "https://pmsdn-dev.hms.harvard.edu/" = list(
+        token = "/home/mika/Downloads/Rcupcake/tests/pmsdntoken",
         tests = list(
             "Listing the resources" = list(
                 request = f(get.children.updated, ""),
-                result =  c("/i2b2-nhanes", "/nhanes")
+                result =  c("/PMSDN-dev")
             ),
-            "Searching for demographics" = list(
-                request = f(search.path, "demographics"),
-                result = "/i2b2-nhanes/Demo/demographics/demographics/"
+            "Searching for Demographics" = list(
+                request = f(search.path, "Demographics"),
+                result = "//Demo/demographics/demographics/"
             )
             
         )
