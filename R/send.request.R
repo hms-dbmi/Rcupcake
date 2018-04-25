@@ -11,10 +11,12 @@
 
 setToken <- function(t){
     token <<- t
+    if(!exists(cache)) cache.creation()
 }
 
 setApiKey <- function(k){
     apiKey <<- k
+    if(!exists(cache)) cache.creation()
 }
 
 send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = FALSE){
