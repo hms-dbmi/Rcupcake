@@ -28,7 +28,7 @@ search.path <- function(fieldname, url, verbose = FALSE){
         ## our goal is the first node of this path
         goal = path.vector[1]
         
-        print(paste("Searchpath GOAL is ", goal))
+        if(verbose) print(paste("Searchpath GOAL is ", goal))
         result = NULL
         toSearch = get.children.updated("", url, verbose = verbose)
         # print( toSearch )

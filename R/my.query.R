@@ -57,7 +57,8 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
         
         # get children of current path entry
         # pathFields <- httr::content(httr::GET(nurl))
-        pathFields <- send.request(url = url, path = nurlstr)
+        pathFields <- send.request(url = url, path = nurlstr,
+                                   verbose = verbose)
         # message(pathFields)
         
         if( verbose == TRUE ){
@@ -97,9 +98,6 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             leafPathFields <- send.request(url = url,
                                            path = leafPathUrl,
                                            verbose = verbose)
-            print("leafPathFields")
-            print(leafPathFields)
-            
             leafPath <- grep(pathList[[i]], leafPathFields, fixed = TRUE, value=TRUE)
             ## message("leafPath")
             ## message(leafPath)
@@ -109,7 +107,8 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             
             # pathFields <- httr::content(httr::GET(nurl))
             pathFields <- send.request(url = url,
-                                       path = nurlstr)
+                                       path = nurlstr,
+                                       verbose = verbose)
             ## message("pathFields")
             ## message(pathFields)
             
@@ -121,8 +120,6 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
                     entry <- leafPathFields[[index]]
                 }
             }
-            print("entry")
-            print(entry)
             # message(entry)
             myField <- list(
                 list(

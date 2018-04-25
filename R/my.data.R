@@ -40,7 +40,8 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
 
     result <- send.request(url = url,
                            path = IRCT_RUN_QUERY_URL,
-                           body = body)
+                           body = body,
+                           verbose = verbose)
     ## result <- httr::content(httr::POST(IRCT_RUN_QUERY_URL, 
     ##                                      body = body))
     if( class(result) != "list" ){
@@ -62,7 +63,8 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
         ##                                         result$resultId, sep = "/")))$status
         status <- send.request(url = url,
                                path = paste(IRCT_GET_RESULTS_STATUS_URL, 
-                                            result$resultId, sep = "/"))$status
+                                            result$resultId, sep = "/"),
+                               verbose = verbose)$status
         
         Sys.sleep(3)
     }
@@ -73,7 +75,8 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
     response <- send.request(
         url = url,
         path = paste(IRCT_GET_RESULTS_FORMATS_URL, 
-                     result$resultId, sep = "/"))
+                     result$resultId, sep = "/"),
+        verbose = verbose)
 
     print(paste("response formats: ", response))
     
@@ -86,7 +89,8 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
 
     response <- send.request(url = url,
                              path = paste(IRCT_GET_RESULTS_URL, 
-                                          result$resultId, responseFormat, sep = "/"), as = "text")
+                                          result$resultId, responseFormat, sep = "/"), as = "text",
+                             verbose = verbose)
     if(verbose) cat("response obtained\n")
     results <- read.csv(text = response)
     if(verbose) cat("response parsed\n")

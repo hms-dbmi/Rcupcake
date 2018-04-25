@@ -10,13 +10,13 @@
 #' @export send.request setToken setApiKey
 
 setToken <- function(t){
-    token <<- t
     if(!exists("cache")) cache.creation()
+    token <<- t
 }
 
 setApiKey <- function(k){
-    apiKey <<- k
     if(!exists("cache")) cache.creation()
+    apiKey <<- k
 }
 
 send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = FALSE){
@@ -41,10 +41,20 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
     }))
 
     fullUrl <- concatPath(c(url, path))
-    if(verbose) cat(paste0("sending a request to: [", fullUrl,"]\n"))
 
     method.function = if(is.null(body)) httr::GET else httr::POST
 
+    if(verbose) {
+        cat(paste0("sending a ",
+                   if(is.null(body)) "GET" else "POST"
+                  ," request to: [", fullUrl,"]\n"))
+        if(!is.null(body)){
+            cat(paste("\n──────────────────── request body ───────────────────\n",
+                      body,
+                      "\n───────────────────────────────────────\n\n"))
+        }
+        
+    }
     
     if(!exists("token")){
         r <- method.function(fullUrl, body = body)
@@ -52,7 +62,11 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
         # print(list(url = fullUrl, body = body, method = method.function))
         r <- method.function(fullUrl, body = body, httr::add_headers(Authorization=paste("bearer", token)))
     }
-    if(verbose) print(httr::status_code(r))
+    if(verbose) cat(paste0("status code: ", httr::status_code(r), "\n"))
+    if(httr::http_error(r)){
+        cat(paste0("HTTP error: ", httr::status_code(r),"\n",
+                   httr::http_status(r), "\n"))
+    }
     return(httr::content(r, as = as))
 }
 

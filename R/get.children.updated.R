@@ -69,7 +69,8 @@ get.children.updated <- function( fieldname, url, verbose = FALSE ) {
                 if(verbose) print(nexturl)
                 ## perform the request
                 # r <- httr::GET(nexturl)
-                children <- send.request( url = url, path = nexturl )
+                children <- send.request(url = url, path = nexturl , ,
+                                         verbose = verbose)
                 # if(verbose) print(httr::http_status(r))
                 ## keep only the puis (= the absolute path)
                 children <- sapply(children, function(c) c$pui )
