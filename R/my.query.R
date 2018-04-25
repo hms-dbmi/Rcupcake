@@ -16,25 +16,34 @@
 #               )
 #' @export my.query
 
-my.query <- function(myfields, myvector, url, verbose = FALSE) {
-
-
+my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL) {
+    myfields.vector <- if(!is.null(myfields.vector)){
+        myfields.vector
+    }else{
+        v <- unlist(strsplit(myfields, "[|]"))
+        v[ nchar(v) > 0 ]
+    }
+       
     if( verbose == TRUE){
         message(" Creating a list with the path from the vector list
                 which contains all available paths for the resource")
     }
 
-    # Filter fields by values in vector using grep
-
-    if( substr( myfields, nchar(myfields), nchar(myfields)) == "|" ){
-        myfields <- substr( myfields, 1, nchar(myfields)-1)
-    }
     
-    myfields <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", myfields)
-    pathList <- grep(myfields, myvector, value=TRUE)
+    # myfields <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", myfields)
+    # pathList <- grep(myfields, myvector, value=TRUE)
+    
+    ## keep only the paths containing the desired fields
+    pathList <- myvector[
+        sapply(myvector, function(v){
+            any(sapply(myfields.vector, function(f){
+                length(grep(f,v)) > 0
+            }))
+        })
+    ]
 
 
-    if(verbose) message(" Getting all the fields available from the pathlist")
+    if(verbose) message("Getting all the fields available from the pathlist")
     
     # Create vector for query
     querySELECT<- c()
@@ -42,7 +51,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
     # for each entry in filtered path list:
     #     create a field entry in the query
     for (i in 1:length(pathList)){
-        if( verbose ) message( "Get the fields for this particluar path" )
+        if( verbose ) message( paste("Get the fields for", pathList[i] ))
         
         
         IRCT_CL_SERVICE_URL <- "rest/v1/"
@@ -142,7 +151,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
 
 
     queryWHERE <- c()
-    field <- unlist(strsplit(myfields, "[|]"))[1]
+    field <- myfields.vector[1] # unlist(strsplit(myfields, "[|]"))[1]
     field <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", field)
     
     whereClause <- grep( field, pathList, value=TRUE)[[1]]
