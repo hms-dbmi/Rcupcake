@@ -78,10 +78,10 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
                      result$resultId, sep = "/"),
         verbose = verbose)
 
-    print(paste("response formats: ", response))
     
     if( ! responseFormat %in% response ){
         message( "Sorry, the ", responseFormat ," format is not available for this query.")
+        message( paste("response available formats: ", paste(response, collapse = ',')))
     }
     
     ## response <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_URL, 
