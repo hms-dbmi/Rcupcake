@@ -10,13 +10,13 @@
 #' @export send.request setToken setApiKey
 
 setToken <- function(t){
-    token <<- t
     if(!exists("cache")) cache.creation()
+    token <<- t
 }
 
 setApiKey <- function(k){
-    apiKey <<- k
     if(!exists("cache")) cache.creation()
+    apiKey <<- k
 }
 
 send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbose = FALSE){

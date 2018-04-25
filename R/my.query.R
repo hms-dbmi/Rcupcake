@@ -97,9 +97,6 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
             leafPathFields <- send.request(url = url,
                                            path = leafPathUrl,
                                            verbose = verbose)
-            print("leafPathFields")
-            print(leafPathFields)
-            
             leafPath <- grep(pathList[[i]], leafPathFields, fixed = TRUE, value=TRUE)
             ## message("leafPath")
             ## message(leafPath)
@@ -121,8 +118,6 @@ my.query <- function(myfields, myvector, url, verbose = FALSE) {
                     entry <- leafPathFields[[index]]
                 }
             }
-            print("entry")
-            print(entry)
             # message(entry)
             myField <- list(
                 list(
