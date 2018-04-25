@@ -67,6 +67,6 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
         cat(paste0("HTTP error: ", httr::status_code(r),"\n",
                    httr::http_status(r), "\n"))
     }
-    return(httr::content(r, as = as))
+    return(httr::content(r, as = as, encoding = "UTF-8"))
 }
 
