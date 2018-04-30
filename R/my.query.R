@@ -37,7 +37,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
     pathList <- myvector[
         sapply(myvector, function(v){
             any(sapply(myfields.vector, function(f){
-                length(grep(f,v)) > 0
+                length(grep(f,v, fixed = T)) > 0
             }))
         })
     ]
