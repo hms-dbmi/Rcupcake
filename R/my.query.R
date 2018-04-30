@@ -151,10 +151,14 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
 
 
     queryWHERE <- c()
-    field <- myfields.vector[1] # unlist(strsplit(myfields, "[|]"))[1]
-    field <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", field)
-    
-    whereClause <- grep( field, pathList, value=TRUE)[[1]]
+    # field <- myfields.vector[1] # unlist(strsplit(myfields, "[|]"))[1]
+    # field <- gsub("([.()\\^{}+$*?]|\\[|\\])", "\\\\\\1", field)
+
+    if(verbose){
+        print(paste0("searching for <", myfields.vector[1], "> in :"))
+        print(paste(pathList, collapse = "\n"))
+    }
+    whereClause <- grep(myfields.vector[1], pathList, fixed = T, value=TRUE)[[1]]
     
     
     # Assuming STRING variable, but not sure
