@@ -7,8 +7,8 @@
 #' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
 #' @param url  The url.
-#' @param enounter.misspell If user retrieve the next error: "{"status":"Invalid Request","message":
-#' "Required field By Encounter is not set"}", change the argument to TRUE. 
+#' @param enounter.misspell By default TRUE. If user retrieve the next error: "{"status":"Invalid Request","message":
+#' "Required field By Encounter is not set"}" in the \code{my.data} function, change the argument to FALSE. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.
 #' @return A JSON query. 
 #' @examples
@@ -18,7 +18,7 @@
 #               )
 #' @export my.query
 
-my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL, enounter.misspell = FALSE) {
+my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL, enounter.misspell = TRUE) {
     myfields.vector <- if(!is.null(myfields.vector)){
         myfields.vector
     }else{
