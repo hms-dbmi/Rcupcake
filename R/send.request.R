@@ -62,7 +62,10 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
         # print(list(url = fullUrl, body = body, method = method.function))
         r <- method.function(fullUrl, body = body, httr::add_headers(Authorization=paste("bearer", token)))
     }
-    if(verbose) cat(paste0("status code: ", httr::status_code(r), "\n"))
+    if(verbose){
+        cat(paste0("status code: ", httr::status_code(r), "\n"))
+        cat(httr::content(r, as = "text", encoding = "UTF-8"), "\n") 
+    }
     if(httr::http_error(r)){
         cat(paste0("HTTP error: ", httr::status_code(r),"\n",
                    httr::http_status(r), "\n"))
