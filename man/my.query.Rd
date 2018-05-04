@@ -5,7 +5,7 @@
 \title{Query analysis to the API}
 \usage{
 my.query(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL,
-  enounter.misspell = F)
+  enounter.misspell = FALSE)
 }
 \arguments{
 \item{myfields}{A vector with the fields of interest}
@@ -16,6 +16,9 @@ function}
 \item{url}{The url.}
 
 \item{verbose}{By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.}
+
+\item{enounter.misspell}{If user retrieve the next error: "{"status":"Invalid Request","message":
+"Required field By Encounter is not set"}", change the argument to TRUE.}
 }
 \value{
 A JSON query.

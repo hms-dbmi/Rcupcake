@@ -7,6 +7,8 @@
 #' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
 #' @param url  The url.
+#' @param enounter.misspell If user retrieve the next error: "{"status":"Invalid Request","message":
+#' "Required field By Encounter is not set"}", change the argument to TRUE. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.
 #' @return A JSON query. 
 #' @examples
@@ -16,7 +18,7 @@
 #               )
 #' @export my.query
 
-my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL) {
+my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL, enounter.misspell = FALSE) {
     myfields.vector <- if(!is.null(myfields.vector)){
         myfields.vector
     }else{
@@ -175,10 +177,13 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
                          predicate = jsonlite::unbox( "CONTAINS" ))
     
     queryWHERE$fields = list()
-    enounter.misspell = send.request( url = url, path = "rest/v1/resourceService/resources")
-    enounter.misspell <- unlist(enounter.misspell)
-    enounter.misspell <- enounter.misspell[["predicates.fields.path"]]
-    queryWHERE$fields[[enounter.misspell]] = jsonlite::unbox("YES")
+    # enounter.misspell = send.request( url = url, path = "rest/v1/resourceService/resources")
+    # enounter.misspell <- unlist(enounter.misspell)
+    # enounter.misspell <- enounter.misspell[["predicates.fields.path"]]
+    # queryWHERE$fields[[enounter.misspell]] = jsonlite::unbox("YES")
+
+    queryWHERE$fields = list()
+    queryWHERE$fields[[if(enounter.misspell) "ENOUNTER" else "ENCOUNTER"]] = jsonlite::unbox("YES")
     #print(queryWHERE)
     
     querySTRING <- list( select = querySELECT,
