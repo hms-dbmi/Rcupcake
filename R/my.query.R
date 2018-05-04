@@ -7,8 +7,9 @@
 #' @param myvector  A vector with the paths of interest, generated applying the \code{getchildren}
 #' function
 #' @param url  The url.
-#' @param enounter.misspell By default TRUE. If user retrieve the next error: "{"status":"Invalid Request","message":
-#' "Required field By Encounter is not set"}" in the \code{my.data} function, change the argument to FALSE. 
+#' @param enounter.misspell By default TRUE. If user retrieve the next error: "{"errorType":
+#' "application_error","message":"Could not convert JSON. Field 'By Encounter' is mandatory."}" 
+#' in the \code{my.data} function, change the argument to FALSE. 
 #' @param verbose By default \code{FALSE}. Change it to \code{TRUE} to get an on-time log from the function.
 #' @return A JSON query. 
 #' @examples
