@@ -175,7 +175,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
                          predicate = jsonlite::unbox( "CONTAINS" ))
     
     queryWHERE$fields = list()
-    queryWHERE$fields[[if(enounter.misspell) "ENOUNTER" else "ENCOUNTER"]] = jsonlite::unbox("NO")
+    queryWHERE$fields[[if(enounter.misspell) "ENOUNTER" else "ENCOUNTER"]] = jsonlite::unbox("YES")
     print(queryWHERE)
     
     querySTRING <- list( select = querySELECT,
