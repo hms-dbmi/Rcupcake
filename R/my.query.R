@@ -103,7 +103,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
 
             # leafnurl <- gsub( "\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub("\\*","%2A", gsub(" ","%20", gsub("\\^","%5E", gsub("[(]","%28", URLencode(leafnurlstr))))))))
 
-            # leafPathUrl <- concatPath(c(IRCT_PATH_RESOURCE_URL, leafnurlstr))
+            leafPathUrl <- concatPath(c(IRCT_PATH_RESOURCE_URL, leafnurlstr))
 
             # leafPathFields <- httr::content(httr::GET(leafPathUrl))
             leafPathFields <- send.request(url = url,
@@ -175,7 +175,7 @@ my.query <- function(myfields, myvector, url, verbose = FALSE, myfields.vector =
                          predicate = jsonlite::unbox( "CONTAINS" ))
     
     queryWHERE$fields = list()
-    queryWHERE$fields[[if(enounter.misspell) "ENOUNTER" else "ENCOUNTER"]] = unbox("NO")
+    queryWHERE$fields[[if(enounter.misspell) "ENOUNTER" else "ENCOUNTER"]] = jsonlite::unbox("NO")
     print(queryWHERE)
     
     querySTRING <- list( select = querySELECT,
