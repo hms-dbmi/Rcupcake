@@ -27,7 +27,7 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
             print("session does not exist")
             if(exists("apiKey") && !is.null(apiKey)){
                 if(verbose) cat("starting session with apiKey...\n")
-                session <<- startSession()
+                session <<- start.session(apiKey = apiKey, url = url)
             }else{
                 cat("No authentication method is set.\nPlease set the Token or apiKey with setToken() or setApiKey() function.\n")
                 return()
@@ -62,13 +62,9 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
         # print(list(url = fullUrl, body = body, method = method.function))
         r <- method.function(fullUrl, body = body, httr::add_headers(Authorization=paste("bearer", token)))
     }
-    if(verbose){
-        cat(paste0("status code: ", httr::status_code(r), "\n"))
+    if(verbose || httr::http_error(r)){
+        cat(paste0("status code: ", httr::http_status(r), "\n"))
         cat(httr::content(r, as = "text", encoding = "UTF-8"), "\n") 
-    }
-    if(httr::http_error(r)){
-        cat(paste0("HTTP error: ", httr::status_code(r),"\n",
-                   httr::http_status(r), "\n"))
     }
     return(httr::content(r, as = as, encoding = "UTF-8"))
 }

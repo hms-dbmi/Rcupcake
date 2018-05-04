@@ -26,7 +26,7 @@ get.children <- function( fieldname, url, verbose = FALSE) {
     
     # fieldname <- gsub("\\#","%23", gsub("\\?", "%3F", gsub("[)]","%29", gsub(" ","%20", gsub("[(]","%28", fieldname)))))
     # nexturl <- paste( IRCT_PATH_RESOURCE_URL, fieldname, sep = "" )
-    newchildren <- httr::content(send.request(
+    newchildren <- (send.request(
                              url = url,
                              path = concatPath(c(IRCT_PATH_RESOURCE_URL, fieldname)), verbose = verbose))
     
