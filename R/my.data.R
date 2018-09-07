@@ -58,7 +58,7 @@ my.data <- function( query, url, responseFormat = "CSV", outputPath = paste0(get
     }
     
     status = "RUNNING"
-    while ( status == "RUNNING" ) {
+    while ( status == "RUNNING" | status == "CREATED" ) {
         ## status <- httr::content(httr::GET(paste(IRCT_GET_RESULTS_STATUS_URL, 
         ##                                         result$resultId, sep = "/")))$status
         status <- send.request(url = url,
