@@ -8,7 +8,7 @@
 #' @examples
 #' 
 #' sessionEx <- start.session( 
-#'               url         = "https://nhanes.hms.harvard.edu/", 
+#'               url         = "https://nhanes2.hms.harvard.edu/", 
 #'               apiKey      = "YOURKEY"
 #'               )
 #' @export start.session

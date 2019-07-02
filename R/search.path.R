@@ -12,7 +12,7 @@
 #' 
 #' pathExample <- search.path( 
 #'                  fieldname   = "demographics", 
-#'                  url         = "https://nhanes.hms.harvard.edu/"
+#'                  url         = "https://nhanes2.hms.harvard.edu/"
 #'               )
 #' @export search.path
 

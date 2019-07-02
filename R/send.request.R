@@ -49,9 +49,7 @@ send.request <- function(url, path, params = NULL, body = NULL, as = NULL, verbo
                    if(is.null(body)) "GET" else "POST"
                   ," request to: [", fullUrl,"]\n"))
         if(!is.null(body)){
-            cat(paste("\n──────────────────── request body ───────────────────\n",
-                      body,
-                      "\n───────────────────────────────────────\n\n"))
+            cat("request body")
         }
         
     }

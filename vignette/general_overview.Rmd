@@ -29,7 +29,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: 
-  BiocStyle::html_document2:
+  BiocStyle::html_document:
   toc_float: true
 ---
 
@@ -178,10 +178,15 @@ The `start.session` function output is a message showing if the connection was o
 
 ```{r startSession, eval=FALSE}
 sessionEx <- start.session( 
-              url         = "https://nhanes.hms.harvard.edu/", 
+              url         = "https://nhanes2.hms.harvard.edu/", 
               apiKey      = "YOURKEY"
               )
 sessionEx
+```
+
+Alternatively, the `setToken` function allows to establish a connection to the database of interest using the token:
+```{r startSessionToken, eval=FALSE}
+setToken( "YOURTOKEN")
 ```
 
 
@@ -200,12 +205,12 @@ The `get.children` function output is a vector of paths. This output will be use
 
 ```{r get.children, eval=FALSE}
 nhanesPcbs <- get.children( 
-              url         = "https://nhanes.hms.harvard.edu/", 
-              fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/"
+              url         = "https://nhanes2.hms.harvard.edu/", 
+              fieldname   = "/i2b2-nhanes/Demo/laboratory/laboratory/pcbs/"
               )
 nhanesDemog <- get.children( 
-              url         = "https://nhanes.hms.harvard.edu/", 
-              fieldname   = "/nhanes/Demo/demographics/demographics/"
+              url         = "https://nhanes2.hms.harvard.edu/", 
+              fieldname   = "/i2b2-nhanes/Demo/demographics/demographics/"
               )
 ```
 
@@ -224,7 +229,7 @@ The `my.query` function output is the JSON query. This output will be used as in
 ```{r my.query, eval=FALSE}
 queryExample <- my.query( myfields = "AGE|PCB153", 
                           myvector = c(nhanesDemog, nhanesPcbs), 
-                          url         = "https://nhanes.hms.harvard.edu/"
+                          url         = "https://nhanes2.hms.harvard.edu/"
                )
 ```
 
@@ -244,7 +249,7 @@ The `my.data` function output is the `data.frame` object that is retrieved for t
 ```{r my.data, eval=FALSE}
 query <- my.data( 
               query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
-              url    = "https://nhanes.hms.harvard.edu/"
+              url    = "https://nhanes2.hms.harvard.edu/"
               )
 ```   
 

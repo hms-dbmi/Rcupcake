@@ -20,7 +20,7 @@ Given a URL and a key access it starts the connection to the database
 \examples{
 
 sessionEx <- start.session( 
-              url         = "https://nhanes.hms.harvard.edu/", 
+              url         = "https://nhanes2.hms.harvard.edu/", 
               apiKey      = "YOURKEY"
               )
 }

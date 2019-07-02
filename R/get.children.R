@@ -11,7 +11,7 @@
 #' 
 #' nhanesPcbs <- get.children( 
 #'                  fieldname   = "/nhanes/Demo/laboratory/laboratory/pcbs/", 
-#'                  url         = "https://nhanes.hms.harvard.edu/"
+#'                  url         = "https://nhanes2.hms.harvard.edu/"
 #'               )
 #' @export get.children
 

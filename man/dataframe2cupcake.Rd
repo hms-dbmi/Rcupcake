@@ -4,8 +4,8 @@
 \alias{dataframe2cupcake}
 \title{Transform a data.frame into a \code{cupcakeData} object}
 \usage{
-dataframe2cupcake(input, phenotypes, variants, age, gender, verbose = FALSE,
-  warnings = TRUE)
+dataframe2cupcake(input, phenotypes, variants, age, gender,
+  verbose = FALSE, warnings = TRUE)
 }
 \arguments{
 \item{input}{Determines the file with the complete path where the required 

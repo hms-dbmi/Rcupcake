@@ -4,7 +4,8 @@
 \alias{comparison2b2}
 \title{Comparison by pairs of variables in a  \code{cupcakeData} object}
 \usage{
-comparison2b2(input, variable1, variable2, nfactor = 10, verbose = FALSE)
+comparison2b2(input, variable1, variable2, nfactor = 10,
+  verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeData} object, obtained after applying the my.data function.}

@@ -5,7 +5,8 @@
 \title{Plot the phenotype prevalence in a barplot (when there is not any variation) and in a network 
 if a variation is defined}
 \usage{
-prevalence.plot(input, layout = "layout.circle", variation, verbose = FALSE)
+prevalence.plot(input, layout = "layout.circle", variation,
+  verbose = FALSE)
 }
 \arguments{
 \item{input}{A \code{cupcakeResults} object, obtained 

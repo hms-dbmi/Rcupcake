@@ -4,9 +4,9 @@
 \alias{patient.selection}
 \title{Patients selection}
 \usage{
-patient.selection(input, pth, ageRange = c(0, 100), phenotypeA, phenotypeB,
-  aggregate = TRUE, gender = "ALL", variation = c("ALL", "ALL"),
-  verbose = FALSE, warnings = TRUE)
+patient.selection(input, pth, ageRange = c(0, 100), phenotypeA,
+  phenotypeB, aggregate = TRUE, gender = "ALL", variation = c("ALL",
+  "ALL"), verbose = FALSE, warnings = TRUE)
 }
 \arguments{
 \item{input}{A \code{cupcakeData} object, obtained with the \code{my.data} function.}

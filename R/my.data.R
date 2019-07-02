@@ -15,7 +15,7 @@
 #' 
 #' #query <- my.data( 
 #' #              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
-#' #              url    = "https://nhanes.hms.harvard.edu/"
+#' #              url    = "https://nhanes2.hms.harvard.edu/"
 #' #              )
 #' @export my.data
 

@@ -4,8 +4,8 @@
 \alias{my.data}
 \title{Query analysis to the API}
 \usage{
-my.data(query, url, responseFormat = "CSV", outputPath = paste0(getwd(),
-  "/queryData.txt"), verbose = FALSE)
+my.data(query, url, responseFormat = "CSV",
+  outputPath = paste0(getwd(), "/queryData.txt"), verbose = FALSE)
 }
 \arguments{
 \item{query}{A JSON query, created with my.query function or contained in a
@@ -30,6 +30,6 @@ the output of the query.
 
 #query <- my.data( 
 #              query  = system.file("extdata", "jsonQueryNhanes", package="Rcupcake"), 
-#              url    = "https://nhanes.hms.harvard.edu/"
+#              url    = "https://nhanes2.hms.harvard.edu/"
 #              )
 }

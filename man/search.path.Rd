@@ -25,6 +25,6 @@ available paths, and stops on the first occurence corresponding to the asked pat
 
 pathExample <- search.path( 
                  fieldname   = "demographics", 
-                 url         = "https://nhanes.hms.harvard.edu/"
+                 url         = "https://nhanes2.hms.harvard.edu/"
               )
 }

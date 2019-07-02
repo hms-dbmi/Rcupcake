@@ -6,7 +6,8 @@
 the summary will contain the results regarding the selected variation}
 \usage{
 phenotype.summary(input, variation = FALSE, nfactor = 10,
-  showTable = TRUE, showFigures = FALSE, pth = getwd(), verbose = FALSE)
+  showTable = TRUE, showFigures = FALSE, pth = getwd(),
+  verbose = FALSE)
 }
 \arguments{
 \item{input}{Object of \code{cupcakeData} class.}

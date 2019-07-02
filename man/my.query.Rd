@@ -4,7 +4,8 @@
 \alias{my.query}
 \title{Query analysis to the API}
 \usage{
-my.query(myfields, myvector, url, verbose = FALSE, myfields.vector = NULL)
+my.query(myfields, myvector, url, verbose = FALSE,
+  myfields.vector = NULL)
 }
 \arguments{
 \item{myfields}{A vector with the fields of interest}

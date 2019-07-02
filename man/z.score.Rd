@@ -4,7 +4,8 @@
 \alias{z.score}
 \title{Transform continuous in categorical variables and generates a new \code{cupcakeData} object.}
 \usage{
-z.score(input, zscoreCutOff = c(-2, 2), nfactor = 10, verbose = FALSE)
+z.score(input, zscoreCutOff = c(-2, 2), nfactor = 10,
+  verbose = FALSE)
 }
 \arguments{
 \item{input}{Object of \code{cupcakeData} class.}
